@@ -30,8 +30,26 @@ const RegisterScreen = (props) => {
   const addressInputRef = createRef();
   const passwordInputRef = createRef();
 
-  const handleSubmitButton = () => {
-    props.navigation.navigate('LoginScreen');
+  const handleSubmitButton = async() => {
+
+    try{
+      const data = await fetch("http://192.168.1.9:8005/signup" , { 
+        method:"POST",
+        headers:{
+          "Content-type":"application/json"
+        },
+        body:JSON.stringify({username:userName , email:userEmail , password:userPassword})
+      });
+      console.log(userName , userEmail , userAddress , userPassword);
+  
+      const res =await data.json();
+      console.log(res);
+  
+      props.navigation.navigate('LoginScreen');
+    }
+    catch(error){
+      console.log("error: "+error);
+    }
   }
   return (
     <View style={{flex: 1, backgroundColor: '#307ecc'}}>
@@ -55,11 +73,11 @@ const RegisterScreen = (props) => {
         </View>
         <KeyboardAvoidingView enabled>
           <View style={styles.SectionStyle}>
-            <TextInput
+            <TextInput 
               style={styles.inputStyle}
               onChangeText={(UserName) => setUserName(UserName)}
               underlineColorAndroid="#f000"
-              placeholder="Enter Name"
+              placeholder="Username"
               placeholderTextColor="#8b9cb5"
               autoCapitalize="sentences"
               returnKeyType="next"
@@ -74,7 +92,7 @@ const RegisterScreen = (props) => {
               style={styles.inputStyle}
               onChangeText={(UserEmail) => setUserEmail(UserEmail)}
               underlineColorAndroid="#f000"
-              placeholder="Enter Email"
+              placeholder="Email"
               placeholderTextColor="#8b9cb5"
               keyboardType="email-address"
               ref={emailInputRef}
@@ -86,14 +104,14 @@ const RegisterScreen = (props) => {
               blurOnSubmit={false}
             />
           </View>
-          <View style={styles.SectionStyle}>
+          <View  style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
               onChangeText={(UserPassword) =>
                 setUserPassword(UserPassword)
               }
               underlineColorAndroid="#f000"
-              placeholder="Enter Password"
+              placeholder="Password"
               placeholderTextColor="#8b9cb5"
               ref={passwordInputRef}
               returnKeyType="next"
@@ -112,7 +130,7 @@ const RegisterScreen = (props) => {
                 setUserAddress(UserAddress)
               }
               underlineColorAndroid="#f000"
-              placeholder="Enter Address"
+              placeholder="Address"
               placeholderTextColor="#8b9cb5"
               autoCapitalize="sentences"
               ref={addressInputRef}
