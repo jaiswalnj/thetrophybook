@@ -24,7 +24,7 @@ const RegisterScreen = (props) => {
     isRegistraionSuccess,
     setIsRegistraionSuccess
   ] = useState(false);
-
+``
   const emailInputRef = createRef();
   const ageInputRef = createRef();
   const addressInputRef = createRef();
@@ -40,11 +40,12 @@ const RegisterScreen = (props) => {
         },
         body:JSON.stringify({username:userName , email:userEmail , password:userPassword})
       });
-      console.log(userName , userEmail , userAddress , userPassword);
   
       const res =await data.json();
       console.log(res);
-  
+      
+
+
       props.navigation.navigate('LoginScreen');
     }
     catch(error){

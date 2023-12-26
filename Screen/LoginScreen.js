@@ -21,7 +21,18 @@ const LoginScreen = ({navigation}) => {
 
   const passwordInputRef = createRef();
 
-  const handleSubmitPress = () => {
+  const handleSubmitPress = async() => {
+
+    const data = await fetch(/*your-pc-ip*/  "http://192.168.1.9:8005/login", {
+      method:"POST",
+      headers:{
+        "content-type":"application/json"
+      },
+      body:JSON.stringify({email:userEmail,password:userPassword})
+    });
+
+    const res = await data.json();
+
     navigation.replace('HomeScreen');
   };
   return (
