@@ -22,18 +22,33 @@ const LoginScreen = ({navigation}) => {
   const passwordInputRef = createRef();
 
   const handleSubmitPress = async() => {
-
-    const data = await fetch(/*your-pc-ip*/  "http://192.168.1.9:8005/login", {
+    if (!userEmail) {
+      alert('Please fill Email');
+      return;
+    }
+    if (!userPassword) {
+      alert('Please fill Password');
+      return;
+    }
+    setLoading(true);
+    const data = await fetch(/*your-pc-ip*/  "http://192.168.1.2:8005/login", {
       method:"POST",
       headers:{
         "content-type":"application/json"
       },
-      body:JSON.stringify({email:userEmail,password:userPassword})
-    });
-
-    const res = await data.json();
-
-    navigation.replace('HomeScreen');
+      body:JSON.stringify({name:userEmail,password:userPassword})
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      setLoading(false);
+      console.log(responseJson);
+      if (responseJson.message === 'login successfull') {
+        console.log(responseJson.data.email);
+        navigation.replace('HomeScreen');
+      } else {
+        setErrortext(responseJson.msg);
+        console.log('Please check your email id or password');
+      }
+    })
   };
   return (
     <View style={styles.mainBody}>

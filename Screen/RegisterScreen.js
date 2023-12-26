@@ -1,15 +1,5 @@
 import React, {useState, createRef} from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-  Image,
-  KeyboardAvoidingView,
-  Keyboard,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, TextInput, View, Text, Image, KeyboardAvoidingView, Keyboard, TouchableOpacity, ScrollView} from 'react-native';
 
 import Loader from './Components/Loader';
 
@@ -20,33 +10,48 @@ const RegisterScreen = (props) => {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-  const [
-    isRegistraionSuccess,
-    setIsRegistraionSuccess
-  ] = useState(false);
-``
+  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   const emailInputRef = createRef();
   const ageInputRef = createRef();
   const addressInputRef = createRef();
   const passwordInputRef = createRef();
 
   const handleSubmitButton = async() => {
-
+    if (!userName) {
+      alert('Please fill Name');
+      return;
+    }
+    if (!userEmail) {
+      alert('Please fill Email');
+      return;
+    }
+    if (!userAddress) {
+      alert('Please fill Address');
+      return;
+    }
+    if (!userPassword) {
+      alert('Please fill Password');
+      return;
+    }
+    setLoading(true);
     try{
-      const data = await fetch("http://192.168.1.9:8005/signup" , { 
+      const data = await fetch("http://192.168.1.2:8005/signup" , { 
         method:"POST",
         headers:{
           "Content-type":"application/json"
         },
         body:JSON.stringify({username:userName , email:userEmail , password:userPassword})
-      });
-  
-      const res =await data.json();
-      console.log(res);
-      
-
-
-      props.navigation.navigate('LoginScreen');
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        setLoading(false);
+        console.log(responseJson);
+        if (responseJson.message === 'registration succesfull') {
+          setIsRegistraionSuccess(true);
+          props.navigation.navigate('LoginScreen');
+        } else {
+          setErrortext(responseJson.msg);
+        }
+      })
     }
     catch(error){
       console.log("error: "+error);
