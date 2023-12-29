@@ -1,4 +1,5 @@
 import React, {useState, createRef} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   StyleSheet,
   TextInput,
@@ -9,6 +10,7 @@ import {
   Keyboard,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 
 import Loader from './Components/Loader';
@@ -31,7 +33,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const data = await fetch(/*your-pc-ip*/  "http://192.168.1.2:8005/login", {
+    const data = await fetch("http://192.168.1.9:8005/login", {
       method:"POST",
       headers:{
         "content-type":"application/json"
@@ -40,9 +42,9 @@ const LoginScreen = ({navigation}) => {
     }).then((response) => response.json())
     .then((responseJson) => {
       setLoading(false);
-      console.log(responseJson);
       if (responseJson.message === 'login successfull') {
-        console.log(responseJson.data.email);
+        const user = responseJson.data;
+        AsyncStorage.multiSet([['user_id', `${user._id}`], ['username', `${user.username}`], ['email', `${user.email}`]]);
         navigation.replace('HomeScreen');
       } else {
         setErrortext(responseJson.msg);

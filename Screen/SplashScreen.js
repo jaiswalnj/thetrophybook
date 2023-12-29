@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   ActivityIndicator,
   View,
@@ -8,20 +9,27 @@ import {
 
 
 const SplashScreen = ({navigation}) => {
-  //State for ActivityIndicator animation
   const [animating, setAnimating] = useState(true);
+  AsyncStorage.clear();  
 
   useEffect(() => {
-    setTimeout(() => {
-      setAnimating(false);
-      navigation.replace('Auth');
-    }, 5000);
-  }, []);
+    const checkUser = async () => {
+      setTimeout(async () => {
+        setAnimating(false);
+        const userId = await AsyncStorage.getItem('user_id');
+        navigation.replace(userId === null ? 'Auth' : 'HomeScreen');
+      }, 5000);
+    };
+
+    if (animating) {
+      checkUser();
+    }
+  }, [animating, navigation]);
 
   return (
     <View style={styles.container}>
       <Image
-        source={require('../Image/favicon.png')}
+        source={require('../Image/splash.png')}
         style={{width: '90%', resizeMode: 'contain', margin: 30}}
       />
       <ActivityIndicator

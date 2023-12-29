@@ -35,7 +35,7 @@ const RegisterScreen = (props) => {
     }
     setLoading(true);
     try{
-      const data = await fetch("http://192.168.1.2:8005/signup" , { 
+      const data = await fetch("http://192.168.1.9a:8005/signup" , { 
         method:"POST",
         headers:{
           "Content-type":"application/json"
