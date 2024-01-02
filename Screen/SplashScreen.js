@@ -10,14 +10,13 @@ import {
 
 const SplashScreen = ({navigation}) => {
   const [animating, setAnimating] = useState(true);
-  AsyncStorage.clear();  
 
   useEffect(() => {
     const checkUser = async () => {
       setTimeout(async () => {
         setAnimating(false);
         const userId = await AsyncStorage.getItem('user_id');
-        navigation.replace(userId === null ? 'Auth' : 'HomeScreen');
+        navigation.replace(userId === null ? 'Auth' : 'DrawerNavigatorRoutes');
       }, 5000);
     };
 
