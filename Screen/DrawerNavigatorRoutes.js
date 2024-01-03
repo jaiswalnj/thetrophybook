@@ -1,58 +1,49 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './DrawerScreens/HomeScreen';
+import Category from './DrawerScreens/Category';
+import Cart from './DrawerScreens/Cart';
+import Likes from './DrawerScreens/Likes';
+import More from './DrawerScreens/More';
 
-import HomeScreen from './HomeScreen';
-import CustomSidebarMenu from './Components/CustomSidebarMenu';
-import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
+const Tab = createBottomTabNavigator();
 
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
-const homeScreenStack = ({navigation}) => {
+const DrawerNavigatorRoutes = () => {
   return (
-    <Stack.Navigator initialRouteName="HomeScreen">
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{
-          title: 'Home',
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#307ecc',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
 
-const DrawerNavigatorRoutes = (props) => {
-  return (
-    <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: '#cee1f2',
-        color: '#cee1f2',
-        itemStyle: {marginVertical: 5, color: 'white'},
-        labelStyle: {
-          color: '#d8d8d8',
-        },
-      }}
-      screenOptions={{headerShown: false}}
-      drawerContent={CustomSidebarMenu}>
-      <Drawer.Screen
-        name="homeScreenStack"
-        options={{drawerLabel: 'Home Screen'}}
-        component={homeScreenStack}
-      />
-    </Drawer.Navigator>
+            if (route.name === 'Home') {
+              iconName = focused
+                ? 'home'
+                : 'home-outline';
+            } else if (route.name === 'Category') {
+              iconName = focused ? 'ios-list' : 'ios-list-outline';
+            } else if (route.name === 'Cart') {
+              iconName = focused ? 'cart' : 'cart-outline';
+            } else if (route.name === 'Likes') {
+              iconName = focused ? 'heart' : 'heart-outline';
+            } else if (route.name === 'More') {
+              iconName = focused ? 'reorder-three' : 'reorder-three-outline';
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: '#FFCD1C',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
+        <Tab.Screen name="Category" component={Category} options={{headerShown: false}}/>
+        <Tab.Screen name="Cart" component={Cart} options={{headerShown: false}}/>
+        <Tab.Screen name="Likes" component={Likes} options={{headerShown: false}}/>
+        <Tab.Screen name="More" component={More} options={{headerShown: false}}/>
+      </Tab.Navigator>
   );
 };
 

@@ -33,7 +33,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const data = await fetch("http://192.168.1.9:8005/login", {
+    const data = await fetch("http://192.168.43.98:8005/login", {
       method:"POST",
       headers:{
         "content-type":"application/json"
@@ -45,7 +45,7 @@ const LoginScreen = ({navigation}) => {
       if (responseJson.message === 'login successfull') {
         const user = responseJson.data;
         AsyncStorage.multiSet([['user_id', `${user._id}`], ['username', `${user.username}`], ['email', `${user.email}`]]);
-        navigation.replace('HomeScreen');
+        navigation.replace('DrawerNavigatorRoutes');
       } else {
         setErrortext(responseJson.msg);
         console.log('Please check your email id or password');
@@ -66,12 +66,14 @@ const LoginScreen = ({navigation}) => {
           <KeyboardAvoidingView enabled>
             <View style={{alignItems: 'center'}}>
               <Image
-                source={require('../Image/favicon.png')}
+                source={require('../Image/logo.png')}
                 style={{
-                  width: '50%',
-                  height: 100,
-                  resizeMode: 'contain',
-                  margin: 30,
+                  width: 150,
+                  height: 150,
+                  borderRadius: 150/2,
+                  overflow: "hidden",
+                  borderWidth: 10,
+                  borderColor: "black"
                 }}
               />
             </View>
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#307ecc',
+    backgroundColor: '#60C1FF',
     alignContent: 'center',
   },
   SectionStyle: {
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#FFC436',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',
