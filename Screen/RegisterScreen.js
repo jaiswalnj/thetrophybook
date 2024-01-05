@@ -1,5 +1,6 @@
 import React, {useState, createRef} from 'react';
-import {StyleSheet, TextInput, View, Text, Image, KeyboardAvoidingView, Keyboard, TouchableOpacity, ScrollView} from 'react-native';
+import {StyleSheet, TextInput, View, Text, Image, KeyboardAvoidingView, Keyboard, TouchableOpacity, ScrollView, Button} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Loader from './Components/Loader';
 
@@ -10,11 +11,11 @@ const RegisterScreen = (props) => {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   const emailInputRef = createRef();
   const ageInputRef = createRef();
   const addressInputRef = createRef();
   const passwordInputRef = createRef();
+
 
   const handleSubmitButton = async() => {
     if (!userName) {
@@ -35,7 +36,7 @@ const RegisterScreen = (props) => {
     }
     setLoading(true);
     try{
-      const data = await fetch("http://192.168.43.98:8005/signup" , { 
+      const data = await fetch(`http://172.20.10.4:8005/signup` , { 
         method:"POST",
         headers:{
           "Content-type":"application/json"
@@ -45,9 +46,10 @@ const RegisterScreen = (props) => {
       .then((responseJson) => {
         setLoading(false);
         console.log(responseJson);
-        if (responseJson.message === 'registration succesfull') {
-          setIsRegistraionSuccess(true);
-          props.navigation.navigate('LoginScreen');
+        if (responseJson.status === 'pending') {
+          props.navigation.navigate('OTP');
+          console.log(responseJson);
+          AsyncStorage.setItem(userId,responseJson.data)
         } else {
           setErrortext(responseJson.msg);
         }
@@ -58,7 +60,7 @@ const RegisterScreen = (props) => {
     }
   }
   return (
-    <View style={{flex: 1, backgroundColor: '#307ecc'}}>
+    <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
       <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -68,7 +70,7 @@ const RegisterScreen = (props) => {
         }}>
         <View style={{alignItems: 'center'}}>
           <Image
-            source={require('../Image/favicon.png')}
+            source={require('../Image/logo.png')}
             style={{
               width: '50%',
               height: 100,
@@ -173,10 +175,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#FFCD1C',
     borderWidth: 0,
-    color: '#FFFFFF',
-    borderColor: '#7DE24E',
+    color: '#FFCD1C',
+    borderColor: '#FFCD1C',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,
@@ -185,19 +187,31 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
+  image: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    color: '#FFCD1C',
+    borderColor: '#FFCD1C',
+    height: 40,
+    width: 150,
+    alignItems: 'center',
+    borderRadius: 30,
+  },
   buttonTextStyle: {
-    color: '#FFFFFF',
+    color: 'black',
     paddingVertical: 10,
     fontSize: 16,
   },
   inputStyle: {
     flex: 1,
-    color: 'white',
+    color: 'black',
     paddingLeft: 15,
     paddingRight: 15,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: '#dadae8',
+    backgroundColor: 'white',
+    borderColor: '#FFCD1C',
   },
   errorTextStyle: {
     color: 'red',
@@ -205,7 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   successTextStyle: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontSize: 18,
     padding: 30,

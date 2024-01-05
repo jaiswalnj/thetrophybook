@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
@@ -23,7 +23,6 @@ const HomeScreen = () => {
 
     fetchUserData();
   }, []); 
-  
 
 
   return (
@@ -49,6 +48,10 @@ const HomeScreen = () => {
             {'\n\n'}
             {userId}
           </Text>
+          <Button 
+          title="Logout"
+          onPress={() => {AsyncStorage.clear();}}
+          />
         </View>
       </View>
     </SafeAreaView>

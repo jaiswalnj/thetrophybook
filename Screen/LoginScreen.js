@@ -33,7 +33,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const data = await fetch("http://192.168.43.98:8005/login", {
+    const data = await fetch(`http://172.20.10.4:8005/login`, {
       method:"POST",
       headers:{
         "content-type":"application/json"
@@ -64,18 +64,15 @@ const LoginScreen = ({navigation}) => {
         }}>
         <View>
           <KeyboardAvoidingView enabled>
-            <View style={{alignItems: 'center'}}>
+            <View style={{alignItems: 'center', alignContent: 'center'}}>
               <Image
-                source={require('../Image/logo.png')}
+                source={require('../Image/main.png')}
                 style={{
-                  width: 150,
-                  height: 150,
-                  borderRadius: 150/2,
-                  overflow: "hidden",
-                  borderWidth: 10,
-                  borderColor: "black"
+                  width: 100,
+                  height: 100,
                 }}
               />
+              <Text style={{fontSize:40, padding: 10}}>Delta{'\n'}Trophies</Text>
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
@@ -102,7 +99,7 @@ const LoginScreen = ({navigation}) => {
                 onChangeText={(UserPassword) =>
                   setUserPassword(UserPassword)
                 }
-                placeholder="Enter Password" //12345
+                placeholder="Enter Password"
                 placeholderTextColor="#8b9cb5"
                 keyboardType="default"
                 ref={passwordInputRef}
@@ -141,51 +138,51 @@ const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#60C1FF',
+    backgroundColor: 'white',
     alignContent: 'center',
   },
   SectionStyle: {
     flexDirection: 'row',
     height: 40,
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 35,
     marginRight: 35,
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#FFC436',
+    backgroundColor: '#FFCD1C',
     borderWidth: 0,
-    color: '#FFFFFF',
-    borderColor: '#7DE24E',
+    color: '#FFCD1C',
+    borderColor: '#FFCD1C',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,
     marginLeft: 35,
     marginRight: 35,
-    marginTop: 20,
-    marginBottom: 25,
+    marginTop: 15,
+    marginBottom: 15,
   },
   buttonTextStyle: {
-    color: '#FFFFFF',
+    color: 'black',
     paddingVertical: 10,
     fontSize: 16,
   },
   inputStyle: {
     flex: 1,
-    color: 'white',
+    color: 'black',
     paddingLeft: 15,
     paddingRight: 15,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: '#dadae8',
+    borderColor: '#FFCD1C',
   },
   registerTextStyle: {
-    color: '#FFFFFF',
+    color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14,
     alignSelf: 'center',
-    padding: 10,
+    padding: 5,
   },
   errorTextStyle: {
     color: 'red',
