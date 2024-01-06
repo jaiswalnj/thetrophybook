@@ -1,31 +1,51 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, Image, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from './Components/Loader';
 
 const OTPVerificationScreen = ({ navigation }) => {
   const [otp, setOtp] = useState(['', '', '', '']);
+  const [userId, setUserId] = useState();
+  const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedUserId = await AsyncStorage.getItem('userId');
+        setUserId(storedUserId || '');
+      } catch (error) {
+        console.error('Error fetching user Id:', error);
+      }
+    };
+    fetchUserData();
+  }, []); 
 
   const handleOTP = async() => {
     const enteredOTP = otp.join('');
-    console.log(enteredOTP);
-    try {
-      const response = await fetch(`http://172.20.10.4:8005/verifyOtp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    console.log(enteredOTP,userId);
+    setLoading(true);
+    try{
+      const data = await fetch(`http://192.168.43.98:8005/verifyOtp` , { 
+        method:"POST",
+        headers:{
+          "Content-type":"application/json"
         },
-        body: JSON.stringify({ otp: enteredOTP }),
-      });
-
-      if (response.status === 'verified') {
+        body:JSON.stringify({userId:userId, otp: enteredOTP})
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        setLoading(false);
+      if (responseJson.status === 'verified') {
         Alert.alert('Success', 'OTP verification successful');
         navigation.navigate('LoginScreen');
       } else {
         Alert.alert('Error', 'Invalid OTP. Please try again.');
         clearOTP();
       }
-    } catch (error) {
+    })
+    } 
+      catch (error) {
       console.error('Error during OTP verification:', error);
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
       clearOTP();

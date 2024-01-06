@@ -33,7 +33,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const data = await fetch(`http://172.20.10.4:8005/login`, {
+    const data = await fetch(`http://192.168.43.98a:8005/login`, {
       method:"POST",
       headers:{
         "content-type":"application/json"
