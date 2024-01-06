@@ -1,11 +1,31 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
 const ForgotPassword = ({navigation}) => {
   const [email, setEmail] = useState('');
 
-  const handleResetPassword = () => {
-    navigation.navigate('OTP');
+  const handleResetPassword = async() => {
+    try{
+        const data = await fetch(`http://192.168.43.98:8005/forgetPassword` , { 
+          method:"POST",
+          headers:{
+            "Content-type":"application/json"
+          },
+          body:JSON.stringify({email:email})
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+        if (responseJson.status === 'A mail has been sent to you for resetting your password.') {
+            Alert.alert('A mail has been sent to you for resetting your password.');
+            navigation.navigate('LoginScreen');
+        } else {
+          Alert.alert(responseJson.message);
+        }
+      })
+      } 
+        catch (error) {
+        Alert.alert('Error', error );
+      }
   };
 
   return (

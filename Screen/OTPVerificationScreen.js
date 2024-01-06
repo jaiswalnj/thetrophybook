@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, Image, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loader from './Components/Loader';
 
-const OTPVerificationScreen = ({ navigation }) => {
+const OTPVerificationScreen = ({navigation }) => {
   const [otp, setOtp] = useState(['', '', '', '']);
   const [userId, setUserId] = useState();
-  const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
 
   useEffect(() => {
@@ -22,10 +20,8 @@ const OTPVerificationScreen = ({ navigation }) => {
   }, []); 
 
   const handleOTP = async() => {
-    navigation.navigate('NewPassword');
-    /* const enteredOTP = otp.join('');
+    const enteredOTP = otp.join('');
     console.log(enteredOTP,userId);
-    setLoading(true);
     try{
       const data = await fetch(`http://192.168.43.98:8005/verifyOtp` , { 
         method:"POST",
@@ -36,7 +32,6 @@ const OTPVerificationScreen = ({ navigation }) => {
       }).then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        setLoading(false);
       if (responseJson.status === 'verified') {
         navigation.navigate('LoginScreen');
        } else if (responseJson.status === 'resetpassword') {
@@ -51,7 +46,7 @@ const OTPVerificationScreen = ({ navigation }) => {
       console.error('Error during OTP verification:', error);
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
       clearOTP();
-    } */
+    }
   };
   
 
@@ -87,7 +82,6 @@ const OTPVerificationScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Loader loading={loading} />
       <Image
             source={require('../Image/logo.png')}
             style={{
