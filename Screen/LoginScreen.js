@@ -33,7 +33,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const data = await fetch(`http://192.168.43.98a:8005/login`, {
+    const data = await fetch(`http://192.168.43.98:8005/login`, {
       method:"POST",
       headers:{
         "content-type":"application/json"
@@ -115,16 +115,24 @@ const LoginScreen = ({navigation}) => {
                 {errortext}
               </Text>
             ) : null}
+            <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
-              style={styles.buttonStyle}
+              style={styles.rbuttonStyle}
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate('RegisterScreen')}>
+              <Text style={styles.buttonTextStyle}>Register</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.lbuttonStyle}
               activeOpacity={0.5}
               onPress={handleSubmitPress}>
               <Text style={styles.buttonTextStyle}>LOGIN</Text>
             </TouchableOpacity>
+            </View>
             <Text
               style={styles.registerTextStyle}
-              onPress={() => navigation.navigate('RegisterScreen')}>
-              New Here ? Register
+              onPress={() => navigation.navigate('ForgotPassowrd')}>
+              Forgot Password?
             </Text>
           </KeyboardAvoidingView>
         </View>
@@ -149,15 +157,24 @@ const styles = StyleSheet.create({
     marginRight: 35,
     margin: 10,
   },
-  buttonStyle: {
+  lbuttonStyle: {
     backgroundColor: '#FFCD1C',
-    borderWidth: 0,
-    color: '#FFCD1C',
-    borderColor: '#FFCD1C',
     height: 40,
     alignItems: 'center',
-    borderRadius: 30,
-    marginLeft: 35,
+    borderRadius: 10,
+    width: '32%',
+    marginLeft: 20,
+    marginRight: 35,
+    marginTop: 15,
+    marginBottom: 15,
+  },
+   rbuttonStyle: {
+    backgroundColor: '#C0C0C0',
+    height: 40,
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '32%',
+    marginLeft: 45,
     marginRight: 35,
     marginTop: 15,
     marginBottom: 15,
@@ -173,7 +190,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     borderWidth: 1,
-    borderRadius: 30,
+    borderRadius: 10,
     borderColor: '#FFCD1C',
   },
   registerTextStyle: {

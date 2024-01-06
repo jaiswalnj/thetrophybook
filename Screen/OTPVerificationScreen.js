@@ -22,7 +22,8 @@ const OTPVerificationScreen = ({ navigation }) => {
   }, []); 
 
   const handleOTP = async() => {
-    const enteredOTP = otp.join('');
+    navigation.navigate('NewPassword');
+    /* const enteredOTP = otp.join('');
     console.log(enteredOTP,userId);
     setLoading(true);
     try{
@@ -37,8 +38,9 @@ const OTPVerificationScreen = ({ navigation }) => {
         console.log(responseJson);
         setLoading(false);
       if (responseJson.status === 'verified') {
-        Alert.alert('Success', 'OTP verification successful');
         navigation.navigate('LoginScreen');
+       } else if (responseJson.status === 'resetpassword') {
+          navigation.navigate('ResetPasswrod');
       } else {
         Alert.alert('Error', 'Invalid OTP. Please try again.');
         clearOTP();
@@ -49,7 +51,7 @@ const OTPVerificationScreen = ({ navigation }) => {
       console.error('Error during OTP verification:', error);
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
       clearOTP();
-    }
+    } */
   };
   
 
@@ -85,6 +87,7 @@ const OTPVerificationScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Loader loading={loading} />
       <Image
             source={require('../Image/logo.png')}
             style={{
@@ -126,6 +129,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#FFFFFF'
   },
   title: {
     fontSize: 18,
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
     borderColor: '#FFCD1C',
     borderWidth: 1,
     width: 40,
-    borderRadius: 12,
+    borderRadius: 10,
     textAlign: 'center',
     marginRight: 10,
   },
@@ -152,7 +156,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
     alignItems: 'center',
-    borderRadius: 30,
+    borderRadius: 10,
   },
   buttonTextStyle: {
     color: 'black',

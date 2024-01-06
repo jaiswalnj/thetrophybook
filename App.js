@@ -10,6 +10,8 @@ import LoginScreen from './Screen/LoginScreen';
 import RegisterScreen from './Screen/RegisterScreen';
 import DrawerNavigatorRoutes from './Screen/DrawerNavigatorRoutes';
 import OTPVerificationScreen from './Screen/OTPVerificationScreen';
+import ForgotPassword from './Screen/ForgotPassword';
+import NewPassword from './Screen/NewPassword';
 
 
 import { AppRegistry } from 'react-native';
@@ -25,7 +27,7 @@ const Auth = () => {
   });
 
   return (
-    <Stack.Navigator initialRouteName="RegisterScreen">
+    <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
@@ -36,6 +38,36 @@ const Auth = () => {
         component={OTPVerificationScreen}
         options={{
           title: 'Verify',
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: 'black',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          cardStyleInterpolator: forFade,
+        }}
+      />
+       <Stack.Screen
+        name="ForgotPassowrd"
+        component={ForgotPassword}
+        options={{
+          title: 'Forgot Passowrd',
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: 'black',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          cardStyleInterpolator: forFade,
+        }}
+      />
+       <Stack.Screen
+        name="NewPassword"
+        component={NewPassword}
+        options={{
+          title: 'Set New Password',
           headerStyle: {
             backgroundColor: 'white',
           },

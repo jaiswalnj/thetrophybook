@@ -1,27 +1,36 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-const ForgotPassword = ({navigation}) => {
-  const [email, setEmail] = useState('');
+const NewPassword = ({ navigation }) => {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleResetPassword = () => {
-    navigation.navigate('OTP');
+    console.log('New Password:', newPassword);
+    console.log('Confirmed Password:', confirmPassword);
+    navigation.navigate('LoginScreen');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Forgot Password</Text>
-      <Text style={styles.subtitle}>Enter your email to Verify</Text>
+      <Text style={styles.title}>Reset Password</Text>
+      <Text style={styles.subtitle}>Enter your new password</Text>
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
+        placeholder="New Password"
+        secureTextEntry
+        value={newPassword}
+        onChangeText={(text) => setNewPassword(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm Password"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={(text) => setConfirmPassword(text)}
       />
       <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-        <Text style={styles.buttonText}>Reset Password</Text>
+        <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
     </View>
   );
@@ -32,8 +41,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    padding: 40,
+    padding: 30,
+    backgroundColor: '#FFFFFF'
   },
   title: {
     fontSize: 24,
@@ -73,4 +82,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgotPassword
+
+export default NewPassword;

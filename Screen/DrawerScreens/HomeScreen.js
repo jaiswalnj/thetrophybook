@@ -1,8 +1,8 @@
 import React,{useEffect,useState} from 'react';
-import {View, Text, SafeAreaView, Button} from 'react-native';
+import {View, Text, SafeAreaView, Button, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [userId, setUserId] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
@@ -23,6 +23,17 @@ const HomeScreen = () => {
 
     fetchUserData();
   }, []); 
+
+  const handleLogout= () => {
+    AsyncStorage.clear(); 
+    Alert.alert('Logout ?', 'Press Confirm to Logout', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {text: 'Confirm', onPress: () => {AsyncStorage.clear(); navigation.navigate('SplashScreen')}},
+    ]);
+  }
 
 
   return (
@@ -50,7 +61,7 @@ const HomeScreen = () => {
           </Text>
           <Button 
           title="Logout"
-          onPress={() => {AsyncStorage.clear();}}
+          onPress={handleLogout}
           />
         </View>
       </View>
