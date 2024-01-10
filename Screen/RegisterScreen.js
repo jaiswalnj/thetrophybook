@@ -36,7 +36,7 @@ const RegisterScreen = (props) => {
     }
     setLoading(true);
     try{
-      const data = await fetch(`http://192.168.43.98:8005/signup` , { 
+      const data = await fetch(`http://192.168.1.3:8005/signup` , { 
         method:"POST",
         headers:{
           "Content-type":"application/json"
@@ -45,6 +45,7 @@ const RegisterScreen = (props) => {
       }).then((response) => response.json())
       .then((responseJson) => {
         setLoading(false);
+        console.log(responseJson.status);
         if (responseJson.status === 'pending') {
           props.navigation.navigate('OTP');
           AsyncStorage.setItem('userId',responseJson.data.user_id);

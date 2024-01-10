@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Card = ({ imageUrl, title, price}) => {
+const Card = ({ imageUrl, title, price, width}) => {
     const [like, setLike] = useState('heart-outline')
     onLikePress =() =>{
         if(like === 'heart-outline'){
@@ -50,8 +50,9 @@ const styles = StyleSheet.create({
     alignSelf: ''
   },
   image: {
-    width: '85%',
+    width: '100%',
     height: 200,
+    marginVertical: 40,
     resizeMode: 'cover',
   },
   title: {

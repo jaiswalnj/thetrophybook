@@ -46,15 +46,30 @@ const HomeScreen = ({ navigation }) => {
           </Text>
           <Icon name='person-circle-outline' size={50} color='black'/>
           </View>
+          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom: 30}}>
+          <TouchableOpacity onPress={()=> active === true ? setActive(false) : setActive(true)}>
+          <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
+          title={'Trophies'}
+          active={false}
+          />
+          </TouchableOpacity>
           <TouchableOpacity onPress={()=> active === true ? setActive(false) : setActive(true)}>
           <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
           title={'Trophies'}
           active={active}
           />
           </TouchableOpacity>
+          <TouchableOpacity onPress={()=> active === true ? setActive(false) : setActive(true)}>
+          <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
+          title={'Trophies'}
+          active={false}
+          />
+          </TouchableOpacity>
+          </View>
           <Card imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
           title={'Trophy'}
-          price={1500}/>
+          price={1500}
+          width={200}/>
         </View>
       </View>
     </SafeAreaView>

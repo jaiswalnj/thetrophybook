@@ -23,7 +23,7 @@ const OTPVerificationScreen = ({navigation }) => {
     const enteredOTP = otp.join('');
     console.log(enteredOTP,userId);
     try{
-      const data = await fetch(`http://192.168.43.98:8005/verifyOtp` , { 
+      const data = await fetch(`http://192.168.1.3:8005/verifyOtp` , { 
         method:"POST",
         headers:{
           "Content-type":"application/json"

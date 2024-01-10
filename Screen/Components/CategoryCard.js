@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
 
   },
   circle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     overflow: 'hidden',
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2 },
@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   activecircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     overflow: 'hidden',
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
@@ -54,9 +54,8 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   title: {
-    marginTop: 8,
+    marginTop: 4,
     fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Category from './DrawerScreens/Category';
 import HomeScreen from './DrawerScreens/HomeScreen';
 import Cart from './DrawerScreens/Cart';
-import Likes from './DrawerScreens/Likes';
+import Favourite from './DrawerScreens/Favourite';
 import More from './DrawerScreens/More';
 
 const Tab = createBottomTabNavigator();
@@ -35,7 +35,7 @@ const DraweerNavigatorRoutes = () => {
               iconName = focused ? 'ios-list' : 'ios-list-outline';
             } else if (route.name === 'Cart') {
               iconName = focused ? 'cart' : 'cart-outline';
-            } else if (route.name === 'Likes') {
+            } else if (route.name === 'Favourite') {
               iconName = focused ? 'heart' : 'heart-outline';
             } else if (route.name === 'More') {
               iconName = focused ? 'reorder-three' : 'reorder-three-outline';
@@ -67,10 +67,11 @@ const DraweerNavigatorRoutes = () => {
           }}
         />
         <Tab.Screen
-          name="Likes"
-          component={Likes}
+          name="Favourite"
+          component={Favourite}
           options={{
-            tabBarButton: props => <CustomTabBarButton route="Likes" {...props} />,
+            tabBarButton: props => <CustomTabBarButton route="Favourite" {...props} />,
+            headerShown: true,
           }}
         />
         <Tab.Screen
@@ -90,7 +91,7 @@ export default DraweerNavigatorRoutes;
 const styles = StyleSheet.create({
   tabBarStyle: {
     position: 'absolute',
-    height: 60,
+    height: 80,
     paddingLeft: 10,
     paddingRight: 10,
   }
