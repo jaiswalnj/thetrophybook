@@ -123,23 +123,23 @@ const HomeScreen = ({ navigation }) => {
           </Text>
           
         </View>} */}
+      <ScrollView
+      vertical
+      showsVerticalScrollIndicator={false}>
+
 
         <View style={styles.container}>
-          <View style={styles.header}>
+          <View style={styles.header} >
             <Text style={styles.titleText}>All Trophies {userName}</Text>
-            <TouchableOpacity onPress={toggleScroll}>
+            <TouchableOpacity onPress={toggleScroll} style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.moreText}>MORE{userName}</Text>
               <Icon name="chevron-forward-outline" size={14} color="#FFCD1C" />
             </TouchableOpacity>
         </View>
 
-      <ScrollView
-        vertical
-        scrollEnabled={isScrollable}>
-        
         <ScrollView
         horizontal
-        // showsHorizontalScrollIndicator={true}
+        showsHorizontalScrollIndicator={false}
         scrollEnabled={isScrollable} // Enable/disable scrolling based on state
         >
           <View style={styles.cardContainer}>
@@ -189,11 +189,17 @@ const HomeScreen = ({ navigation }) => {
             title={'Trophy'}
             price={1500}
             width={200}/>
+          <Card 
+            imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
+            title={'Trophy'}
+            price={1500}
+            width={200}/>
 
-      </ScrollView>
+      
           
 
         </View>
+        </ScrollView>
         
       </View>
       
@@ -212,13 +218,15 @@ const styles = StyleSheet.create({
     // ...
   },
   header: {
-    // ...
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    
   },
   titleText: {
     // ...
   },
   moreText: {
-    // ...
+    color: "#FFCD1C"
   },
   
   // ... other styles
