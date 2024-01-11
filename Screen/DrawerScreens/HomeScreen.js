@@ -33,6 +33,8 @@ const HomeScreen = ({ navigation }) => {
     fetchUserData();
   }, []); 
 
+
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, padding: 16, backgroundColor: '#FAFAFA'}}>
@@ -131,10 +133,13 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
         </View>
 
-
+      <ScrollView
+        vertical
+        scrollEnabled={isScrollable}>
+        
         <ScrollView
         horizontal
-        showsHorizontalScrollIndicator={true}
+        // showsHorizontalScrollIndicator={true}
         scrollEnabled={isScrollable} // Enable/disable scrolling based on state
         >
           <View style={styles.cardContainer}>
@@ -185,12 +190,38 @@ const HomeScreen = ({ navigation }) => {
             price={1500}
             width={200}/>
 
+      </ScrollView>
           
 
         </View>
+        
       </View>
+      
     </SafeAreaView>
   );
 };
+
+
+const styles = StyleSheet.create({
+  // Define your styles here, e.g.,
+  container: {
+    // ...
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    // ...
+  },
+  header: {
+    // ...
+  },
+  titleText: {
+    // ...
+  },
+  moreText: {
+    // ...
+  },
+  
+  // ... other styles
+});
 
 export default HomeScreen;
