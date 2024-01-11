@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
 
   },
   circle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 45,
+    height: 45,
+    borderRadius: 25,
     overflow: 'hidden',
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2 },
@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   activecircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     overflow: 'hidden',
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 4,
@@ -51,11 +51,15 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
+    resizeMode: 'center',
   },
-  title: {
+  titleIdle: {
     marginTop: 4,
-    fontSize: 16,
+    fontSize: 8,
+  },
+  titleSelected: {
+    marginTop: 4,
+    fontSize: 10,
   },
 });
 

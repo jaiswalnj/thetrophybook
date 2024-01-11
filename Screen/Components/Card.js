@@ -1,6 +1,10 @@
 import React,{useState} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
+import * as Font from 'expo-font'; 
+
+
 
 const Card = ({ imageUrl, title, price, width}) => {
     const [like, setLike] = useState('heart-outline')
@@ -11,6 +15,9 @@ const Card = ({ imageUrl, title, price, width}) => {
             setLike('heart-outline')
         }
     }
+    
+    const BUTTON_SHRINK_FACTOR = .2;
+
     onAddPress= () =>{
 
     }
@@ -20,12 +27,13 @@ const Card = ({ imageUrl, title, price, width}) => {
           <Image source={{ uri: imageUrl }} style={styles.image} />
     
           <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
-            <Icon name={like} size={24} color="black" />
+            <Icon name={like} size={22} color="black" />
           </TouchableOpacity>
     
         </View>
-        <TouchableOpacity style={styles.addButton} onPress={onAddPress}>
-            <Icon name="add-outline" size={48} color="black" />
+        <TouchableOpacity style={styles.addButton} activeScale={onAddPress ? BUTTON_SHRINK_FACTOR : 2 } onPress={onAddPress} activeOpacity={0.88}>
+            <Icon name="add-outline" size={42} color="black" />
+            
           </TouchableOpacity>
           <Text style={styles.price}>₹{price}</Text>
         <Text style={styles.title}>{title}</Text>
@@ -35,38 +43,47 @@ const Card = ({ imageUrl, title, price, width}) => {
 
 const styles = StyleSheet.create({
     Container: {
-        backgroundColor: 'white',
+        backgroundColor: '#FAFAFA',
         textAlign: 'right',
         width: 220,
         overflow: 'hidden',
+        marginTop: 12,
+        marginBottom: 15,
       },
   card: {
     backgroundColor: '#64ECC7',
-    width: 200,
+    width: 180,
     height: 250,
-    borderRadius: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 16,
     overflow: 'hidden',
     elevation: 3,
     alignSelf: ''
   },
   image: {
-    width: '100%',
-    height: 200,
-    marginVertical: 40,
-    resizeMode: 'cover',
+    width: '200%',
+    height: 180,
+    marginVertical: 50,
+    marginHorizontal: -90,
+    resizeMode: 'center',
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    padding: 16,
+    //fontFamily: 'EuclidFlex',
+    //fontWeight: 500,
+    paddingTop: 4,
+    paddingHorizontal: 16
   },
   price: {
     fontSize: 25,
-    fontWeight: 'bold',
-    color: '#555',
+    fontFamily: 'ArialRoundedMT',
+    fontWeight: 'regular',
+    letterSpacing: 0.2,
+    color: 'black',
     paddingTop:20,
     paddingLeft: 16,
-    paddingBottom: 10,
+    paddingBottom: 2,
   },
   likeButton: {
     position: 'absolute',
@@ -80,11 +97,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius:5,
     shadowColor: 'black',
-    shadowOpacity: 0.50,
+    shadowOpacity: 0.8,
+    shadowOffset: { width:10, height:10},
+    shadowRadius:5,
     height: 40,
     width: 40,
-    bottom: 95,
-    right: 15,
+    bottom: 75,
+    right: 30,
+    elevation: 4,
     zIndex: 1,
   },
 });

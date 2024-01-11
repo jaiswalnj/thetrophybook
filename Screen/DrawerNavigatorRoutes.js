@@ -10,6 +10,7 @@ import HomeScreen from './DrawerScreens/HomeScreen';
 import Cart from './DrawerScreens/Cart';
 import Favourite from './DrawerScreens/Favourite';
 import More from './DrawerScreens/More';
+import CategoryList from './Components/CategoryList';
 
 const Tab = createBottomTabNavigator();
 
