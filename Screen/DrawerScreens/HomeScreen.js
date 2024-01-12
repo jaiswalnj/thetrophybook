@@ -143,12 +143,12 @@ const HomeScreen = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
         scrollEnabled={isScrollable} // Enable/disable scrolling based on state
         >
-          <LinearGradient
+          {/* <LinearGradient
       colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.gradientCard}
-           >
+           > */}
 
           <View style={styles.cardContainer}>
 
@@ -175,7 +175,7 @@ const HomeScreen = ({ navigation }) => {
         
         
         </View>
-        </LinearGradient>
+        {/* </LinearGradient> */}
         </ScrollView>
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

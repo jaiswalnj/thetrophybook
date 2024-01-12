@@ -1,9 +1,8 @@
 import React,{useState} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import LinearGradient from 'react-native-linear-gradient';
 import * as Font from 'expo-font'; 
-
+import {LinearGradient} from 'expo-linear-gradient';
 
 
 const Card = ({ imageUrl, title, price, width}) => {
@@ -24,13 +23,22 @@ const Card = ({ imageUrl, title, price, width}) => {
     return (
         <View style={styles.Container}>
         <View style={styles.card}>
+        
+        <LinearGradient
+      colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
+      start={{ x: 0.455, y: 0 }}
+      end={{ x:1, y: 1 }}
+      style={styles.gradientCard}>
           <Image source={{ uri: imageUrl }} style={styles.image} />
     
           <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
             <Icon name={like} size={21} color="black" />
           </TouchableOpacity>
     
+        
+        </LinearGradient>
         </View>
+
         <TouchableOpacity style={styles.addButton } activeScale={onAddPress ? BUTTON_SHRINK_FACTOR : 2 } onPress={onAddPress} activeOpacity={0.88}>
             <Icon name="add-outline" size={29} color="black" style={{ position: 'center', top:1, left: 2}} />
             
@@ -50,6 +58,8 @@ const styles = StyleSheet.create({
         marginTop: 12,
         marginBottom: 15,
       },
+
+
   card: {
     backgroundColor: '#64ECC7',
     width: 180,
