@@ -27,12 +27,12 @@ const Card = ({ imageUrl, title, price, width}) => {
           <Image source={{ uri: imageUrl }} style={styles.image} />
     
           <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
-            <Icon name={like} size={22} color="black" />
+            <Icon name={like} size={21} color="black" />
           </TouchableOpacity>
     
         </View>
-        <TouchableOpacity style={styles.addButton} activeScale={onAddPress ? BUTTON_SHRINK_FACTOR : 2 } onPress={onAddPress} activeOpacity={0.88}>
-            <Icon name="add-outline" size={42} color="black" />
+        <TouchableOpacity style={styles.addButton } activeScale={onAddPress ? BUTTON_SHRINK_FACTOR : 2 } onPress={onAddPress} activeOpacity={0.88}>
+            <Icon name="add-outline" size={29} color="black" style={{ position: 'center', top:1, left: 2}} />
             
           </TouchableOpacity>
           <Text style={styles.price}>₹{price}</Text>
@@ -100,10 +100,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowOffset: { width:10, height:10},
     shadowRadius:5,
-    height: 40,
-    width: 40,
-    bottom: 75,
-    right: 30,
+    height: 30,
+    width: 30,
+    bottom: 70,
+    right: 25,
     elevation: 4,
     zIndex: 1,
   },

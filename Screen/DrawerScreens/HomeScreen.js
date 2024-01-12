@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../Components/Card';
 import CategoryCard from '../Components/CategoryCard';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { LinearGradient } from 'react-native-linear-gradient';
 
 const HomeScreen = ({ navigation }) => {
   const [userId, setUserId] = useState('');
@@ -142,7 +143,16 @@ const HomeScreen = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
         scrollEnabled={isScrollable} // Enable/disable scrolling based on state
         >
+          <LinearGradient
+      colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.gradientCard}
+           >
+
           <View style={styles.cardContainer}>
+
+          
 
           <Card  
             imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
@@ -161,8 +171,11 @@ const HomeScreen = ({ navigation }) => {
             title={'Trophy'}
             price={1500}
             width={200}/>
+
+        
         
         </View>
+        </LinearGradient>
         </ScrollView>
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -227,6 +240,9 @@ const styles = StyleSheet.create({
   },
   moreText: {
     color: "#FFCD1C"
+  },
+  gradientCard: {
+
   },
   
   // ... other styles
