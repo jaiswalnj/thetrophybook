@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../Components/Card';
 import CategoryCard from '../Components/CategoryCard';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LinearGradient } from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 
 const HomeScreen = ({ navigation }) => {
   const [userId, setUserId] = useState('');
