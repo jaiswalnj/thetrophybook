@@ -3,9 +3,11 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityCompon
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Font from 'expo-font'; 
 import {LinearGradient} from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Card = ({ imageUrl, title, price, width}) => {
+    const navigation = useNavigation();
     const [like, setLike] = useState('heart-outline')
     onLikePress =() =>{
         if(like === 'heart-outline'){
@@ -20,16 +22,16 @@ const Card = ({ imageUrl, title, price, width}) => {
     onAddPress= () =>{
 
     }
+
     return (
         <View style={styles.Container}>
         <View style={styles.card}>
-        
         <LinearGradient
       colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
       start={{ x: 0.455, y: 0 }}
       end={{ x:1, y: 1 }}
       style={styles.gradientCard}>
-          <Image source={{ uri: imageUrl }} style={styles.image} />
+          <Image source={{ uri: imageUrl }} style={styles.image}/>
     
           <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
             <Icon name={like} size={21} color="black" />
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 25,
-    fontFamily: 'ArialRoundedMT',
+    // fontFamily: 'ArialRoundedMT',
     fontWeight: 'regular',
     letterSpacing: 0.2,
     color: 'black',

@@ -4,40 +4,66 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../Components/Card';
 import CategoryCard from '../Components/CategoryCard';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {LinearGradient} from 'expo-linear-gradient';
+import base64 from 'base64-js';
+import Loader from '../Components/Loader';
 
 const HomeScreen = ({ navigation }) => {
   const [userId, setUserId] = useState('');
-  const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const [active, setActive] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const handlePress = (index) => {setActiveIndex(index);} 
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState('Momentoes');
+  const [loading, setLoading] = useState(false);
+
+
+  const handlePress = (index, category) => {
+    setActiveIndex(index);
+    setCategory(category);
+  };
+  
 
   const [isScrollable, setIsScrollable] = useState(false);
   const toggleScroll = () => {setIsScrollable(!isScrollable);};
+
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
         setUserId(storedUserId || '');
-        const storedUserEmail = await AsyncStorage.getItem('email');
-        setUserEmail(storedUserEmail || '');
         const storedUserName = await AsyncStorage.getItem('username');
         setUserName(storedUserName || '');
       } catch (error) {
         console.error('Error fetching user Id:', error);
       }
     };
+    const fetchProducts = async (category) => {
+      try {
+        console.log(category);
+        const response = await fetch(`http://192.168.1.2:8005/getProducts?category=${category}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setProducts(data.data);
+          console.log(products);
+          setLoading(false);
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
 
     fetchUserData();
-  }, []); 
+    fetchProducts(category);
+  }, [category]);
 
 
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <Loader loading={loading} />
       <View style={{flex: 1, padding: 16, backgroundColor: '#FAFAFA'}}>
         <View
           style={{
@@ -62,68 +88,39 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
 
-        <View style={{flexDirection:'row', justifyContent: 'space-around', marginBottom: 30}}>
-          
-          <TouchableOpacity onPress={()=> handlePress(0)} key={0} >
-          <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-          title={'Trophies'}
-          active={activeIndex === 0}
-          />
+        <View style={styles.categoryContainer}>
+          <TouchableOpacity onPress={() => handlePress(0, 'Trophies')} key={0}>
+          <CategoryCard
+              title={'Trophies'}
+              active={activeIndex === 0}
+            />
           </TouchableOpacity>
-
-          <TouchableOpacity onPress={()=> handlePress(1)} key={1}>
-          <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-          title={'Medals'}
-          active={activeIndex === 1}
-          /> 
+          <TouchableOpacity onPress={() => handlePress(1, 'Medals')} key={1}>
+          <CategoryCard
+              title={'Medals'}
+              active={activeIndex === 1}
+            />
           </TouchableOpacity>
-
-          <TouchableOpacity onPress={()=> handlePress(2)} key={2}>
-          
-          <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-          title={'Momentos'}
-          active={activeIndex === 2}
-          />
+          <TouchableOpacity onPress={() => handlePress(2, 'Momentoes')} key={2}>
+          <CategoryCard
+              title={'Momentoes'}
+              active={activeIndex === 2}
+            />
           </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => handlePress(3)} key={3}>
-          <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'} 
-          title={'Badges'} 
-          active={activeIndex === 3}
-          />
+          <TouchableOpacity onPress={() => handlePress(3, 'Badges')} key={3}>
+          <CategoryCard
+              title={'Badges'}
+              active={activeIndex === 3}
+            />
           </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => handlePress(4)} key={4}>
-          <CategoryCard imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'} 
-          title={'More'} 
-          active={activeIndex === 4}
-          />
+          <TouchableOpacity onPress={() => handlePress(4, 'More')} key={4}>
+          <CategoryCard
+              title={'More'}
+              active={activeIndex === 4}
+            />
           </TouchableOpacity>
-          
-        
-            
-        </View>
+          </View>
 
-        {/* {<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text
-            style={{
-              fontSize: 22,
-              
-              textAlign: 'left',
-              
-            }}> All Trophies {userName}
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              color: "#FFCD1C",
-              textAlign: 'justify',
-              marginTop: 4,
-            }}> MORE{userName}
-            <Icon name="chevron-forward-outline" size={14} color='#FFCD1C' />
-          </Text>
-          
-        </View>} */}
       <ScrollView
       vertical
       showsVerticalScrollIndicator={false}>
@@ -141,41 +138,26 @@ const HomeScreen = ({ navigation }) => {
         <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={isScrollable} // Enable/disable scrolling based on state
+        scrollEnabled={isScrollable} 
         >
-          {/* <LinearGradient
-      colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradientCard}
-           > */}
 
-          <View style={styles.cardContainer}>
+        <View style={styles.productContainer}>
+            {products.map((product) => (
+              <TouchableOpacity
+                key={product.productId}
+                onPress={() => navigation.navigate('ProductDescription', {product})}
+              >
+                <Card
+                  imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}`}
+                  title={product.title}
+                  price={product.price}
+                  width={200}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
 
-          
 
-          <Card  
-            imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-            title={'Trophy'}
-            price={1500}
-            width={200}/>
-          
-          <Card  
-            imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-            title={'Trophy'}
-            price={1500}
-            width={200}/>
-          
-          <Card  
-            imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-            title={'Trophy'}
-            price={1500}
-            width={200}/>
-
-        
-        
-        </View>
-        {/* </LinearGradient> */}
         </ScrollView>
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -222,7 +204,16 @@ const HomeScreen = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
-  // Define your styles here, e.g.,
+  categoryContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 30,
+  },
+  productContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
   container: {
     // ...
   },
@@ -245,7 +236,6 @@ const styles = StyleSheet.create({
 
   },
   
-  // ... other styles
 });
 
 export default HomeScreen;
