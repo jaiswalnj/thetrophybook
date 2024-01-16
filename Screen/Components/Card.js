@@ -1,11 +1,13 @@
 import React,{useState} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Font from 'expo-font'; 
 import {LinearGradient} from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 
-const Card = ({ imageUrl, title, price, width}) => {
+const Card = ({ imageUrl, title, price, productId, userId, width}) => {
+    const navigation = useNavigation();
     const [like, setLike] = useState('heart-outline')
     onLikePress =() =>{
         if(like === 'heart-outline'){
@@ -17,19 +19,39 @@ const Card = ({ imageUrl, title, price, width}) => {
     
     const BUTTON_SHRINK_FACTOR = .2;
 
-    onAddPress= () =>{
+    const handleAddToCart = async () => {
+      try {
+        const data = await fetch(`http://192.168.1.2:8005/addToCart/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+          })
+        }).then((response) => response.json())
+        .then((responseJson) => {
+        if (responseJson.message === 'Item added to the cart') {
+          Alert.alert('Success', 'Item added to the cart successfully');
+        } else {
+          Alert.alert('Error', data.message || 'Failed to add item to the cart');
+        }
+      })
+      } catch (error) {
+        console.error('Error adding item to the cart:', error.message);
+        Alert.alert('Error', 'Something went wrong. Please try again.');
+      }
+    };
 
-    }
     return (
         <View style={styles.Container}>
         <View style={styles.card}>
-        
         <LinearGradient
       colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
       start={{ x: 0.455, y: 0 }}
       end={{ x:1, y: 1 }}
       style={styles.gradientCard}>
-          <Image source={{ uri: imageUrl }} style={styles.image} />
+          <Image source={{ uri: imageUrl }} style={styles.image}/>
     
           <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
             <Icon name={like} size={21} color="black" />
@@ -39,7 +61,7 @@ const Card = ({ imageUrl, title, price, width}) => {
         </LinearGradient>
         </View>
 
-        <TouchableOpacity style={styles.addButton } activeScale={onAddPress ? BUTTON_SHRINK_FACTOR : 2 } onPress={onAddPress} activeOpacity={0.88}>
+        <TouchableOpacity style={styles.addButton } activeScale={handleAddToCart ? BUTTON_SHRINK_FACTOR : 2 } onPress={handleAddToCart} activeOpacity={0.88}>
             <Icon name="add-outline" size={29} color="black" style={{ position: 'center', top:1, left: 2}} />
             
           </TouchableOpacity>
@@ -87,7 +109,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 25,
-    fontFamily: 'ArialRoundedMT',
+    // fontFamily: 'ArialRoundedMT',
     fontWeight: 'regular',
     letterSpacing: 0.2,
     color: 'black',
