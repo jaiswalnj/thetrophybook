@@ -1,12 +1,12 @@
 import React,{useState} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Font from 'expo-font'; 
 import {LinearGradient} from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 
-const Card = ({ imageUrl, title, price, width}) => {
+const Card = ({ imageUrl, title, price, productId, userId, width}) => {
     const navigation = useNavigation();
     const [like, setLike] = useState('heart-outline')
     onLikePress =() =>{
@@ -19,9 +19,29 @@ const Card = ({ imageUrl, title, price, width}) => {
     
     const BUTTON_SHRINK_FACTOR = .2;
 
-    onAddPress= () =>{
-
-    }
+    const handleAddToCart = async () => {
+      try {
+        const data = await fetch(`http://192.168.1.2:8005/addToCart/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+          })
+        }).then((response) => response.json())
+        .then((responseJson) => {
+        if (responseJson.message === 'Item added to the cart') {
+          Alert.alert('Success', 'Item added to the cart successfully');
+        } else {
+          Alert.alert('Error', data.message || 'Failed to add item to the cart');
+        }
+      })
+      } catch (error) {
+        console.error('Error adding item to the cart:', error.message);
+        Alert.alert('Error', 'Something went wrong. Please try again.');
+      }
+    };
 
     return (
         <View style={styles.Container}>
@@ -41,7 +61,7 @@ const Card = ({ imageUrl, title, price, width}) => {
         </LinearGradient>
         </View>
 
-        <TouchableOpacity style={styles.addButton } activeScale={onAddPress ? BUTTON_SHRINK_FACTOR : 2 } onPress={onAddPress} activeOpacity={0.88}>
+        <TouchableOpacity style={styles.addButton } activeScale={handleAddToCart ? BUTTON_SHRINK_FACTOR : 2 } onPress={handleAddToCart} activeOpacity={0.88}>
             <Icon name="add-outline" size={29} color="black" style={{ position: 'center', top:1, left: 2}} />
             
           </TouchableOpacity>

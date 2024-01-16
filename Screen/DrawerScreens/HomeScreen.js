@@ -12,8 +12,10 @@ const HomeScreen = ({ navigation }) => {
   const [userName, setUserName] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState('Momentoes');
+  const [category, setCategory] = useState('Trophies');
   const [loading, setLoading] = useState(false);
+  const [trophySections, setTrophySections] = useState([]);
+
 
 
   const handlePress = (index, category) => {
@@ -25,8 +27,7 @@ const HomeScreen = ({ navigation }) => {
   const [isScrollable, setIsScrollable] = useState(false);
   const toggleScroll = () => {setIsScrollable(!isScrollable);};
 
-
-  useEffect(() => {
+  useEffect(()=>{
     const fetchUserData = async () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
@@ -37,15 +38,20 @@ const HomeScreen = ({ navigation }) => {
         console.error('Error fetching user Id:', error);
       }
     };
+    fetchUserData();
+  },[userId]);
+
+
+  useEffect(() => {
     const fetchProducts = async (category) => {
       try {
-        console.log(category);
+        setLoading(true);
         const response = await fetch(`http://192.168.1.2:8005/getProducts?category=${category}`);
         const data = await response.json();
+        console.log(data);
 
         if (response.ok) {
-          setProducts(data.data);
-          console.log(products);
+          setProducts(data);
           setLoading(false);
         } else {
           console.error(data.message);
@@ -54,25 +60,36 @@ const HomeScreen = ({ navigation }) => {
         console.error('Error fetching product:', error);
       }
     };
-
-    fetchUserData();
     fetchProducts(category);
   }, [category]);
+
+  useEffect(() => {
+    const organizeTrophiesIntoSections = () => {
+      const MAX_PROPERTIES = 1000;
+
+  const sections = {};
+  products.forEach((product) => {
+    const trophyType = product.trophyType;
+    if (!sections[trophyType]) {
+      sections[trophyType] = [];
+    }
+    sections[trophyType].push(product);
+  });
+
+  const limitedSections = Object.entries(sections)
+    .slice(0, MAX_PROPERTIES)
+    .map(([trophyType, trophies]) => ({ trophyType, trophies }));
+  setTrophySections(limitedSections);
+    };
+    organizeTrophiesIntoSections();
+  }, [products]);
 
 
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, marginBottom:30}}>
       <Loader loading={loading} />
       <View style={{flex: 1, padding: 16, backgroundColor: '#FAFAFA'}}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-start',
-          }}></View>
-          
-
-
         <View style={{paddingTop:10 ,flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text
             style={{
@@ -121,81 +138,33 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
           </View>
 
-      <ScrollView
-      vertical
-      showsVerticalScrollIndicator={false}>
+          <ScrollView vertical showsVerticalScrollIndicator={false}>
 
-
-        <View style={styles.container}>
-          <View style={styles.header} >
-            <Text style={styles.titleText}>All Trophies {userName}</Text>
-            <TouchableOpacity onPress={toggleScroll} style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.moreText}>MORE{userName}</Text>
-              <Icon name="chevron-forward-outline" size={14} color="#FFCD1C" />
-            </TouchableOpacity>
-        </View>
-
-        <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        scrollEnabled={isScrollable} 
-        >
-
-        <View style={styles.productContainer}>
-            {products.map((product) => (
-              <TouchableOpacity
-                key={product.productId}
-                onPress={() => navigation.navigate('ProductDescription', {product})}
-              >
-                <Card
-                  imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}`}
-                  title={product.title}
-                  price={product.price}
-                  width={200}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-
-
+          {trophySections.map((section) => (
+            <View key={section.trophyType}>
+              <Text style={{ fontSize: 22, textAlign: 'left' }}>{section.trophyType}</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {section.trophies.map((product) => (
+                  <TouchableOpacity
+                    key={product.productId}
+                    onPress={() => navigation.navigate('ProductDescription', { product })}
+                  >
+                    <Card
+                      imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(
+                        product.image.image.data.data
+                      )}`}
+                      title={product.title}
+                      price={product.price}
+                      productId={product._id}
+                      userId={userId}
+                      width={200}
+                    />
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+              </View>
+          ))}
         </ScrollView>
-
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text
-            style={{
-              fontSize: 22,
-              textAlign: 'left',
-              
-            }}> Metal Trophies {userName}
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              textAlign: 'justify',
-              color: "#FFCD1C",
-              marginTop: 4,
-            }}> MORE{userName}
-            <Icon name="chevron-forward-outline" size={14} color='#FFCD1C' />
-          </Text>
-          
-        </View>
-          <Card 
-            imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-            title={'Trophy'}
-            price={1500}
-            width={200}/>
-          <Card 
-            imageUrl={'https://as2.ftcdn.net/v2/jpg/05/73/13/55/1000_F_573135545_QpPCuCRScNyy70u1m9P0DQmAl5w6Hhrf.webp'}
-            title={'Trophy'}
-            price={1500}
-            width={200}/>
-
-      
-          
-
-        </View>
-        </ScrollView>
-        
       </View>
       
     </SafeAreaView>
