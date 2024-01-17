@@ -47,9 +47,8 @@ const HomeScreen = ({ navigation }) => {
       try {
         setLoading(true);
         setProducts([])
-        const response = await fetch(`http://192.168.1.2:8005/getProducts?category=${category}`);
+        const response = await fetch(`http://192.168.1.3:8005/getProducts?category=${category}`);
         const data = await response.json();
-        console.log(data);
 
         if (response.ok) {
           const productsMap = new Map();
@@ -57,6 +56,7 @@ const HomeScreen = ({ navigation }) => {
             productsMap.set(product.productId, product);
           });
           setProducts(productsMap);
+          console.log(products);
           setLoading(false);
         } else {
           console.error(data.message);
@@ -70,8 +70,6 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const organizeTrophiesIntoSections = () => {
-      const MAX_PROPERTIES = 1000;
-
       const sections = {};
       products.forEach((product) => {
         const trophyType = product.trophyType;
@@ -81,11 +79,13 @@ const HomeScreen = ({ navigation }) => {
         sections[trophyType].push(product);
       });
 
-      const limitedSections = Object.entries(sections)
-        .slice(0, MAX_PROPERTIES)
-        .map(([trophyType, trophies]) => ({ trophyType, trophies }));
-      setTrophySections(limitedSections);
-        };
+      const sectionsArray = Object.entries(sections).map(([trophyType, trophies]) => ({
+        trophyType,
+        trophies,
+      }));
+
+      setTrophySections(sectionsArray);
+    };
         organizeTrophiesIntoSections();
   }, [products]);
 

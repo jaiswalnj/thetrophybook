@@ -24,8 +24,7 @@ const Cart = () => {
   useFocusEffect(React.useCallback(() => {
     const fetchUserData = async () => {
       try {
-        console.log(userId);
-        const data = await fetch(`http://192.168.1.2:8005/user/${userId}`)
+        const data = await fetch(`http://192.168.1.3:8005/user/${userId}`)
           .then((response)=> response.json())
           .then((responseJson)=>{
             if (responseJson) {
@@ -42,12 +41,12 @@ const Cart = () => {
     };
 
     fetchUserData();
-  }, [])
+  }, [userId])
   );
 
   return (
     <View>
-
+      <ScrollView style={{height:'70%'}}>
       <FlatList
         data={cartItems}
         keyExtractor={(item) => item._id}
@@ -63,8 +62,10 @@ const Cart = () => {
           />
         )}
       />
+      </ScrollView>
     </View>
   );
 };
+
 
 export default Cart

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import base64 from 'base64-js';
 import {LinearGradient} from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({ cartItem, onCustomize, onRemove }) => {
   const [quantity, setQuantity] = useState();
@@ -33,9 +34,12 @@ const CartItem = ({ cartItem, onCustomize, onRemove }) => {
       <Image source={{ uri: `data:${cartItem.trophy.image.image.contentType};base64,${base64.fromByteArray(cartItem.trophy.image.image.data.data)}` }}  style={styles.image}/>
       </LinearGradient>
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{cartItem.trophy.trophyName}</Text>
         { isEditing ? (
-            <View>
+            <View style={{padding:20}}>
+                <View style={{}}>
+                <Text style={{fontSize:12}}>{cartItem.trophy.trophyName}</Text>
+                </View>
+                <View>
               <TextInput
                 style={styles.input}
                 placeholder="Customization 1"
@@ -55,19 +59,28 @@ const CartItem = ({ cartItem, onCustomize, onRemove }) => {
                 onChangeText={(text) => setCustomization3(text)}
               />
               <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                <Text>Save</Text>
+                <Text style={{fontSize:14}}>Save</Text>
               </TouchableOpacity>
+              </View>
             </View>
           ) : (
+            <View style={{flexDirection: 'row'}}>
+            <View style={{padding:20}}>
+            <Text style={styles.title}>{cartItem.trophy.price}</Text>
+            <Text style={styles.title}>{cartItem.trophy.trophyName}</Text>
+            </View>
             <View style={styles.quantityContainer}>
-              <Text>Quantity: {cartItem.qty}</Text>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <TouchableOpacity onPress={() => handleCustomize()}>
-                <Text>Customize</Text>
+              <Icon name='create-outline' size={20} color='black'/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onRemove(cartItem.id)}>
-                <Text>Remove</Text>
+              <Icon name='trash-bin-outline' size={20} color='black'/>
               </TouchableOpacity>
+              </View>
+              <Text>Quantity: {cartItem.qty}</Text>
             </View>
+         </View>
           )
         }
       </View>
@@ -78,10 +91,11 @@ const CartItem = ({ cartItem, onCustomize, onRemove }) => {
 const styles = StyleSheet.create({
   cartItemContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    marginHorizontal: 25,
+    paddingHorizontal: 10,
+    paddingVertical:5,
   },
   image: {
     width: '100%',
@@ -89,8 +103,8 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
   },
   card: {
-    width: 80,
-    height: 100,
+    width: 70,
+    height: 80,
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 8,
@@ -99,7 +113,7 @@ const styles = StyleSheet.create({
     alignSelf: ''
   },
   detailsContainer: {
-    flex: 1,
+    flexDirection: 'row'
   },
   title: {
     fontSize: 16,
@@ -107,7 +121,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   input: {
-    height: 40,
+    height: 30,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
@@ -115,16 +129,17 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: '#FFCD1C',
-    padding: 10,
+    height:30,
+    width:70,
+    padding: 5,
     alignItems: 'center',
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 5,
   },
   quantityContainer: {
-    flexDirection: 'row',
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 10,
+    justifyContent: 'space-around',
   },
 });
 

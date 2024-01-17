@@ -21,7 +21,7 @@ const Card = ({ imageUrl, title, price, productId, userId, width}) => {
 
     const handleAddToCart = async () => {
       try {
-        const data = await fetch(`http://192.168.1.2:8005/addToCart/${productId}`, {
+        const data = await fetch(`http://192.168.1.3:8005/addToCart/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

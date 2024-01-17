@@ -36,7 +36,9 @@ const ProductScreen = ({ route}) => {
       </TouchableOpacity>
       {product ? (
         <>
+        <View style={{width: '100%',height:300, alignItems: 'center'}}>
           <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64String}` }} style={styles.productImage} />
+          </View>
           <View style={styles.productInfo}>
             <Text style={styles.productTitle}>{product.trophyName}</Text>
             <Text style={styles.productPrice}>${product.price}</Text>
@@ -59,8 +61,7 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '100%',
-    height: 300,
-    resizeMode: 'cover',
+    height: '100%',
   },
   productInfo: {
     padding: 16,
