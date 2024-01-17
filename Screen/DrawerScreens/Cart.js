@@ -1,69 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Button,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import { View, FlatList, ScrollView} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CartItems from '../Components/CartItems';
-import Icon from 'react-native-vector-icons/Ionicons';
+import CartItem from '../Components/CartItem';
 
-const Cart = ({ navigation }) => {
+const Cart = () => {
   const [userId, setUserId] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [user, setUser] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
-  // ... other code (fetchUserData, toggleScroll, etc.)
+  useEffect(()=>{
+    const fetchUserId = async () => {
+      try {
+        const storedUserId = await AsyncStorage.getItem('user_id');
+        setUserId(storedUserId || '');
+      } catch (error) {
+        console.error('Error fetching user Id:', error);
+      }
+    };
+    fetchUserId();
+  },[userId]);
+
+  useFocusEffect(React.useCallback(() => {
+    const fetchUserData = async () => {
+      try {
+        console.log(userId);
+        const data = await fetch(`http://192.168.1.2:8005/user/${userId}`)
+          .then((response)=> response.json())
+          .then((responseJson)=>{
+            if (responseJson) {
+              setUser(responseJson.data);
+              setCartItems(responseJson.data.cart);
+              console.log(cartItems);
+            } else {
+              console.error(responseJson.message);
+            }
+          })
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [])
+  );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.headerBar}>
-        
-        <Button
-          
-          onPress={() => navigation.goBack()}
-          title="Back"
-          icon={<Icon name="chevron-left" size={25} color="black" />}
-        />
-        <Text style={styles.headerTitle}>Cart</Text>
-      </View>
-      <ScrollView contentContainerStyle={styles.cartContent}>
-        {/* Render your cart items here */}
-        <CartItems
-          imageUrl="..."
-          title="Product 1"
-          price="12.99"
-          width={220}
-        />
-        {/* Add more CartItems as needed */}
-      </ScrollView>
-    </SafeAreaView>
+    <View>
+
+      <FlatList
+        data={cartItems}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <CartItem
+            cartItem={item}
+            onCustomize={() => {
+              console.log('Customize pressed for item:', item);
+            }}
+            onRemove={() => {
+              console.log('Remove pressed for item:', item);
+            }}
+          />
+        )}
+      />
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  headerBar: {
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    paddingHorizontal: 10,
-    alignItems: 'center',
-    textAlign: 'center',
-    justifyContent: 'space-between',
-    height: 80, // Adjust height as needed
-    paddingTop: 15, // Adjust padding as needed
-  },
-  headerTitle: {
-    fontSize: 18,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  cartContent: {
-    padding: 10,
-  },
-});
-
-export default Cart;
+export default Cart

@@ -10,7 +10,6 @@ import HomeScreen from './DrawerScreens/HomeScreen';
 import Cart from './DrawerScreens/Cart';
 import Favourite from './DrawerScreens/Favourite';
 import More from './DrawerScreens/More';
-import CategoryList from './Components/CategoryList';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,6 +64,7 @@ const DraweerNavigatorRoutes = () => {
           component={Cart}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Cart" {...props} />,
+            headerShown: true,
           }}
         />
         <Tab.Screen

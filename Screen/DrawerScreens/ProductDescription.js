@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
@@ -31,9 +31,9 @@ const ProductScreen = ({ route}) => {
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.back} onPress={() => navigation.replace('DrawerNavigatorRoutes')}>
+      <TouchableOpacity style={styles.back} onPress={() => navigation.replace('DrawerNavigatorRoutes')}>
         <Icon name="arrow-back-sharp" size={30} color='black' />
-      </Pressable>
+      </TouchableOpacity>
       {product ? (
         <>
           <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64String}` }} style={styles.productImage} />
