@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
+import Loader from '../Components/Loader';
 
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
@@ -48,7 +49,7 @@ const ProductScreen = ({ route}) => {
           </View>
         </>
       ) : (
-        <Text>Loading...</Text>
+        <Loader/>
       )}
     </View>
   );
@@ -60,8 +61,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   productImage: {
-    width: '100%',
-    height: '100%',
+    width: '200%',
+    height: 250,
+    marginVertical: 50,
+    marginHorizontal: -90,
+    resizeMode: 'center',
+    zIndex:1,
   },
   productInfo: {
     padding: 16,

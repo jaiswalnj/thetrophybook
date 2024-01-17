@@ -6,7 +6,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 
-const Card = ({ imageUrl, title, price, productId, userId}) => {
+const Liked = ({ imageUrl, title, price, productId, userId}) => {
     const navigation = useNavigation();
     const [like, setLike] = useState('heart-outline')
 
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
 
   card: {
     backgroundColor: '#64ECC7',
-    width: 180,
+    width: 160,
     height: 250,
     paddingTop: 10,
     paddingBottom: 10,
@@ -155,11 +155,11 @@ const styles = StyleSheet.create({
     shadowRadius:5,
     height: 30,
     width: 30,
-    bottom: 70,
-    right: 25,
+    bottom: 75,
+    right: 50,
     elevation: 4,
     zIndex: 1,
   },
 });
 
-export default Card;
+export default Liked;

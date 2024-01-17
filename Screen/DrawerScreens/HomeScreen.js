@@ -51,11 +51,7 @@ const HomeScreen = ({ navigation }) => {
         const data = await response.json();
 
         if (response.ok) {
-          const productsMap = new Map();
-          data.forEach((product) => {
-            productsMap.set(product.productId, product);
-          });
-          setProducts(productsMap);
+          setProducts([...data]);
           console.log(products);
           setLoading(false);
         } else {
@@ -123,9 +119,9 @@ const HomeScreen = ({ navigation }) => {
               active={activeIndex === 1}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handlePress(2, 'Momentoes')} key={2}>
+          <TouchableOpacity onPress={() => handlePress(2, 'Momentos')} key={2}>
           <CategoryCard
-              title={'Momentoes'}
+              title={'Momentos'}
               active={activeIndex === 2}
             />
           </TouchableOpacity>
@@ -147,7 +143,13 @@ const HomeScreen = ({ navigation }) => {
 
           {trophySections.map((section) => (
             <View key={section.trophyType}>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <Text style={{ fontSize: 22, textAlign: 'left' }}>{section.trophyType}</Text>
+              <TouchableOpacity style={{flexDirection:'row', alignItems: 'center'}}>
+                <Text style={{fontSize:20, textAlign: 'right', color:'#FFCD1C'}}>More</Text>
+                <Icon name='chevron-forward-outline' size={22} color='#FFCD1C'  />
+              </TouchableOpacity>
+              </View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {section.trophies.map((product) => (
                   <TouchableOpacity
@@ -155,14 +157,11 @@ const HomeScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('ProductDescription', { product })}
                   >
                     <Card
-                      imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(
-                        product.image.image.data.data
-                      )}`}
+                      imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}`}
                       title={product.title}
                       price={product.price}
                       productId={product._id}
                       userId={userId}
-                      width={200}
                     />
                   </TouchableOpacity>
                 ))}
