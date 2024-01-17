@@ -46,12 +46,17 @@ const HomeScreen = ({ navigation }) => {
     const fetchProducts = async (category) => {
       try {
         setLoading(true);
+        setProducts([])
         const response = await fetch(`http://192.168.1.2:8005/getProducts?category=${category}`);
         const data = await response.json();
         console.log(data);
 
         if (response.ok) {
-          setProducts(data);
+          const productsMap = new Map();
+          data.forEach((product) => {
+            productsMap.set(product.productId, product);
+          });
+          setProducts(productsMap);
           setLoading(false);
         } else {
           console.error(data.message);
@@ -67,21 +72,21 @@ const HomeScreen = ({ navigation }) => {
     const organizeTrophiesIntoSections = () => {
       const MAX_PROPERTIES = 1000;
 
-  const sections = {};
-  products.forEach((product) => {
-    const trophyType = product.trophyType;
-    if (!sections[trophyType]) {
-      sections[trophyType] = [];
-    }
-    sections[trophyType].push(product);
-  });
+      const sections = {};
+      products.forEach((product) => {
+        const trophyType = product.trophyType;
+        if (!sections[trophyType]) {
+          sections[trophyType] = [];
+        }
+        sections[trophyType].push(product);
+      });
 
-  const limitedSections = Object.entries(sections)
-    .slice(0, MAX_PROPERTIES)
-    .map(([trophyType, trophies]) => ({ trophyType, trophies }));
-  setTrophySections(limitedSections);
-    };
-    organizeTrophiesIntoSections();
+      const limitedSections = Object.entries(sections)
+        .slice(0, MAX_PROPERTIES)
+        .map(([trophyType, trophies]) => ({ trophyType, trophies }));
+      setTrophySections(limitedSections);
+        };
+        organizeTrophiesIntoSections();
   }, [products]);
 
 
