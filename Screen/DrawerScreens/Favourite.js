@@ -16,7 +16,7 @@ const Favourite = () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
         setUserId(storedUserId || '');
-        const response = await fetch(`http://192.168.1.9:8005/user/${userId}`);
+        const response = await fetch(`http://192.168.1.2:8005/user/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -46,18 +46,19 @@ const Favourite = () => {
             }}> Favourite
           </Text>
         </View>
-      <FlatList
-        data={likedItems}
-        keyExtractor={(item) => item.itemId}
-        renderItem={({ item }) => (
-          <Liked
-            imageUrl={`data:${item.image.image.contentType};base64,${base64.fromByteArray(item.image.image.data.data)}`}
-            title={item.trophyName}
-            price={item.price}
-            liked={true}
-          />
-        )}
-      />
+        <FlatList
+          data={likedItems}
+          keyExtractor={(item) => item.itemId}
+          numColumns={2}
+          renderItem={({ item }) => (
+            <Liked
+              imageUrl={`data:${item.image.image.contentType};base64,${base64.fromByteArray(item.image.image.data.data)}`}
+              title={item.trophyName}
+              price={item.price}
+              liked={true}
+            />
+          )}
+        />
     </View>
   );
 };

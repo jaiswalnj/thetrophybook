@@ -4,8 +4,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
-import Card from '../Components/Card';
-
 
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
@@ -70,6 +68,11 @@ const ProductScreen = ({ route}) => {
         <>
         <View style={{width: '100%',height:300, alignItems: 'center'}}>
           <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}` }} style={styles.productImage} />
+          <LinearGradient
+          colors={['#FB7D7D', '#FF5150']}
+          start={{ x: 0.04, y: 0.96 }}
+          end={{ x: 0.82, y: 0.18 }}
+          style={styles.cardOverlay} ></LinearGradient>
           </View>
           <View style={styles.productInfo}>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -277,6 +280,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#007AFF',
     textDecorationLine: 'underline',
+  },
+  cardOverlay: {
+    height: 400,
+    width:500,
+    borderRadius: 50,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16, 
+    left:110,
+    bottom: 15,
+    zIndex: -1,
   },
 });
 

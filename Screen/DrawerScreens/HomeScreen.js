@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
       try {
         setLoading(true);
         setProducts([])
-        const response = await fetch(`http://192.168.29.25:8005/getProducts?category=${category}`);
+        const response = await fetch(`http://192.168.1.2:8005/getProducts?category=${category}`);
         const data = await response.json();
 
         if (response.ok) {

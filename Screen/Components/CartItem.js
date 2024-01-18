@@ -5,11 +5,16 @@ import {LinearGradient} from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({ cartItem, onRemove }) => {
-  const [quantity, setQuantity] = useState();
+  const [quantity, setQuantity] = useState(cartItem.qty);
   const [customization1, setCustomization1] = useState();
   const [customization2, setCustomization2] = useState();
   const [customization3, setCustomization3] = useState();
   const [isEditing, setIsEditing] = useState(false);
+
+
+  const handlePlusPress = () => {setQuantity(quantity + 1);};
+  const handleMinusPress = () => {if (quantity > 0) {setQuantity(quantity - 1);}};
+
 
   const handleSave = () => {
     setIsEditing(false);
@@ -40,8 +45,21 @@ const CartItem = ({ cartItem, onRemove }) => {
                 <Text style={{fontSize:12}}>{cartItem.trophy.trophyName}</Text>
                 </View>
                 <View>
-              <TextInput
-                style={styles.input}
+                <View style={styles.quantityContainer}>
+                    <TouchableOpacity onPress={handleMinusPress}>
+                      <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1}}>
+                        <Text style={{ color: 'white', fontSize: 40, textAlign: 'justify' }}>-</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <Text style={{ color: 'black', fontSize: 20 }}>{quantity}</Text>
+                    <TouchableOpacity onPress={handlePlusPress}>
+                      <View style={{backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1,}}>
+                        <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
+                      </View>
+                    </TouchableOpacity>
+                    </View>
+              <TextInput 
+              style={styles.input}
                 placeholder="Customization 1"
                 value={customization1}
                 onChangeText={(text) => setCustomization1(text)}
@@ -96,6 +114,18 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     paddingHorizontal: 10,
     paddingVertical:5,
+  },
+  quantityContainer:{
+    flex:1,
+    backgroundColor: '#FF9F1C',
+    borderRadius: 16,
+    padding:20,
+    width:100,
+    padding: 10,
+    flexDirection: 'row',
+    alignContent: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   image: {
     width: '100%',

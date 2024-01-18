@@ -13,7 +13,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
 
     const onLikePress = async () => {
       try {
-        const response = await fetch(`http://192.168.1.3:8005/addToLikedItems/${productId}`, {
+        const response = await fetch(`http://192.168.1.2:8005/addToLikedItems/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

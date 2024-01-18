@@ -24,7 +24,7 @@ const Cart = () => {
   useFocusEffect(React.useCallback(() => {
     const fetchUserData = async () => {
       try {
-        const data = await fetch(`http://192.168.29.25:8005/user/${userId}`)
+        const data = await fetch(`http://192.168.1.9:8005/user/${userId}`)
           .then((response)=> response.json())
           .then((responseJson)=>{
             if (responseJson) {
