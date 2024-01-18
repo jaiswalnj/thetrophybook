@@ -13,7 +13,7 @@ const Cart = () => {
     const fetchUserId = async () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
-        setUserId(storedUserId || '');
+        setUserId(storedUserId || '6598525fea5dc95f82511a33');
       } catch (error) {
         console.error('Error fetching user Id:', error);
       }
@@ -24,7 +24,7 @@ const Cart = () => {
   useFocusEffect(React.useCallback(() => {
     const fetchUserData = async () => {
       try {
-        const data = await fetch(`http://192.168.1.2:8005/user/${userId}`)
+        const data = await fetch(`http://192.168.1.9:8005/user/${userId}`)
           .then((response)=> response.json())
           .then((responseJson)=>{
             if (responseJson) {

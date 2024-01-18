@@ -42,7 +42,7 @@ const Liked = ({ imageUrl, title, price, productId, userId}) => {
 
     const handleAddToCart = async () => {
       try {
-        const data = await fetch(`http://192.168.1.3:8005/addToCart/${productId}`, {
+        const data = await fetch(`http://192.168.29.25:8005/addToCart/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

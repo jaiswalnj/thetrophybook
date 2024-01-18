@@ -16,7 +16,7 @@ const Favourite = () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
         setUserId(storedUserId || '');
-        const response = await fetch(`http://192.168.1.2:8005/user/${userId}`);
+        const response = await fetch(`http://192.168.1.9:8005/user/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
