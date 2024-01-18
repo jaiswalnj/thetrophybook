@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, ScrollView} from 'react-native';
+import { View, FlatList, ScrollView,Text} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CartItem from '../Components/CartItem';
@@ -24,7 +24,7 @@ const Cart = () => {
   useFocusEffect(React.useCallback(() => {
     const fetchUserData = async () => {
       try {
-        const data = await fetch(`http://192.168.1.3:8005/user/${userId}`)
+        const data = await fetch(`http://192.168.1.9:8005/user/${userId}`)
           .then((response)=> response.json())
           .then((responseJson)=>{
             if (responseJson) {
@@ -45,8 +45,18 @@ const Cart = () => {
   );
 
   return (
-    <View>
-      <ScrollView style={{height:'70%'}}>
+    <View style={{ backgroundColor: '#FAFAFA'}}>
+      <View style={{paddingTop:10, alignItems: 'center', backgroundColor: 'white'}}>
+          <Text
+            style={{
+              fontSize: 30,
+              textAlign: 'center',
+              marginTop: 30,
+              marginBottom: 10,
+            }}> Cart
+          </Text>
+        </View>
+      <ScrollView style={{height:'60%'}}>
       <FlatList
         data={cartItems}
         keyExtractor={(item) => item._id}

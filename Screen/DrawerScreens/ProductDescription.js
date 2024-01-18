@@ -8,7 +8,6 @@ import Loader from '../Components/Loader';
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
   const { product } = route.params;
-  const base64String = base64.fromByteArray(product.image.image.data.data);
 
   // useEffect(() => {
   //   const fetchProduct = async () => {
@@ -38,7 +37,7 @@ const ProductScreen = ({ route}) => {
       {product ? (
         <>
         <View style={{width: '100%',height:300, alignItems: 'center'}}>
-          <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64String}` }} style={styles.productImage} />
+          <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}` }} style={styles.productImage} />
           </View>
           <View style={styles.productInfo}>
             <Text style={styles.productTitle}>{product.trophyName}</Text>

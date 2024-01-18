@@ -16,7 +16,7 @@ const Favourite = () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
         setUserId(storedUserId || '');
-        const response = await fetch(`http://192.168.1.3:8005/user/${userId}`);
+        const response = await fetch(`http://192.168.1.9:8005/user/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -35,7 +35,17 @@ const Favourite = () => {
   }, [userId])
   );
   return (
-    <View style={{ flex: 1, flexDirection:'row', padding: 8, backgroundColor: '#FAFAFA', marginBottom:30}}>
+    <View style={{backgroundColor: '#FAFAFA', marginBottom:30}}>
+      <View style={{paddingTop:10, alignItems: 'center', backgroundColor: 'white'}}>
+          <Text
+            style={{
+              fontSize: 30,
+              textAlign: 'center',
+              marginTop: 30,
+              marginBottom: 10,
+            }}> Favourite
+          </Text>
+        </View>
       <FlatList
         data={likedItems}
         keyExtractor={(item) => item.itemId}
