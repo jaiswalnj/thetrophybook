@@ -51,7 +51,7 @@ const ProductScreen = ({ route}) => {
       {product ? (
         <>
         <View style={{width: '100%',height:300, alignItems: 'center'}}>
-          <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64String}` }} style={styles.productImage} />
+          <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}` }} style={styles.productImage} />
           </View>
           <View style={styles.productInfo}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>

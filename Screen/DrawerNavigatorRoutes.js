@@ -52,11 +52,11 @@ const DraweerNavigatorRoutes = () => {
             tabBarButton: props => <CustomTabBarButton route="Home" {...props} />,
           }}
         />
-        <Tab.Screen
-          name="Category"
-          component={Category}
+         <Tab.Screen
+          name="Favourite"
+          component={Favourite}
           options={{
-            tabBarButton: props => <CustomTabBarButton route="Category" {...props} />,
+            tabBarButton: props => <CustomTabBarButton route="Favourite" {...props} />,
           }}
         />
         <Tab.Screen
@@ -64,15 +64,6 @@ const DraweerNavigatorRoutes = () => {
           component={Cart}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Cart" {...props} />,
-            headerShown: true,
-          }}
-        />
-        <Tab.Screen
-          name="Favourite"
-          component={Favourite}
-          options={{
-            tabBarButton: props => <CustomTabBarButton route="Favourite" {...props} />,
-            headerShown: true,
           }}
         />
         <Tab.Screen

@@ -1,12 +1,15 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const CategoryCard = ({ imageUrl, title, active }) => {
+const CategoryCard = ({title, active }) => {
+  const [image, setImage] = useState();
+   useEffect
+  
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center', marginHorizontal:10}}>
     <View style={[styles.circle, active && styles.activecircle]}>
       <View style={[styles.container, active && styles.activeContainer]}>
-        <Image source={{ uri: imageUrl }} style={styles.image} />
+      <Image source={require('../../Image/Category/trophies.png')} style={styles.image} />
       </View>
       <Text style={styles.title}>{title}</Text>
     </View>

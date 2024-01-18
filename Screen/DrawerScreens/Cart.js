@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, ScrollView} from 'react-native';
+import { View, FlatList, ScrollView,Text} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CartItem from '../Components/CartItem';
@@ -45,8 +45,18 @@ const Cart = () => {
   );
 
   return (
-    <View>
-      <ScrollView style={{height:'70%'}}>
+    <View style={{ backgroundColor: '#FAFAFA'}}>
+      <View style={{paddingTop:10, alignItems: 'center', backgroundColor: 'white'}}>
+          <Text
+            style={{
+              fontSize: 30,
+              textAlign: 'center',
+              marginTop: 30,
+              marginBottom: 10,
+            }}> Cart
+          </Text>
+        </View>
+      <ScrollView style={{height:'60%'}}>
       <FlatList
         data={cartItems}
         keyExtractor={(item) => item._id}

@@ -10,12 +10,20 @@ import Loader from '../Components/Loader';
 const HomeScreen = ({ navigation }) => {
   const [userId, setUserId] = useState('');
   const [userName, setUserName] = useState('');
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(2);
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState('Trophies');
   const [loading, setLoading] = useState(false);
   const [trophySections, setTrophySections] = useState([]);
 
+  const categories = [
+    { title: 'Medals'},
+    { title: 'Momentos'},
+    { title: 'Trophies'},
+    { title: 'Badges'},
+    { title: 'Cups'},
+    { title: 'More'},
+  ];
 
 
   const handlePress = (index, category) => {
@@ -105,53 +113,32 @@ const HomeScreen = ({ navigation }) => {
           <Icon name='person-circle-outline' size={60} color='black' marginTop ={40} marginBottom ={20} />
         </View>
 
-
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={styles.categoryContainer}>
-          <TouchableOpacity onPress={() => handlePress(0, 'Trophies')} key={0}>
-          <CategoryCard
-              title={'Trophies'}
-              active={activeIndex === 0}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handlePress(1, 'Medals')} key={1}>
-          <CategoryCard
-              title={'Medals'}
-              active={activeIndex === 1}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handlePress(2, 'Momentos')} key={2}>
-          <CategoryCard
-              title={'Momentos'}
-              active={activeIndex === 2}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handlePress(3, 'Badges')} key={3}>
-          <CategoryCard
-              title={'Badges'}
-              active={activeIndex === 3}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handlePress(4, 'More')} key={4}>
-          <CategoryCard
-              title={'More'}
-              active={activeIndex === 4}
-            />
-          </TouchableOpacity>
+            {categories.map((category, index) => (
+            <TouchableOpacity onPress={() => handlePress(index, category.title)} key={index}>
+              <CategoryCard
+                  title={category.title}
+                  active={activeIndex === index}
+                />
+            </TouchableOpacity>
+          ))}
           </View>
+          </ScrollView>
 
           <ScrollView vertical showsVerticalScrollIndicator={false}>
 
           {trophySections.map((section) => (
             <View key={section.trophyType}>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-              <Text style={{ fontSize: 22, textAlign: 'left' }}>{section.trophyType}</Text>
+              <Text style={{ fontSize: 22, textAlign: 'left',}}>{section.trophyType}</Text>
               <TouchableOpacity style={{flexDirection:'row', alignItems: 'center'}}>
                 <Text style={{fontSize:20, textAlign: 'right', color:'#FFCD1C'}}>More</Text>
                 <Icon name='chevron-forward-outline' size={22} color='#FFCD1C'  />
               </TouchableOpacity>
               </View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {section.trophies.map((product) => (
+                {section.trophies.map((product, index) => (
                   <TouchableOpacity
                     key={product.productId}
                     onPress={() => navigation.navigate('ProductDescription', { product })}
@@ -162,6 +149,7 @@ const HomeScreen = ({ navigation }) => {
                       price={product.price}
                       productId={product._id}
                       userId={userId}
+                      useCustomColor={index % 2 === 0}
                     />
                   </TouchableOpacity>
                 ))}
@@ -179,7 +167,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   categoryContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginBottom: 30,
   },
   productContainer: {

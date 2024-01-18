@@ -35,7 +35,17 @@ const Favourite = () => {
   }, [userId])
   );
   return (
-    <View style={{ flex: 1, flexDirection:'row', padding: 8, backgroundColor: '#FAFAFA', marginBottom:30}}>
+    <View style={{backgroundColor: '#FAFAFA', marginBottom:30}}>
+      <View style={{paddingTop:10, alignItems: 'center', backgroundColor: 'white'}}>
+          <Text
+            style={{
+              fontSize: 30,
+              textAlign: 'center',
+              marginTop: 30,
+              marginBottom: 10,
+            }}> Favourite
+          </Text>
+        </View>
       <FlatList
         data={likedItems}
         keyExtractor={(item) => item.itemId}
