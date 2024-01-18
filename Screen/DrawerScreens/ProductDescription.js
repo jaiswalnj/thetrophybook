@@ -6,6 +6,7 @@ import base64 from 'base64-js';
 import Loader from '../Components/Loader';
 import Card from '../Components/Card';
 
+
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
   const { product } = route.params;
@@ -50,11 +51,17 @@ const ProductScreen = ({ route}) => {
       
       <View style={{
         paddingTop: 44,
-        paddingBottom: 10,
+        // paddingBottom: 10,
         paddingLeft: 15,
+        elevation: 4,
+        zIndex: 4,
+        // position: 'relative',
+        position: 'absolute'
       }}>
         <TouchableOpacity onPress={() => navigation.replace('DrawerNavigatorRoutes')}>
         <Icon name="arrow-back-sharp" size={30} color='black' />
+        {/* <Icon name="add-outline" size={30} color='black' /> */}
+        
       </TouchableOpacity>
       </View>
 
@@ -65,7 +72,7 @@ const ProductScreen = ({ route}) => {
           <Image source={{ uri: `data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}` }} style={styles.productImage} />
           </View>
           <View style={styles.productInfo}>
-          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={styles.productTitle}>{product.trophyName}</Text>
                 <Text style={styles.productPrice}>${product.price}</Text>
               </View>
@@ -93,6 +100,10 @@ const ProductScreen = ({ route}) => {
                   paddingVertical: 8,
                   borderRadius: 5,
                   marginRight: 10,
+                  shadowColor: 'black',
+                  shadowOpacity: 0.9,
+                  shadowOffset: { width: 10, height: 10 },
+                  shadowRadius: 5,
                   
                   
                 }}
@@ -130,10 +141,14 @@ const ProductScreen = ({ route}) => {
       backgroundColor:'#FFFFFF',
       padding: 10,
       flexDirection: 'row',
-      marginTop: 200,
-      justifyContent: 'space-around',
-      width: 500,
+      marginTop: 490,
+      justifyContent: 'space-between',
+      width: 400,
       height: 80,
+      shadowColor: 'black',
+      shadowOpacity: 1.2,
+      shadowOffset: { width: 10, height: 10 },
+      shadowRadius: 5,
      }}>
       
       
@@ -150,10 +165,10 @@ const ProductScreen = ({ route}) => {
           padding: 10,
           flexDirection: 'row',
           // // marginTop: 10,
-          alignContent: 'flex-end',
+          alignContent: 'space-around',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          // width: 100,
+          justifyContent: 'space-evenly',
+          width: 110,
           // height: 10,
           
         }}
@@ -163,10 +178,11 @@ const ProductScreen = ({ route}) => {
             style={{
               backgroundColor: '#FF9F1C',
               borderRadius: 1,
-              padding: 1,
+              padding: 4,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 40, textAlign: 'justify' }}>-</Text>
+            {/* <Text style={{ color: 'white', fontSize: 40, textAlign: 'center' }}>-</Text> */}
+            <Icon name="remove-outline" size={25} color='white' />
           </View>
         </TouchableOpacity>
         <Text style={{ color: 'white', fontSize: 20 }}>{count}</Text>
@@ -175,10 +191,12 @@ const ProductScreen = ({ route}) => {
             style={{
               backgroundColor: '#FF9F1C',
               borderRadius: 1,
-              padding: 1,
+              padding: 4,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
+            {/* <Text style={{ color: 'white', fontSize: 30 }}>+</Text> */}
+            <Icon name="add-outline" size={25} color='white' />
+            
           </View>
         </TouchableOpacity>
       </View>
@@ -194,7 +212,7 @@ const ProductScreen = ({ route}) => {
           width:250,
         }}>
       
-          <Text style={{ color: 'white', fontSize: 20 }}> Add to Cart</Text>
+          <Text style={{ color: 'white', fontSize: 20, alignContent: 'center' }}> Add to Cart</Text>
         
                   </View>
                 </TouchableOpacity>
@@ -230,11 +248,13 @@ const styles = StyleSheet.create({
     fontSize: 45,
     fontWeight: 'bold',
     marginBottom: 8,
+    alignItems: 'flex-start'
   },
   productPrice: {
     fontSize: 38,
-    color: '#007bff',
+    color: '#FF9F1C',
     marginBottom: 8,
+    paddingLeft: 30,
   },
   productDescription: {
     fontSize: 16,
