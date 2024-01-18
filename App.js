@@ -12,6 +12,7 @@ import DrawerNavigatorRoutes from './Screen/DrawerNavigatorRoutes';
 import OTPVerificationScreen from './Screen/OTPVerificationScreen';
 import ForgotPassword from './Screen/ForgotPassword';
 import ProductDescription from './Screen/DrawerScreens/ProductDescription';
+import Orders from './Screen/DrawerScreens/Orders';
 
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
@@ -108,6 +109,11 @@ const App = () => {
         <Stack.Screen
           name="ProductDescription"
           component={ProductDescription}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Orders"
+          component={Orders}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
