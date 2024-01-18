@@ -69,7 +69,7 @@ const RegisterScreen = (props) => {
         }}>
         <View style={{alignItems: 'center'}}>
           <Image
-            source={require('../Image/Logo.png')}
+            source={require('../Image/logo.png')}
             style={{
               width: '50%',
               height: 100,

@@ -83,7 +83,7 @@ const OTPVerificationScreen = ({navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-            source={require('../Image/Logo.png')}
+            source={require('../Image/logo.png')}
             style={{
               width: '50%',
               height: 100,

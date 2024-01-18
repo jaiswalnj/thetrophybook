@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
@@ -21,45 +22,19 @@ const ProductScreen = ({ route}) => {
   const handleAddToCart = () => {
     // Handle adding item to cart here
   };
-
-  const base64String = base64.fromByteArray(product.image.image.data.data);
-
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       const response = await fetch(`http://192.168.1.2:8005/product/${productId}`);
-  //       const data = await response.json();
-
-  //       if (response.ok) {
-  //         setProduct(data.data);
-  //         setBase64String(base64.fromByteArray(data.data.image.image.data.data));
-  //       } else {
-  //         console.error(data.message);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching product:', error);
-  //     }
-  //   };
-
-  //   fetchProduct();
-  // }, [productId]);
-
   return (
     <View style={styles.container}>
+      <ScrollView vertical showsVerticalScrollIndicator={true}>
       
       <View style={{
         paddingTop: 44,
-        // paddingBottom: 10,
         paddingLeft: 15,
         elevation: 4,
         zIndex: 4,
-        // position: 'relative',
         position: 'absolute'
       }}>
         <TouchableOpacity onPress={() => navigation.replace('DrawerNavigatorRoutes')}>
         <Icon name="arrow-back-sharp" size={30} color='black' />
-        {/* <Icon name="add-outline" size={30} color='black' /> */}
-        
       </TouchableOpacity>
       </View>
 
@@ -74,23 +49,24 @@ const ProductScreen = ({ route}) => {
           end={{ x: 0.82, y: 0.18 }}
           style={styles.cardOverlay} ></LinearGradient>
           </View>
-          <View style={styles.productInfo}>
-          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <View>
+          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingHorizontal:10}}>
                 <Text style={styles.productTitle}>{product.trophyName}</Text>
                 <Text style={styles.productPrice}>${product.price}</Text>
               </View>
-            <Text>{product.trophyType}</Text>
-            <Text>{product.category}</Text>
+            <Text style={{paddingHorizontal:10,}}>{product.trophyType}</Text>
+            <Text style={{paddingHorizontal:10,}}>{product.category}</Text>
             <Text style={styles.productDescription}>{product.description}</Text>
             
             
-            <Text style={{ color: 'black', fontSize: 25, marginRight: 10, marginTop: 10, marginBottom: 15 }}>Size:</Text>
+            <Text style={{ color: 'black', fontSize: 25, marginLeft: 10, marginTop: 10, marginBottom: 15 }}>Size:</Text>
             
         <View style={{ 
           flexDirection: 'row',
           alignItems: 'flex-end',
           justifyContent: 'space-around' ,
-          width: '100%' 
+          width: '100%', 
+          paddingHorizontal: 10,
           }}>           
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex:1, flexDirection: 'row', }}>
@@ -122,69 +98,61 @@ const ProductScreen = ({ route}) => {
         <View style={{
           flex: 0, 
           flexDirection: 'column', 
-          // padding: 2,
           backgroundColor: '#FAFAFA',
           marginTop: 10,
-          borderRadius: 16,
           height: 150,
+          paddingHorizontal:10,
         }}>
       <Text style={{fontSize: 24,fontWeight: 'bold',marginBottom: 10, color: '#000'}}>Product Details</Text>
-      <Text style={styles.subtitle}>Product:{/*name*/}</Text>
-      <Text style={styles.subtitle}>Type: {/*type*/}</Text>
-      <Text style={styles.subtitle}>Dimensions: {/*dimensions*/}</Text>
-      <View style={ {fontSize: 20,color: '#000F',textDecorationLine: 'underline',}} />
-      
-      <TouchableOpacity>
-      <Text style={styles.moreDetails}>More Details</Text>
-      </TouchableOpacity>
-    </View>
+      <View style={{flexDirection:'row', justifyContent:'center'}}>
+        <View style={{paddingHorizontal:10, borderRightWidth:1, borderColor: 'black',}}>
+        <Text style={styles.subtitle1}>Product</Text>
+        <Text style={styles.subtitle1}>Type</Text>
+        <Text style={styles.subtitle1}>Dimensions</Text>
+        </View>
+        <View style={{paddingHorizontal:10}}>
+        <Text style={styles.subtitle2}>{product.category}</Text>
+        <Text style={styles.subtitle2}>{product.trophyType}</Text>
+        <Text style={styles.subtitle2}>4*4</Text>
+        </View>
+      </View>
+      <View style={ {fontSize: 20,color: '#000F',textDecorationLine: 'underline', marginLeft:10}} />
+        <TouchableOpacity>
+        <Text style={styles.moreDetails}>More Details</Text>
+        </TouchableOpacity>
+      </View>
 
     <View style={{
-      position: 'absolute',
       backgroundColor:'#FFFFFF',
-      padding: 10,
       flexDirection: 'row',
-      marginTop: 490,
-      justifyContent: 'space-between',
-      width: 400,
-      height: 80,
+      justifyContent: 'space-around',
+      padding:5,
+      alignItems:'center',
+      width: '100%',
+      height: 60,
       shadowColor: 'black',
       shadowOpacity: 1.2,
       shadowOffset: { width: 10, height: 10 },
       shadowRadius: 5,
      }}>
       
-      
-      {/* <TouchableOpacity onPress={nopress} > */}
-    {/* Bottom bar */}
       <View
-
         style={{
-          
           backgroundColor: '#FF9F1C',
-          borderRadius: 16,
-          padding:20,
+          borderRadius: 20,
           width:100,
-          padding: 10,
+          height:40,
           flexDirection: 'row',
-          // // marginTop: 10,
-          alignContent: 'space-around',
           alignItems: 'center',
           justifyContent: 'space-evenly',
-          width: 110,
-          // height: 10,
-          
         }}
       >
         <TouchableOpacity onPress={handleMinusPress}>
           <View
             style={{
-              backgroundColor: '#FF9F1C',
               borderRadius: 1,
               padding: 4,
-            }}
-          >
-            {/* <Text style={{ color: 'white', fontSize: 40, textAlign: 'center' }}>-</Text> */}
+            }}>
             <Icon name="remove-outline" size={25} color='white' />
           </View>
         </TouchableOpacity>
@@ -192,33 +160,31 @@ const ProductScreen = ({ route}) => {
         <TouchableOpacity onPress={handlePlusPress}>
           <View
             style={{
-              backgroundColor: '#FF9F1C',
               borderRadius: 1,
               padding: 4,
             }}
           >
-            {/* <Text style={{ color: 'white', fontSize: 30 }}>+</Text> */}
             <Icon name="add-outline" size={25} color='white' />
             
           </View>
         </TouchableOpacity>
       </View>
-      {/* </TouchableOpacity> */}
       
-    <TouchableOpacity onPress={handleAddToCart}>
-      <View
-        style={{
-          backgroundColor: '#FF9F1C',
-          borderRadius: 16,
-          padding:20,
-
-          width:250,
-        }}>
-      
-          <Text style={{ color: 'white', fontSize: 20, alignContent: 'center' }}> Add to Cart</Text>
-        
-                  </View>
-                </TouchableOpacity>
+          <TouchableOpacity onPress={handleAddToCart}>
+            <View
+              style={{
+                flex:1,
+                justifyContent:'center',
+                alignItems: 'center',
+                backgroundColor: '#FF9F1C',
+                borderRadius: 25,
+                marginHorizontal:10,
+                width:200,
+                height: 50,
+              }}> 
+              <Text style={{ color: 'white', fontSize: 20, alignContent: 'center' }}> Add to Cart</Text>
+            </View>
+          </TouchableOpacity>
                 
               </View>
               
@@ -227,6 +193,7 @@ const ProductScreen = ({ route}) => {
       ) : (
         <Loader/>
       )}
+      </ScrollView>
     </View>
   );
 };
@@ -244,9 +211,6 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
     zIndex:1,
   },
-  productInfo: {
-    padding: 16,
-  },
   productTitle: {
     fontSize: 45,
     fontWeight: 'bold',
@@ -262,14 +226,21 @@ const styles = StyleSheet.create({
   productDescription: {
     fontSize: 16,
     lineHeight: 24,
+    padding:10,
   },
   back: {
     paddingTop: 40,
     paddingBottom: 10,
   },
-  subtitle: {
+  subtitle1: {
     fontSize: 16,
     marginBottom: 5,
+    textAlign: 'right'
+  },
+  subtitle2: {
+    fontSize: 16,
+    marginBottom: 5,
+    textAlign: 'left'
   },
   divider: {
     height: 1,
@@ -278,8 +249,9 @@ const styles = StyleSheet.create({
   },
   moreDetails: {
     fontSize: 16,
-    color: '#007AFF',
+    color: '#FF9F1C',
     textDecorationLine: 'underline',
+    marginLeft:10
   },
   cardOverlay: {
     height: 400,
