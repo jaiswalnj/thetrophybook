@@ -4,7 +4,7 @@ import base64 from 'base64-js';
 import {LinearGradient} from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const CartItem = ({ cartItem, onCustomize, onRemove }) => {
+const CartItem = ({ cartItem, onRemove }) => {
   const [quantity, setQuantity] = useState();
   const [customization1, setCustomization1] = useState();
   const [customization2, setCustomization2] = useState();

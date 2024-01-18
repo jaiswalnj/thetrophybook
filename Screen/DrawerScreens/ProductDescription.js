@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView  } from 're
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
+import Loader from '../Components/Loader';
 
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
@@ -13,7 +14,11 @@ const ProductScreen = ({ route}) => {
 
 
   const handlePlusPress = () => {setCount(count + 1);};
-  const handleMinusPress = () => {if (count > 0) {setCount(count - 1);}
+  const nopress = () => {setCount(count+0);};
+  const handleMinusPress = () => {if (count > 0) {setCount(count - 1);}};
+
+  const handleAddToCart = () => {
+    // Handle adding item to cart here
   };
 
   const base64String = base64.fromByteArray(product.image.image.data.data);
@@ -83,22 +88,35 @@ const ProductScreen = ({ route}) => {
           </ScrollView>
         </View>
 
+    <View style={{
+      position: 'absolute',
+      backgroundColor:'#FFFFFF',
+      padding: 10,
+      flexDirection: 'row',
+      marginTop: 440,
+      justifyContent: 'space-evenly',
+      width: 500,
+      height: 80,
+     }}>
       
-      <TouchableOpacity onPress={handlePlusPress} >
-
+      {/* <TouchableOpacity onPress={nopress} > */}
+    {/* Bottom bar */}
       <View
 
         style={{
           
           backgroundColor: '#FF9F1C',
           borderRadius: 16,
+          padding:20,
+          width:100,
           padding: 10,
           flexDirection: 'row',
-          marginTop: 100,
+          // // marginTop: 10,
           alignContent: 'flex-end',
           alignItems: 'center',
-          justifyContent: 'space-around',
-          width: 100,
+          justifyContent: 'space-between',
+          // width: 100,
+          // height: 10,
           
         }}
       >
@@ -110,7 +128,7 @@ const ProductScreen = ({ route}) => {
               padding: 1,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 40 }}>-</Text>
+            <Text style={{ color: 'white', fontSize: 40, textAlign: 'justify' }}>-</Text>
           </View>
         </TouchableOpacity>
         <Text style={{ color: 'white', fontSize: 20 }}>{count}</Text>
@@ -126,11 +144,34 @@ const ProductScreen = ({ route}) => {
           </View>
         </TouchableOpacity>
       </View>
+      {/* </TouchableOpacity> */}
+      
+    <TouchableOpacity onPress={handleAddToCart}>
+      <View
+        style={{
+          backgroundColor: '#FF9F1C',
+          borderRadius: 16,
+          padding:20,
+
+          width:250,
+        }}>
+      
+          <Text style={{ color: 'white', fontSize: 20 }}> Add to Cart</Text>
+        
+      </View>
       </TouchableOpacity>
+    </View>
+
+
+
+
           </View>
+
+
+
         </>
       ) : (
-        <Text>Loading...</Text>
+        <Loader/>
       )}
     </View>
   );
@@ -143,8 +184,11 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '200%',
-    height: '100%',
-    resizeMode: 'contain',
+    height: 250,
+    marginVertical: 50,
+    marginHorizontal: -90,
+    resizeMode: 'center',
+    zIndex:1,
   },
   productInfo: {
     padding: 16,
