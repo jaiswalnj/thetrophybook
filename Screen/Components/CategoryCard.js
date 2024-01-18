@@ -3,13 +3,32 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 const CategoryCard = ({title, active }) => {
   const [image, setImage] = useState();
-   useEffect
+
+  useEffect(() => {
+    let imagePath;
+
+    if (title === 'Trophies') {
+      imagePath = require('../../Image/Category/trophies.png');
+    } else if (title === 'Medals') {
+      imagePath = require('../../Image/Category/medals.png');
+    } else if (title === 'Badges') {
+      imagePath = require('../../Image/Category/badges.png');
+    } else if (title === 'Cups') {
+      imagePath = require('../../Image/Category/cups.png');
+    } else if (title === 'Momentos') {
+      imagePath = require('../../Image/Category/momentos.png');
+    } else if (title === 'More') {
+      imagePath = require('../../Image/Category/more.png');
+    }
+    setImage(imagePath);
+  }, [title]);
+
   
   return (
     <View style={{alignItems: 'center', marginHorizontal:10}}>
     <View style={[styles.circle, active && styles.activecircle]}>
       <View style={[styles.container, active && styles.activeContainer]}>
-      <Image source={require('../../Image/Category/trophies.png')} style={styles.image} />
+      <Image source={image} style={styles.image} />
       </View>
       <Text style={styles.title}>{title}</Text>
     </View>
@@ -28,8 +47,8 @@ const styles = StyleSheet.create({
 
   },
   circle: {
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     borderRadius: 25,
     overflow: 'hidden',
     shadowColor: 'black',

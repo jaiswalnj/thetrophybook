@@ -24,7 +24,7 @@ const Cart = () => {
   useFocusEffect(React.useCallback(() => {
     const fetchUserData = async () => {
       try {
-        const data = await fetch(`http://192.168.1.9:8005/user/${userId}`)
+        const data = await fetch(`http://192.168.1.2:8005/user/${userId}`)
           .then((response)=> response.json())
           .then((responseJson)=>{
             if (responseJson) {
@@ -43,6 +43,17 @@ const Cart = () => {
     fetchUserData();
   }, [userId])
   );
+  const totalCartPrice = cartItems.reduce((total, item) => {
+    if (item.price && typeof item.price === 'number') {
+      console.log(`Item price for ${item._id}: ${item.price}`);
+      return total + item.price;
+    } else {
+      console.warn(`Invalid price for item ${item._id}: ${item.price}`);
+    }
+    return total;
+  }, 0);
+
+  console.log('Total Cart Price:', totalCartPrice);
 
   return (
     <View style={{ backgroundColor: '#FAFAFA'}}>
@@ -73,6 +84,9 @@ const Cart = () => {
         )}
       />
       </ScrollView>
+      <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: '#ddd' }}>
+        <Text style={{ fontSize: 20, textAlign: 'right' }}>Total: ₹{totalCartPrice}</Text>
+      </View>
     </View>
   );
 };
