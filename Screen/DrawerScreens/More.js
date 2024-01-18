@@ -31,7 +31,7 @@ const More = ({navigation}) => {
           .then((responseJson)=>{
             if (responseJson) {
               setUser(responseJson.data);
-              setUserImage({ uri: `data:${responseJson.data.image.image.contentType};base64,${base64.fromByteArray(responseJson.data.image.image.data.data)}`} || require('../../Image/logo.png'));
+              setUserImage({ uri: `data:${responseJson.data.image.image.contentType};base64,${base64.fromByteArray(responseJson.data.image.image.data.data)}`} || require('../../Image/Logo.png'));
               console.log(user);
             } else {
               console.error(responseJson.message);

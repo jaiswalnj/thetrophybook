@@ -119,7 +119,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
       height: 180,
       marginVertical: 50,
       marginHorizontal: -90,
-      resizeMode: 'center',
+      resizeMode: 'contain',
     },
     title: {
       fontSize: 18,
