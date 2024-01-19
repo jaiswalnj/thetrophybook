@@ -6,14 +6,14 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 
-const Liked = ({ imageUrl, title, price, productId, userId}) => {
+const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
     const navigation = useNavigation();
     const [like, setLike] = useState('heart-outline')
 
 
     const onLikePress = async () => {
       try {
-        const response = await fetch(`http://192.168.1.3:8005/addToLikedItems/${productId}`, {
+        const response = await fetch(`http://192.168.1.2:8005/addToLikedItems/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const Liked = ({ imageUrl, title, price, productId, userId}) => {
 
     const handleAddToCart = async () => {
       try {
-        const data = await fetch(`http://192.168.29.25:8005/addToCart/${productId}`, {
+        const data = await fetch(`http://192.168.1.3:8005/addToCart/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -64,102 +64,100 @@ const Liked = ({ imageUrl, title, price, productId, userId}) => {
       }
     };
 
+    const gradientColors = useCustomColor
+    ? ['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']
+    : ['#FFC473', '#FFC473', '#FFC473', '#FFC473'];
+
+
     return (
-        <View style={styles.Container}>
-        <View style={styles.card}>
+      <View style={styles.container}>
         <LinearGradient
-      colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
-      start={{ x: 0.455, y: 0 }}
-      end={{ x:1, y: 1 }}
-      style={styles.gradientCard}>
-          <Image source={{ uri: imageUrl }} style={styles.image}/>
-    
+          colors={gradientColors}
+          start={{ x: 0.455, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.gradientCard}
+        >
+          <Image source={{ uri: imageUrl }} style={styles.image} />
+  
           <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
             <Icon name={like} size={21} color="black" />
           </TouchableOpacity>
-    
-        
         </LinearGradient>
-        </View>
-
-        <TouchableOpacity style={styles.addButton } activeScale={handleAddToCart ? BUTTON_SHRINK_FACTOR : 2 } onPress={handleAddToCart} activeOpacity={0.88}>
-            <Icon name="add-outline" size={29} color="black" style={{ position: 'center', top:1, left: 2}} />
-            
-          </TouchableOpacity>
-          <Text style={styles.price}>₹{price}</Text>
+  
+        <TouchableOpacity
+          style={styles.addButton}
+          activeScale={handleAddToCart ? BUTTON_SHRINK_FACTOR : 2}
+          onPress={handleAddToCart}
+          activeOpacity={0.88}
+        >
+          <Icon name="add-outline" size={29} color="black" style={{ position: 'center', top: 1, left: 2 }} />
+        </TouchableOpacity>
+        <Text style={styles.price}>₹{price}</Text>
         <Text style={styles.title}>{title}</Text>
-        </View>
-      );
-    };
-
-const styles = StyleSheet.create({
-    Container: {
-        backgroundColor: '#FAFAFA',
-        textAlign: 'right',
-        width: 220,
-        overflow: 'hidden',
-        marginTop: 12,
-        marginBottom: 15,
-      },
-
-
-  card: {
-    backgroundColor: '#64ECC7',
-    width: 160,
-    height: 250,
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderRadius: 16,
-    overflow: 'hidden',
-    elevation: 3,
-    alignSelf: ''
-  },
-  image: {
-    width: '200%',
-    height: 180,
-    marginVertical: 50,
-    marginHorizontal: -90,
-    resizeMode: 'center',
-  },
-  title: {
-    fontSize: 18,
-    //fontFamily: 'EuclidFlex',
-    //fontWeight: 500,
-    paddingTop: 4,
-    paddingHorizontal: 16
-  },
-  price: {
-    fontSize: 25,
-    // fontFamily: 'ArialRoundedMT',
-    fontWeight: 'regular',
-    letterSpacing: 0.2,
-    color: 'black',
-    paddingTop:20,
-    paddingLeft: 16,
-    paddingBottom: 2,
-  },
-  likeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 1,
-  },
-  addButton: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    alignItems: 'center',
-    borderRadius:5,
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    shadowOffset: { width:10, height:10},
-    shadowRadius:5,
-    height: 30,
-    width: 30,
-    bottom: 75,
-    right: 50,
-    elevation: 4,
-    zIndex: 1,
-  },
-});
+      </View>
+    );
+  };
+  
+  const styles = StyleSheet.create({
+    container: {
+      overflow: 'hidden',
+      width:180,
+      marginTop: 12,
+      marginBottom: 15,
+      marginHorizontal:10,
+    },
+    gradientCard: {
+      width: 160,
+      height: 250,
+      borderRadius: 16,
+      overflow: 'hidden',
+      elevation: 3,
+      alignSelf: '',
+    },
+    image: {
+      width: '200%',
+      height: 180,
+      marginVertical: 50,
+      marginHorizontal: -90,
+      resizeMode: 'contain',
+    },
+    title: {
+      fontSize: 18,
+      paddingTop: 4,
+      paddingHorizontal: 16,
+      color: 'black',
+    },
+    price: {
+      fontSize: 25,
+      fontWeight: 'regular',
+      letterSpacing: 0.2,
+      color: 'black',
+      paddingTop: 20,
+      paddingLeft: 16,
+      paddingBottom: 2,
+    },
+    likeButton: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
+      zIndex: 1,
+    },
+    addButton: {
+      position: 'absolute',
+      backgroundColor: 'white',
+      alignItems: 'center',
+      borderRadius: 5,
+      shadowColor: 'black',
+      shadowOpacity: 0.8,
+      shadowOffset: { width: 10, height: 10 },
+      shadowRadius: 5,
+      height: 30,
+      width: 30,
+      bottom: 70,
+      right: 5,
+      elevation: 4,
+      zIndex: 1,
+    },
+  });
 
 export default Liked;

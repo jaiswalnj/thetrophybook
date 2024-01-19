@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
       try {
         setLoading(true);
         setProducts([])
-        const response = await fetch(`http://192.168.1.2:8005/getProducts?category=${category}`);
+        const response = await fetch(`http://192.168.1.4:8005/getProducts?category=${category}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -110,7 +110,11 @@ const HomeScreen = ({ navigation }) => {
             }}> Hello {userName}
           </Text>
           
-          <Icon name='person-circle-outline' size={60} color='black' marginTop ={40} marginBottom ={20} />
+          <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
+            <Text style={{ color: "#ffffff", fontSize:40, alignSelf: 'center'}}>
+                  {userName ? userName.charAt(0) : "?"}
+              </Text>
+          </View>
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -174,6 +178,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginTop:40,
+    marginRight:10,
+    borderColor:'black',
+    borderWidth:1,
   },
   container: {
     // ...

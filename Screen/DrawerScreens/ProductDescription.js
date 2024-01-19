@@ -80,9 +80,9 @@ const ProductScreen = ({ route}) => {
                   borderRadius: 5,
                   marginRight: 10,
                   shadowColor: 'black',
-                  shadowOpacity: 0.9,
-                  shadowOffset: { width: 10, height: 10 },
-                  shadowRadius: 5,
+                  shadowOpacity: 0.3,
+                  shadowOffset: { width: 4, height: 4 },
+                  shadowRadius: 3,
                   
                   
                 }}
@@ -130,9 +130,11 @@ const ProductScreen = ({ route}) => {
       alignItems:'center',
       width: '100%',
       height: 60,
+      position: 'absolute',
+      bottom: 0,
       shadowColor: 'black',
-      shadowOpacity: 1.2,
-      shadowOffset: { width: 10, height: 10 },
+      shadowOpacity: 0.5,
+      shadowOffset: { width: 5, height: 5 },
       shadowRadius: 5,
      }}>
       
@@ -202,6 +204,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFAFA',
+    height: '100%',
+    width: '100%',
   },
   productImage: {
     width: '200%',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity,Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity,Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import {PermissionsAndroid} from 'react-native';
@@ -8,14 +8,16 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const More = ({navigation}) => {
   const [userId, setUserId] = useState('');
+  const [userName, setUserName] = useState('');
   const [user, setUser] = useState([]);
-  const [userImage, setUserImage] = useState()
 
   useEffect(()=>{
     const fetchUserId = async () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
         setUserId(storedUserId || '');
+        const storedUserName = await AsyncStorage.getItem('username');
+        setUserName(storedUserName || '');
       } catch (error) {
         console.error('Error fetching user Id:', error);
       }
@@ -26,12 +28,11 @@ const More = ({navigation}) => {
   useFocusEffect(React.useCallback(() => {
     const fetchUserData = async () => {
       try {
-        const data = await fetch(`http://192.168.1.2:8005/user/${userId}`)
+        const data = await fetch(`http://192.168.1.4:8005/user/${userId}`)
           .then((response)=> response.json())
           .then((responseJson)=>{
             if (responseJson) {
               setUser(responseJson.data);
-              setUserImage({ uri: `data:${responseJson.data.image.image.contentType};base64,${base64.fromByteArray(responseJson.data.image.image.data.data)}`} || require('../../Image/logo.png'));
               console.log(user);
             } else {
               console.error(responseJson.message);
@@ -60,11 +61,12 @@ const More = ({navigation}) => {
     <View style={styles.container}>
      
       <View style={styles.header}>
-        <Image
-          source={userImage}
-          style={styles.profileImage}
-        />
-        <Text style={styles.profileName}>{user.username}</Text>
+        <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
+        <Text style={{ color: "white", fontSize:50, alignSelf: 'center'}}>
+              {userName ? userName.charAt(0) : "?"}
+          </Text>
+          </View>
+        <Text style={styles.profileName}>{userName}</Text>
       </View>
 
 
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    marginTop:20,
   },
   header: {
     flexDirection: 'row',
@@ -106,7 +109,9 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 80,
     height: 80,
+    textAlign: 'center',
     borderRadius: 40,
+    borderWidth:1,
   },
   profileName: {
     fontSize: 24,
