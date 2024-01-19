@@ -59,7 +59,17 @@ const More = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-     
+      <View style={{alignItems: 'center', backgroundColor: 'white'}}>
+          <Text
+            style={{
+              fontSize: 30,
+              textAlign: 'center',
+              marginTop: 30,
+              marginBottom: 10,
+            }}> Profile
+          </Text>
+        </View>
+    <View style={{padding:20}}>
       <View style={styles.header}>
         <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
         <Text style={{ color: "white", fontSize:50, alignSelf: 'center'}}>
@@ -77,18 +87,19 @@ const More = ({navigation}) => {
         <TouchableOpacity style={styles.orderButton}>
           <Text style={styles.orderText}>Returns</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.orderButton}>
-          <Text style={styles.orderText}>Addresses</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.options}>
+      <TouchableOpacity style={styles.option}>
+          <Text style={styles.optionText}>Address</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.option}>
           <Text style={styles.optionText}>Your Account</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.option} onPress={handleLogout}>
           <Text style={styles.optionText}>Logout</Text>
         </TouchableOpacity>
+      </View>
       </View>
     </View>
   );
@@ -97,9 +108,7 @@ const More = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-    marginTop:20,
+    backgroundColor: '#FAFAFA',
   },
   header: {
     flexDirection: 'row',
@@ -121,6 +130,7 @@ const styles = StyleSheet.create({
   orderSummary: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop:20,
     marginBottom: 20,
   },
   orderButton: {

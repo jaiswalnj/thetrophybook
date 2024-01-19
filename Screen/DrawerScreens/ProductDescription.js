@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Touchable  } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
@@ -9,18 +9,39 @@ import { LinearGradient } from 'expo-linear-gradient';
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
   const { product } = route.params;
+  const { userId } = route.params;
   const [size, setSize] = useState(11);
-  const sizes = [11, 12, 13, 14, 15];  
+  const sizes = product.size;  
   const [count, setCount] = useState(0);
-
-  // const { name, type, dimensions } = product; adding details to an item
 
   const handlePlusPress = () => {setCount(count + 1);};
   const nopress = () => {setCount(count+0);};
   const handleMinusPress = () => {if (count > 0) {setCount(count - 1);}};
 
-  const handleAddToCart = () => {
-    // Handle adding item to cart here
+  const handleAddToCart = async () => {
+    const productId=product._id;
+    console.log(productId)
+    try {
+      const data = await fetch(`http://192.168.1.4:8005/addToCart/${productId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userId,
+        })
+      }).then((response) => response.json())
+      .then((responseJson) => {
+      if (responseJson.message === 'Item added to the cart') {
+        Alert.alert('Success', 'Item added to the cart successfully');
+      } else {
+        Alert.alert('Error', data.message || 'Failed to add item to the cart');
+      }
+    })
+    } catch (error) {
+      console.error('Error adding item to the cart:', error.message);
+      Alert.alert('Error', 'Something went wrong. Please try again.');
+    }
   };
   return (
     <View style={styles.container}>
@@ -50,7 +71,7 @@ const ProductScreen = ({ route}) => {
           style={styles.cardOverlay} ></LinearGradient>
           </View>
           <View>
-          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingHorizontal:10}}>
+          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingHorizontal:10, justifyContent:'center'}}>
                 <Text style={styles.productTitle}>{product.trophyName}</Text>
                 <Text style={styles.productPrice}>${product.price}</Text>
               </View>
@@ -82,9 +103,7 @@ const ProductScreen = ({ route}) => {
                   shadowColor: 'black',
                   shadowOpacity: 0.3,
                   shadowOffset: { width: 4, height: 4 },
-                  shadowRadius: 3,
-                  
-                  
+                  shadowRadius: 3,  
                 }}
                 onPress={() => setSize(s)}
               >
@@ -130,8 +149,6 @@ const ProductScreen = ({ route}) => {
       alignItems:'center',
       width: '100%',
       height: 60,
-      position: 'absolute',
-      bottom: 0,
       shadowColor: 'black',
       shadowOpacity: 0.5,
       shadowOffset: { width: 5, height: 5 },
@@ -208,16 +225,15 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   productImage: {
-    width: '200%',
+    width: '300%',
     height: 250,
-    marginVertical: 50,
-    marginHorizontal: -90,
-    resizeMode: 'center',
+    marginVertical: 40,
+    marginHorizontal: -70,
+    resizeMode: 'contain',
     zIndex:1,
   },
   productTitle: {
-    fontSize: 45,
-    fontWeight: 'bold',
+    fontSize: 35,
     marginBottom: 8,
     alignItems: 'flex-start'
   },
@@ -265,8 +281,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16, 
-    left:110,
-    bottom: 15,
+    left:90,
+    bottom: 0,
     zIndex: -1,
   },
 });

@@ -33,10 +33,10 @@ export default CustomTabBarButton;
 const styles = StyleSheet.create({
   btnWrapper: {
     flex: 1,
-    top: -18,
-    width: 70,
-    height: 70,
-    borderRadius: 65/ 2,
+    top: -15,
+    width: 90,
+    height: 90,
+    borderRadius: 90/ 2,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
