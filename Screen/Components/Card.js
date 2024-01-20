@@ -6,7 +6,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 
-const Card = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
+const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked, onPress}) => {
     const navigation = useNavigation();
     const [like, setLike] = useState('heart-outline')
 
@@ -79,8 +79,8 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
         >
           <Image source={{ uri: imageUrl }} style={styles.image} />
   
-          <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
-            <Icon name={like} size={21} color="black" />
+          <TouchableOpacity style={styles.likeButton} onPress={() => onPress(productId, userId)}>
+          <Icon name={liked ? 'heart' : 'heart-outline'} size={24} color='black'/>
           </TouchableOpacity>
         </LinearGradient>
   

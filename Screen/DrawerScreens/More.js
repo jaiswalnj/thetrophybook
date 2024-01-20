@@ -59,16 +59,9 @@ const More = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center', backgroundColor: 'white'}}>
-          <Text
-            style={{
-              fontSize: 30,
-              textAlign: 'center',
-              marginTop: 30,
-              marginBottom: 10,
-            }}> Profile
-          </Text>
-        </View>
+      <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: 'white' }}>
+        <Text style={{ fontSize: 30, textAlign: 'center', marginTop: 30, marginBottom: 10 }}>Profile</Text>
+      </View>
     <View style={{padding:20}}>
       <View style={styles.header}>
         <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
@@ -85,7 +78,7 @@ const More = ({navigation}) => {
           <Text style={styles.orderText}>Orders</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.orderButton}>
-          <Text style={styles.orderText}>Returns</Text>
+          <Text style={styles.orderText}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
 
@@ -94,7 +87,10 @@ const More = ({navigation}) => {
           <Text style={styles.optionText}>Address</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Your Account</Text>
+          <Text style={styles.optionText}>Feedback</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.option}>
+          <Text style={styles.optionText}>Conatct Us</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.option} onPress={handleLogout}>
           <Text style={styles.optionText}>Logout</Text>

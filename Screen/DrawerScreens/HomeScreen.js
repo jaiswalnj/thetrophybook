@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import {View, Text, SafeAreaView, Button, Alert, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import Card from '../Components/Card';
 import CategoryCard from '../Components/CategoryCard';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,6 +11,8 @@ import Loader from '../Components/Loader';
 const HomeScreen = ({ navigation }) => {
   const [userId, setUserId] = useState('');
   const [userName, setUserName] = useState('');
+  const [user, setUser] = useState();
+  const [likedItems, setLikedItems] = useState([]);
   const [activeIndex, setActiveIndex] = useState(2);
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState('Trophies');
@@ -30,10 +33,52 @@ const HomeScreen = ({ navigation }) => {
     setActiveIndex(index);
     setCategory(category);
   };
-  
 
-  const [isScrollable, setIsScrollable] = useState(false);
-  const toggleScroll = () => {setIsScrollable(!isScrollable);};
+  const handleLikePress = async (productId, userId) => {
+    try {
+      const isLiked = likedItems.some((item) => item._id === productId);
+  
+      if (isLiked) {
+        const response = await fetch(`http://192.168.1.4:8005/removeFromLikedItems/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          setLikedItems((prevLikedItems) => prevLikedItems.filter((item) => item._id !== productId));
+        } else {
+          console.error(data.message);
+        }
+      } else {
+        const response = await fetch(`http://192.168.1.4:8005/addToLikedItems/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          setLikedItems((prevLikedItems) => [...prevLikedItems, data.data]);
+        } else {
+          console.error(data.message);
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling like status:', error);
+    }
+  };
 
   useEffect(()=>{
     const fetchUserData = async () => {
@@ -48,6 +93,30 @@ const HomeScreen = ({ navigation }) => {
     };
     fetchUserData();
   },[userId]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUserData = async () => {
+        try {
+          const data = await fetch(`http://192.168.1.4:8005/user/${userId}`)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (responseJson) {
+                setUser(responseJson.data);
+                setLikedItems(responseJson.data.likedItems);
+                console.log(likedItems);
+              } else {
+                console.error(responseJson.message);
+              }
+            });
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchUserData();
+    }, [userId])
+  );
 
 
   useEffect(() => {
@@ -154,6 +223,8 @@ const HomeScreen = ({ navigation }) => {
                       productId={product._id}
                       userId={userId}
                       useCustomColor={index % 2 === 0}
+                      liked={likedItems.some((item) => item._id === product._id)}
+                      onPress={(productId, userId) => handleLikePress(productId, userId)}
                     />
                   </TouchableOpacity>
                 ))}
