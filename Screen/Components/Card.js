@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent,Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Font from 'expo-font'; 
 import {LinearGradient} from 'expo-linear-gradient';
@@ -42,7 +42,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
 
     const handleAddToCart = async () => {
       try {
-        const data = await fetch(`http://192.168.1.3:8005/addToCart/${productId}`, {
+        const data = await fetch(`http://192.168.1.4:8005/addToCart/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -148,14 +148,14 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
       alignItems: 'center',
       borderRadius: 5,
       shadowColor: 'black',
-      shadowOpacity: 0.8,
-      shadowOffset: { width: 10, height: 10 },
-      shadowRadius: 5,
+      shadowOpacity: 0.5,
+      shadowOffset: { width: 5, height: 5 },
+      shadowRadius: 3,
       height: 30,
       width: 30,
-      bottom: 70,
-      right: 5,
-      elevation: 4,
+      bottom: 60,
+      right: 10,
+      elevation: 2,
       zIndex: 1,
     },
   });

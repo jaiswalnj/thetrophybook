@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 const Orders = ({orderHistory}) => {
     const navigation = useNavigation();
@@ -13,9 +15,10 @@ const Orders = ({orderHistory}) => {
   )
 }
 const styles = StyleSheet.create({
-    back: {
-      paddingTop: 20,
-    },
+  back: {
+    paddingTop: 40,
+    paddingBottom: 10,
+  },
   });
 
 export default Orders

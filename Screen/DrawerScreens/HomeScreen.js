@@ -96,21 +96,25 @@ const HomeScreen = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={{flex: 1, marginBottom:30}}>
+    <SafeAreaView style={{flex: 1, marginBottom:35}}>
       <Loader loading={loading} />
-      <View style={{flex: 1, padding: 16, backgroundColor: '#FAFAFA'}}>
-        <View style={{paddingTop:10 ,flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{flex: 1, padding: 12, backgroundColor: '#FAFAFA'}}>
+        <View style={{paddingTop:5 ,flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text
             style={{
               fontSize: 40,
               textAlign: 'left',
-              marginLeft: 15,
-              marginTop: 40,
+              marginLeft: 5,
+              marginTop: 35,
               marginBottom: 20,
             }}> Hello {userName}
           </Text>
           
-          <Icon name='person-circle-outline' size={60} color='black' marginTop ={40} marginBottom ={20} />
+          <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
+            <Text style={{ color: "#ffffff", fontSize:40, alignSelf: 'center'}}>
+                  {userName ? userName.charAt(0) : "?"}
+              </Text>
+          </View>
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -141,11 +145,11 @@ const HomeScreen = ({ navigation }) => {
                 {section.trophies.map((product, index) => (
                   <TouchableOpacity
                     key={product.productId}
-                    onPress={() => navigation.navigate('ProductDescription', { product })}
+                    onPress={() => navigation.navigate('ProductDescription', { product,userId })}
                   >
                     <Card
                       imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}`}
-                      title={product.title}
+                      title={product.trophyName}
                       price={product.price}
                       productId={product._id}
                       userId={userId}
@@ -168,12 +172,22 @@ const styles = StyleSheet.create({
   categoryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    marginTop:10,
+    marginBottom: 45,
   },
   productContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginTop:40,
+    marginRight:10,
+    borderColor:'black',
+    borderWidth:1,
   },
   container: {
     // ...

@@ -6,7 +6,7 @@ const ForgotPassword = ({navigation}) => {
 
   const handleResetPassword = async() => {
     try{
-        const data = await fetch(`http://192.168.1.3:8005/forgetPassword` , { 
+        const data = await fetch(`http://192.168.1.4:8005/forgetPassword` , { 
           method:"POST",
           headers:{
             "Content-type":"application/json"

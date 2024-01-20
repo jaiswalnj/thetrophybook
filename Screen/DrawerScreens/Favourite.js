@@ -16,7 +16,7 @@ const Favourite = () => {
       try {
         const storedUserId = await AsyncStorage.getItem('user_id');
         setUserId(storedUserId || '');
-        const response = await fetch(`http://192.168.1.2:8005/user/${userId}`);
+        const response = await fetch(`http://192.168.1.4:8005/user/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -35,7 +35,7 @@ const Favourite = () => {
   }, [userId])
   );
   return (
-    <View style={{backgroundColor: '#FAFAFA', marginBottom:30}}>
+    <View style={{backgroundColor: '#FAFAFA', marginBottom:30 }}>
       <View style={{paddingTop:10, alignItems: 'center', backgroundColor: 'white'}}>
           <Text
             style={{
@@ -50,12 +50,13 @@ const Favourite = () => {
           data={likedItems}
           keyExtractor={(item) => item.itemId}
           numColumns={2}
-          renderItem={({ item }) => (
+          renderItem={({ item,index }) => (
             <Liked
               imageUrl={`data:${item.image.image.contentType};base64,${base64.fromByteArray(item.image.image.data.data)}`}
               title={item.trophyName}
               price={item.price}
               liked={true}
+              useCustomColor={index % 3 === 0}
             />
           )}
         />
