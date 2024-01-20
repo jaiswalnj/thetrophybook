@@ -24,7 +24,7 @@ const Cart = () => {
   useFocusEffect(React.useCallback(() => {
     const fetchUserData = async () => {
       try {
-        const data = await fetch(`http://192.168.1.9:8005/user/${userId}`)
+        const data = await fetch(`http://192.168.29.25:8005/user/${userId}`)
           .then((response)=> response.json())
           .then((responseJson)=>{
             if (responseJson) {
@@ -64,6 +64,10 @@ const Cart = () => {
               textAlign: 'center',
               marginTop: 30,
               marginBottom: 10,
+              shadowColor: 'black',
+              shadowOpacity: 1.2,
+              shadowOffset: { width: 10, height: 10 },
+              shadowRadius: 5,
             }}> Cart
           </Text>
         </View>

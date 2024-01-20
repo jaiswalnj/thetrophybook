@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
@@ -84,7 +85,7 @@ const ProductScreen = ({ route}) => {
             <Text style={styles.productDescription}>{product.description}</Text>
             
             
-            <Text style={{ color: 'black', fontSize: 25, marginRight: 10, marginTop: 10, marginBottom: 15 }}>Size:</Text>
+            <Text style={{ color: 'black', fontSize: 25, marginRight: 1, marginTop: 10, marginBottom: 15 }}>Size:</Text>
             
         <View style={{ 
           flexDirection: 'row',
@@ -140,14 +141,19 @@ const ProductScreen = ({ route}) => {
     </View>
 
     <View style={{
-      position: 'absolute',
-      backgroundColor:'#FFFFFF',
+      // flex:1,
+      // alignSelf: 'flex-end',
+      position: 'relative',
+      left:-1,
+      marginLeft:-16,
+      right:-1,
+      backgroundColor:'#FFF',
+      // top:,
+      bottom:-70,
       padding: 10,
       flexDirection: 'row',
-      marginTop: 490,
       justifyContent: 'space-between',
-      width: 400,
-      height: 80,
+      width: '109%',
       shadowColor: 'black',
       shadowOpacity: 1.2,
       shadowOffset: { width: 10, height: 10 },
@@ -164,15 +170,13 @@ const ProductScreen = ({ route}) => {
           backgroundColor: '#FF9F1C',
           borderRadius: 16,
           padding:20,
-          width:100,
+          width:'50%',
           padding: 10,
           flexDirection: 'row',
-          // // marginTop: 10,
           alignContent: 'space-around',
           alignItems: 'center',
           justifyContent: 'space-evenly',
-          width: 110,
-          // height: 10,
+           // height: 10,
           
         }}
       >
@@ -181,7 +185,7 @@ const ProductScreen = ({ route}) => {
             style={{
               backgroundColor: '#FF9F1C',
               borderRadius: 1,
-              padding: 4,
+              padding: 1,
             }}
           >
             {/* <Text style={{ color: 'white', fontSize: 40, textAlign: 'center' }}>-</Text> */}
@@ -194,7 +198,7 @@ const ProductScreen = ({ route}) => {
             style={{
               backgroundColor: '#FF9F1C',
               borderRadius: 1,
-              padding: 4,
+              padding: 1,
             }}
           >
             {/* <Text style={{ color: 'white', fontSize: 30 }}>+</Text> */}
@@ -212,7 +216,7 @@ const ProductScreen = ({ route}) => {
           borderRadius: 16,
           padding:20,
 
-          width:250,
+          width:'100%',
         }}>
       
           <Text style={{ color: 'white', fontSize: 20, alignContent: 'center' }}> Add to Cart</Text>
@@ -234,6 +238,7 @@ const ProductScreen = ({ route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // height: '100%',
     backgroundColor: '#FAFAFA',
   },
   productImage: {
@@ -246,6 +251,7 @@ const styles = StyleSheet.create({
   },
   productInfo: {
     padding: 16,
+    
   },
   productTitle: {
     fontSize: 45,

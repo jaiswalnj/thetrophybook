@@ -4,10 +4,10 @@
     "slug": "thetrophybook",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./Image/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./Image/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
