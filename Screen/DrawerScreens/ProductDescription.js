@@ -5,23 +5,62 @@ import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
 import { LinearGradient } from 'expo-linear-gradient';
-import { LinearGradient } from 'expo-linear-gradient';
 
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
   const { product } = route.params;
-  const { userId } = route.params;
+  const { user } = route.params;
   const [size, setSize] = useState(11);
   const sizes = product.size;  
   const [count, setCount] = useState(0);
+  const [isInCart, setIsInCart] = useState(false);
+  const productId=product._id;
+  const userId=user._id;
 
-  const handlePlusPress = () => {setCount(count + 1);};
-  const nopress = () => {setCount(count+0);};
-  const handleMinusPress = () => {if (count > 0) {setCount(count - 1);}};
+    useEffect(() => {
+      if (user && user.cart) {
+        console.log(user.cart);
+        const cartItem = user.cart.find(item => item._id === productId);
+        if (cartItem) {
+          setCount(cartItem.quantity);
+          setIsInCart(true);
+        }
+      }
+    }, [user]);
+
+
+  const handleMinusPress = async () => {
+    
+    if (count > 0) {
+      if(count===1){
+        setIsInCart(false);
+      }else{
+        setCount(count - 1);
+      }
+      try {
+        const response = await fetch(`http://192.168.1.4:8005/minus-cart-qty/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+          }),
+        });
+  
+        if (response.ok) {
+          const responseData = await response.json();
+        } else {
+          console.error('API error:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Error calling API:', error);
+      }
+    }
+  };
 
   const handleAddToCart = async () => {
-    const productId=product._id;
-    console.log(productId)
+    setCount(count + 1);
     try {
       const data = await fetch(`http://192.168.1.4:8005/addToCart/${productId}`, {
         method: 'POST',
@@ -34,7 +73,7 @@ const ProductScreen = ({ route}) => {
       }).then((response) => response.json())
       .then((responseJson) => {
       if (responseJson.message === 'Item added to the cart') {
-        Alert.alert('Success', 'Item added to the cart successfully');
+        setIsInCart(true);
       } else {
         Alert.alert('Error', data.message || 'Failed to add item to the cart');
       }
@@ -44,6 +83,7 @@ const ProductScreen = ({ route}) => {
       Alert.alert('Error', 'Something went wrong. Please try again.');
     }
   };
+
   return (
     <View style={styles.container}>
       <ScrollView vertical showsVerticalScrollIndicator={true}>
@@ -128,12 +168,10 @@ const ProductScreen = ({ route}) => {
         <View style={{paddingHorizontal:10, borderRightWidth:1, borderColor: 'black',}}>
         <Text style={styles.subtitle1}>Product</Text>
         <Text style={styles.subtitle1}>Type</Text>
-        <Text style={styles.subtitle1}>Dimensions</Text>
         </View>
         <View style={{paddingHorizontal:10}}>
         <Text style={styles.subtitle2}>{product.category}</Text>
         <Text style={styles.subtitle2}>{product.trophyType}</Text>
-        <Text style={styles.subtitle2}>4*4</Text>
         </View>
       </View>
       <View style={ {fontSize: 20,color: '#000F',textDecorationLine: 'underline', marginLeft:10}} />
@@ -147,12 +185,8 @@ const ProductScreen = ({ route}) => {
       // flex:1,
       // alignSelf: 'flex-end',
       position: 'relative',
-      left:-1,
-      marginLeft:-16,
-      right:-1,
       backgroundColor:'#FFF',
       // top:,
-      bottom:-70,
       padding: 10,
       flexDirection: 'row',
       justifyContent: 'space-around',
@@ -168,65 +202,23 @@ const ProductScreen = ({ route}) => {
       shadowRadius: 5,
      }}>
       
-      <View
-        style={{
-          backgroundColor: '#FF9F1C',
-          borderRadius: 20,
-          width:100,
-          height:40,
-          borderRadius: 16,
-          padding:20,
-          width:'50%',
-          padding: 10,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-        }}
-      >
-        <TouchableOpacity onPress={handleMinusPress}>
-          <View
-            style={{
-              borderRadius: 1,
-              padding: 1,
-            }}
-          >
-            {/* <Text style={{ color: 'white', fontSize: 40, textAlign: 'center' }}>-</Text> */}
-            <Icon name="remove-outline" size={25} color='white' />
-          </View>
-        </TouchableOpacity>
-        <Text style={{ color: 'white', fontSize: 20 }}>{count}</Text>
-        <TouchableOpacity onPress={handlePlusPress}>
-          <View
-            style={{
-              borderRadius: 1,
-              padding: 1,
-            }}
-          >
-            <Icon name="add-outline" size={25} color='white' />
-            
-          </View>
-        </TouchableOpacity>
-      </View>
-      
-          <TouchableOpacity onPress={handleAddToCart}>
-            <View
-              style={{
-                flex:1,
-                justifyContent:'center',
-                alignItems: 'center',
-                backgroundColor: '#FF9F1C',
-                borderRadius: 25,
-                marginHorizontal:10,
-                width:200,
-                height: 50,
-              }}> 
-              <Text style={{ color: 'white', fontSize: 20, alignContent: 'center' }}> Add to Cart</Text>
-            </View>
+      {isInCart ? (
+        <View style={styles.quantityContainer}>
+          <TouchableOpacity onPress={handleMinusPress}>
+            <Icon name="remove-outline" size={25} color="black" />
           </TouchableOpacity>
-                
-              </View>
-              
-            </View>
+          <Text style={styles.quantityText}>{count}</Text>
+          <TouchableOpacity onPress={handleAddToCart}>
+            <Icon name="add-outline" size={25} color="black" />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TouchableOpacity onPress={handleAddToCart} style={styles.addToCartButton}>
+          <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+        </TouchableOpacity>
+      )} 
+        </View>
+      </View>
      </>
       ) : (
         <Loader/>
@@ -304,6 +296,36 @@ const styles = StyleSheet.create({
     left:90,
     bottom: 0,
     zIndex: -1,
+  },
+  quantityContainer: {
+    backgroundColor: '#FF9F1C',
+    borderRadius: 20,
+    width:100,
+    height:40,
+    borderRadius: 16,
+    width:'50%',
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  quantityText: {
+    fontSize: 20,
+    marginHorizontal: 10,
+  },
+  addToCartButton: {
+    flex:1,
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor: '#FF9F1C',
+    borderRadius: 25,
+    marginHorizontal:10,
+    width:200,
+    height: 50,
+  },
+  addToCartButtonText: {
+    color: 'white',
+    fontSize: 20,
   },
 });
 

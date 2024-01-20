@@ -4,49 +4,19 @@ import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CartItem from '../Components/CartItem';
 
-const Cart = ({ navigation }) => {
-  const [userId, setUserId] = useState('');
-  const [user, setUser] = useState(null);
+const Cart = ({ navigation, user }) => {
   const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const fetchUserId = async () => {
-      try {
-        const storedUserId = await AsyncStorage.getItem('user_id');
-        setUserId(storedUserId || '6598525fea5dc95f82511a33');
-      } catch (error) {
-        console.error('Error fetching user Id:', error);
-      }
-    };
-    fetchUserId();
-  }, [userId]);
 
   useFocusEffect(
     React.useCallback(() => {
-      const fetchUserData = async () => {
-        try {
-          const data = await fetch(`http://192.168.1.4:8005/user/${userId}`)
-            .then((response) => response.json())
-            .then((responseJson) => {
-              if (responseJson) {
-                setUser(responseJson.data);
-                setCartItems(responseJson.data.cart);
-                console.log(cartItems);
-              } else {
-                console.error(responseJson.message);
-              }
-            });
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-
-      fetchUserData();
-    }, [userId])
+      if (user && user.cart) {
+        setCartItems(user.cart);
+      }
+    }, [user])
   );
 
   const totalCartPrice = cartItems.reduce((total, item) => {
-    if (item.price && typeof item.price === 'number') {
+    if (item.price && typeof item.price === 'number' && !isNaN(item.price)) {
       console.log(`Item price for ${item._id}: ${item.price}`);
       return total + item.price;
     } else {
@@ -69,7 +39,7 @@ const Cart = ({ navigation }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId,
+          userId: user._id,
         }),
       }).then((response) => response.json());
 
@@ -84,40 +54,61 @@ const Cart = ({ navigation }) => {
       <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: 'white' }}>
         <Text style={{ fontSize: 30, textAlign: 'center', marginTop: 30, marginBottom: 10 }}> Cart </Text>
       </View>
-      <ScrollView vertical showsVerticalScrollIndicator={false} style={{ height: '100%' }}>
-        <FlatList
-          data={cartItems}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <CartItem
-              cartItem={item}
-              onCustomize={() => {
-                console.log('Customize pressed for item:', item);
-              }}
-              onRemove={() => {
-                console.log('Remove pressed for item:', item);
-              }}
-            />
-          )}
-        />
-      </ScrollView>
-      <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: '#ddd' }}>
-        <Text style={{ fontSize: 20, textAlign: 'right' }}>Total: ₹{totalCartPrice}</Text>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
-        <TouchableOpacity onPress={handleRedirectToHomepage}>
-          <View style={{ backgroundColor: 'green', padding: 10, borderRadius: 5 }}>
-            <Text style={{ color: 'white' }}>Add Items</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleAddToOrderHistory}>
-          <View style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}>
-            <Text style={{ color: 'white' }}>Craft Quotation</Text>
-          </View>
-        </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+          <FlatList
+            data={cartItems}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <CartItem
+                cartItem={item}
+                onCustomize={() => {
+                  console.log('Customize pressed for item:', item);
+                }}
+                onRemove={async () => {
+                  const productId = item._id;
+                  await fetch(`http://192.168.1.4:8005/removeFromCart/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      user_id: user._id,
+                    }),
+                  })
+                    .then(response => {
+                      if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                      }
+                      return response.json();
+                    })
+                    .then(data => {
+                      console.log('API response:', data);
+                    })
+                    .catch(error => {
+                      console.error('Error calling API:', error);
+                    });
+                }}
+              />
+            )}
+          />
+        <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: '#ddd' }}>
+          <Text style={{ fontSize: 20, textAlign: 'right' }}>Total: ₹{totalCartPrice}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
+          <TouchableOpacity onPress={handleRedirectToHomepage}>
+            <View style={{ backgroundColor: 'green', padding: 10, borderRadius: 5 }}>
+              <Text style={{ color: 'white' }}>Add Items</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleAddToOrderHistory}>
+            <View style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}>
+              <Text style={{ color: 'white' }}>Craft Quotation</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
 
-export default Cart
+export default Cart;

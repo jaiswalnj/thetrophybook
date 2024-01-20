@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent,Alert } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Font from 'expo-font'; 
 import {LinearGradient} from 'expo-linear-gradient';
@@ -8,12 +8,11 @@ import { useNavigation } from '@react-navigation/native';
 
 const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
     const navigation = useNavigation();
-    const [like, setLike] = useState('heart-outline')
 
 
-    const onLikePress = async () => {
-      try {
-        const response = await fetch(`http://192.168.29.25:8005/addToLikedItems/${productId}`, {
+    const onRemove = async () => {
+      try{
+        const response = await fetch(`http://192.168.1.4:8005/removeFromLikedItems/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -22,20 +21,10 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor}) => 
             user_id: userId,
           }),
         });
-        const data = await response.json();
-        if (response.ok) {
-          if (like === 'heart-outline') {
-            setLike('heart');
-          } else {
-            setLike('heart-outline');
-          }
-          console.log('Item added to likedItems:', data.message);
-        } else {
-          console.error('Failed to add item to likedItems:', data.message);
-        }
-      } catch (error) {
-        console.error('Error:', error.message);
-      }
+        setRefreshKey((prevKey) => prevKey + 1);
+      }catch (error) {
+        console.error('Error toggling like status:', error);
+      } 
     };
     
     const BUTTON_SHRINK_FACTOR = .2;
@@ -79,8 +68,8 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor}) => 
         >
           <Image source={{ uri: imageUrl }} style={styles.image} />
   
-          <TouchableOpacity style={styles.likeButton} onPress={onLikePress}>
-            <Icon name={like} size={21} color="black" />
+          <TouchableOpacity style={styles.likeButton} onPress={onRemove}>
+          <Icon name='trash-outline' size={20} color='black'/>
           </TouchableOpacity>
         </LinearGradient>
   

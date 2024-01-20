@@ -9,6 +9,7 @@ const CartItem = ({ cartItem, onRemove }) => {
   const [customization1, setCustomization1] = useState();
   const [customization2, setCustomization2] = useState();
   const [customization3, setCustomization3] = useState();
+  const [customization4, setCustomization4] = useState();
   const [isEditing, setIsEditing] = useState(false);
   const cardItem = useRef();
 
@@ -113,8 +114,8 @@ const CartItem = ({ cartItem, onRemove }) => {
                 style={styles.note}
                 // style={`${styles.input} ${styles.note}`}
                 placeholder="Add Note"
-                value={customization3}
-                onChangeText={(text) => setCustomization3(text)}
+                value={customization4}
+                onChangeText={(text) => setCustomization4(text)}
               />
 
               <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -133,17 +134,15 @@ const CartItem = ({ cartItem, onRemove }) => {
               
             <View style={{flexDirection:'row', alignContent: 'space-between', }}>
               <TouchableOpacity onPress={() => handleCustomize()} style={{padding: 10}}>
-              <Icon name='create-outline' size={20} color='black'/>
+              <Icon name='create' size={22} color='black'/>
               </TouchableOpacity>
               
               
               <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: 10}}>
-              <Icon name='trash-bin-outline' size={20} color='black'/>
+              <Icon name='trash-outline' size={22} color='black'/>
               </TouchableOpacity>
               </View>
                   <Text >Quantity: {cartItem.qty}</Text>
-
-                  {/* the counter for item quantity */}
             </View>
          </View>
           )

@@ -1,17 +1,16 @@
 import React,{useEffect,useState} from 'react';
 import {View, Text, SafeAreaView, Button, Alert, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Card from '../Components/Card';
 import CategoryCard from '../Components/CategoryCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({user}) => {
+  const navigation = useNavigation();
   const [userId, setUserId] = useState('');
   const [userName, setUserName] = useState('');
-  const [user, setUser] = useState();
   const [likedItems, setLikedItems] = useState([]);
   const [activeIndex, setActiveIndex] = useState(2);
   const [products, setProducts] = useState([]);
@@ -33,6 +32,16 @@ const HomeScreen = ({ navigation }) => {
     setActiveIndex(index);
     setCategory(category);
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+        if (user && user.likedItems) {
+          setLikedItems(user.likedItems);
+          setUserName(user.username);
+          setUserId(user._id);
+        }
+    }, [user])
+  );
 
   const handleLikePress = async (productId, userId) => {
     try {
@@ -80,51 +89,13 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
-  useEffect(()=>{
-    const fetchUserData = async () => {
-      try {
-        const storedUserId = await AsyncStorage.getItem('user_id');
-        setUserId(storedUserId || '');
-        const storedUserName = await AsyncStorage.getItem('username');
-        setUserName(storedUserName || '');
-      } catch (error) {
-        console.error('Error fetching user Id:', error);
-      }
-    };
-    fetchUserData();
-  },[userId]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const fetchUserData = async () => {
-        try {
-          const data = await fetch(`http://192.168.1.4:8005/user/${userId}`)
-            .then((response) => response.json())
-            .then((responseJson) => {
-              if (responseJson) {
-                setUser(responseJson.data);
-                setLikedItems(responseJson.data.likedItems);
-                console.log(likedItems);
-              } else {
-                console.error(responseJson.message);
-              }
-            });
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-
-      fetchUserData();
-    }, [userId])
-  );
-
 
   useEffect(() => {
     const fetchProducts = async (category) => {
       try {
         setLoading(true);
-        setProducts([])
-        const response = await fetch(`http://192.168.29.25:8005/getProducts?category=${category}`);
+        setProducts([]);
+        const response = await fetch(`http://192.168.1.4:8005/getProducts?category=${category}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -161,7 +132,6 @@ const HomeScreen = ({ navigation }) => {
     };
         organizeTrophiesIntoSections();
   }, [products]);
-
 
 
   return (
@@ -214,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
                 {section.trophies.map((product, index) => (
                   <TouchableOpacity
                     key={product.productId}
-                    onPress={() => navigation.navigate('ProductDescription', { product,userId })}
+                    onPress={() => navigation.navigate('ProductDescription', { product,user})}
                   >
                     <Card
                       imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}`}

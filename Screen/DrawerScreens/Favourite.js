@@ -1,65 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Card from '../Components/Card';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Liked from '../Components/Liked';
 
-const Favourite = () => {
-  const [userId, setUserId] = useState('');
-  const [user, setUser] = useState(null);
+const Favourite = ({ user }) => {
   const [likedItems, setLikedItems] = useState([]);
+  const navigation = useNavigation();
 
-  useFocusEffect(React.useCallback(() => {
-    const fetchUserData = async () => {
-      try {
-        const storedUserId = await AsyncStorage.getItem('user_id');
-        setUserId(storedUserId || '');
-        const response = await fetch(`http://192.168.1.4:8005/user/${userId}`);
-        const data = await response.json();
-
-        if (response.ok) {
-          setUser(data.data);
-          setLikedItems(data.data.likedItems);
-          console.log(likedItems);
-        } else {
-          console.error(data.message);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (user && user.likedItems) {
+        setLikedItems(user.likedItems);
       }
-    };
-
-    fetchUserData();
-  }, [userId])
+    }, [user])
   );
+
   return (
-    <View style={{backgroundColor: '#FAFAFA', marginBottom:30 }}>
-      <View style={{paddingTop:10, alignItems: 'center', backgroundColor: 'white'}}>
-          <Text
-            style={{
-              fontSize: 30,
-              textAlign: 'center',
-              marginTop: 30,
-              marginBottom: 10,
-            }}> Favourite
-          </Text>
-        </View>
-        <FlatList
-          data={likedItems}
-          keyExtractor={(item) => item.itemId}
-          numColumns={2}
-          renderItem={({ item,index }) => (
+    <View style={{ backgroundColor: '#FAFAFA', marginBottom: 50 }}>
+      <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: 'white' }}>
+        <Text
+          style={{
+            fontSize: 30,
+            textAlign: 'center',
+            marginTop: 30,
+            marginBottom: 10,
+          }}> Favourite
+        </Text>
+      </View>
+      <FlatList
+        data={likedItems}
+        keyExtractor={(product) => product.productId}
+        numColumns={2}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity onPress={() => navigation.navigate('ProductDescription', { product: item, user })}>
             <Liked
               imageUrl={`data:${item.image.image.contentType};base64,${base64.fromByteArray(item.image.image.data.data)}`}
               title={item.trophyName}
+              userId={user._id}
+              productId={item._id}
               price={item.price}
               liked={true}
               useCustomColor={index % 3 === 0}
             />
-          )}
-        />
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 };

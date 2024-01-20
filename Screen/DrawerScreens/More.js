@@ -1,49 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity,Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
-import {PermissionsAndroid} from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 
-const More = ({navigation}) => {
-  const [userId, setUserId] = useState('');
+const More = ({user}) => {
   const [userName, setUserName] = useState('');
-  const [user, setUser] = useState([]);
+  const navigation = useNavigation();
 
-  useEffect(()=>{
-    const fetchUserId = async () => {
-      try {
-        const storedUserId = await AsyncStorage.getItem('user_id');
-        setUserId(storedUserId || '');
-        const storedUserName = await AsyncStorage.getItem('username');
-        setUserName(storedUserName || '');
-      } catch (error) {
-        console.error('Error fetching user Id:', error);
-      }
-    };
-    fetchUserId();
-  },[userId]);
-
-  useFocusEffect(React.useCallback(() => {
-    const fetchUserData = async () => {
-      try {
-        const data = await fetch(`http://192.168.29.25:8005/user/${userId}`)
-          .then((response)=> response.json())
-          .then((responseJson)=>{
-            if (responseJson) {
-              setUser(responseJson.data);
-              console.log(user);
-            } else {
-              console.error(responseJson.message);
-            }
-          })
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-    fetchUserData();
-  }, [userId])
+  useFocusEffect(
+    React.useCallback(() => {
+        if (user && user.username) {
+          setUserName(user.username);
+        }
+    }, [user])
   );
 
   const handleLogout= () => {

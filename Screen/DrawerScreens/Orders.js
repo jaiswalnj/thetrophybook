@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-const Orders = ({orderHistory}) => {
+const Orders = ({route}) => {
     const navigation = useNavigation();
   return (
     <View>

@@ -1,4 +1,6 @@
-import React from 'react';
+import React,{useEffect,useRef ,useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,6 +17,59 @@ const Tab = createBottomTabNavigator();
 
 const DraweerNavigatorRoutes = () => {
   const navigation = useNavigation();
+  const [userId, setUserId] = useState('');
+  const [user, setUser] = useState();
+
+  useEffect(()=>{
+    const fetchUserId = async () => {
+      try {
+        const storedUserId = await AsyncStorage.getItem('user_id');
+        setUserId(storedUserId || '');
+      } catch (error) {
+        console.error('Error fetching user Id:', error);
+      }
+    };
+    fetchUserId();
+  },[]);
+
+  const isMounted = useRef(true);
+
+  const fetchUserData = async () => {
+    try {
+      const data = await fetch(`http://192.168.1.4:8005/user/${userId}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson) {
+            setUser(responseJson.data);
+          } else {
+            console.error(responseJson.message);
+          }
+        });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUserData();
+      return () => {
+        isMounted.current = false;
+      };
+    }, [userId])
+  );
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', () => {
+      if (isMounted.current) {
+        fetchUserData();
+      }
+    });
+
+    return () => {
+      unsubscribe(); // Clean up the subscription when the component unmounts
+    };
+  }, [navigation, fetchUserData]);
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -47,28 +102,28 @@ const DraweerNavigatorRoutes = () => {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          children={() => <HomeScreen user={user} />}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Home" {...props} />,
           }}
         />
          <Tab.Screen
           name="Favourite"
-          component={Favourite}
+          children={() => <Favourite user={user} />}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Favourite" {...props} />,
           }}
         />
         <Tab.Screen
           name="Cart"
-          component={Cart}
+          children={() => <Cart user={user} />}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Cart" {...props} />,
           }}
         />
         <Tab.Screen
           name="More"
-          component={More}
+          children={() => <More user={user} />}
           options={{
             tabBarButton: props => <CustomTabBarButton route="More" {...props} />,
           }}

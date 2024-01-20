@@ -1,42 +1,10 @@
 import React,{useState} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TouchableOpacityComponent, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as Font from 'expo-font'; 
 import {LinearGradient} from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
 
 
 const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked, onPress}) => {
-    const navigation = useNavigation();
-    const [like, setLike] = useState('heart-outline')
-
-
-    const onLikePress = async () => {
-      try {
-        const response = await fetch(`http://192.168.1.2:8005/addToLikedItems/${productId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            user_id: userId,
-          }),
-        });
-        const data = await response.json();
-        if (response.ok) {
-          if (like === 'heart-outline') {
-            setLike('heart');
-          } else {
-            setLike('heart-outline');
-          }
-          console.log('Item added to likedItems:', data.message);
-        } else {
-          console.error('Failed to add item to likedItems:', data.message);
-        }
-      } catch (error) {
-        console.error('Error:', error.message);
-      }
-    };
     
     const BUTTON_SHRINK_FACTOR = .2;
 
