@@ -1,25 +1,95 @@
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import apiConfig from '../../apiConfig';
+    
+const Orders = ({ route }) => {
+  const { orderHistory } = route.params;
+  const navigation = useNavigation();
+  console.log(orderHistory);
 
+  const renderOrderItem = ({ item }) => (
+    <View style={styles.orderItem}>
+      <Text style={styles.orderId}>Order ID: {item._id}</Text>
+      <Text style={styles.orderDate}>Order Date: {new Date(item.date_ordered).toLocaleDateString()}</Text>
 
-const Orders = ({route}) => {
-    const navigation = useNavigation();
+      {item.trophy && (
+        <View style={styles.trophyContainer}>
+          {/* <Image source={{ uri: `data:${item.trophy.image[0].image.contentType};base64,${item.trophy.image[0].image.data}` }} style={styles.trophyImage} /> */}
+          <View style={styles.trophyDetails}>
+            <Text>Trophy Name: {item.trophy.trophyName}</Text>
+            <Text>Category: {item.trophy.category}</Text>
+            <Text>Price: ${item.trophy.price}</Text>
+          </View>
+        </View>
+      )}
+
+      <Text>Quantity: {item.qty}</Text>
+      <Text>Text on Trophy: {item.text_on_trophy}</Text>
+      <Text>Occasion: {item.occasion}</Text>
+      <Text>Additional Detail: {item.additional_detail}</Text>
+    </View>
+  );
+    
   return (
     <View>
-      <TouchableOpacity style={styles.back} onPress={() => navigation.replace('DrawerNavigatorRoutes')}>
+      <View style={{paddingTop: 44,paddingLeft: 15,elevation: 4,zIndex: 4,position: 'absolute'}}>
+        <TouchableOpacity onPress={() => navigation.replace('DrawerNavigatorRoutes')}>
         <Icon name="arrow-back-sharp" size={30} color='black' />
-      </TouchableOpacity>
-    </View>
-  )
-}
+        </TouchableOpacity>
+      </View>
+      <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: 'white' }}>
+        <Text style={{ fontSize: 30, textAlign: 'center', marginTop: 30, marginBottom: 10 }}>Orders</Text>
+      </View>
+
+      <FlatList
+        data={orderHistory}
+        keyExtractor={(item) => item._id}
+        renderItem={renderOrderItem}
+      />
+
+        </View>
+      );
+    };
+    
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FAFAFA',
+  },
   back: {
     paddingTop: 40,
     paddingBottom: 10,
   },
-  });
+  orderItem: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+    marginBottom: 16,
+  },
+  orderId: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  orderDate: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  trophyContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  trophyImage: {
+    width: 80,
+    height: 80,
+    marginRight: 8,
+    borderRadius: 4,
+  },
+  trophyDetails: {
+    flex: 1,
+  },
+});
 
-export default Orders
+export default Orders;

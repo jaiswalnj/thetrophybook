@@ -106,7 +106,8 @@ const ProductScreen = ({ route}) => {
           colors={['#FB7D7D', '#FF5150']}
           start={{ x: 0.04, y: 0.96 }}
           end={{ x: 0.82, y: 0.18 }}
-          style={styles.cardOverlay} ></LinearGradient>
+          style={styles.cardOverlay} >
+          </LinearGradient>
         </View>
         <View style={{height:'60%', width:'100%'}}>
         <ScrollView vertical showsVerticalScrollIndicator={false}>
@@ -121,21 +122,7 @@ const ProductScreen = ({ route}) => {
           <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-around', width: '100%', paddingHorizontal: 10,}}>           
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex:1, flexDirection: 'row', }}>
               {sizes.map((s, i) => (
-                <TouchableOpacity
-                  key={i}
-                  style={{
-                    backgroundColor: size === s ? '#FF9F1C' : '#FFFFFF',
-                    paddingHorizontal: 24,
-                    paddingVertical: 8,
-                    borderRadius: 5,
-                    marginRight: 10,
-                    shadowColor: 'black',
-                    shadowOpacity: 0.3,
-                    shadowOffset: { width: 4, height: 4 },
-                    shadowRadius: 3,  
-                  }}
-                  onPress={() => setSize(s)}
-                >
+                <TouchableOpacity key={i} style={[styles.sizedesign,{backgroundColor: size === s ? '#FF9F1C' : '#FFFFFF'}]} onPress={() => setSize(s)}>
                   <Text style={{ color: size === s ? '#FFFFFF' : '#000000', fontSize: 24 }}>{s}"</Text>
                 </TouchableOpacity>
               ))}
@@ -296,6 +283,16 @@ const styles = StyleSheet.create({
   addToCartButtonText: {
     color: 'white',
     fontSize: 20,
+  },
+  sizedesign: {
+    paddingHorizontal: 24,
+    paddingVertical: 8,
+    borderRadius: 5,
+    marginRight: 10,
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 4, height: 4 },
+    shadowRadius: 3,  
   },
 });
 

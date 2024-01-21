@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CartItem from '../Components/CartItem';
 import apiConfig from '../../apiConfig';
 
-const Cart = ({ navigation, user }) => {
+const Cart = ({user }) => {
+  const navigation = useNavigation();
   const [cartItems, setCartItems] = useState([]);
 
 
@@ -25,13 +26,9 @@ const Cart = ({ navigation, user }) => {
     return total;
   }, 0);
 
-  const handleRedirectToHomepage = () => {
-    navigation.navigate('DrawerNavigatorRoutes');
-  };
-
   const handleAddToOrderHistory = async () => {
     try {
-      const data = await fetch('${apiConfig.baseURL}/addToOrderHistory', {
+      const data = await fetch(`${apiConfig.baseURL}/addToOrderHistory`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +45,7 @@ const Cart = ({ navigation, user }) => {
   };
 
   return (
-    <View style={{ backgroundColor: '#FAFAFA', flex: 1 }}>
+    <View style={{ backgroundColor: '#FAFAFA', flex: 1, marginBottom:85 }}>
       <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: 'white' }}>
         <Text style={{ fontSize: 30, textAlign: 'center', marginTop: 30, marginBottom: 10 }}> Cart </Text>
       </View>
@@ -83,17 +80,27 @@ const Cart = ({ navigation, user }) => {
               />
             )}
           />
-        <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: '#ddd' }}>
-          <Text style={{ fontSize: 20, textAlign: 'right' }}>Total: ₹{totalCartPrice}</Text>
         </View>
+        <View style={{backgroundColor:'#FFF8DF', margin:10, borderRadius:15}}>
+
+          <View style={{padding:10}}>
+            <Text style={{ fontSize: 15, textAlign: 'left', padding:5}}>Price Details</Text>
+            <View style={{padding:3, borderTopWidth: 0.5, borderBottomWidth: 0.5, flexDirection: 'row', justifyContent:'space-between'}}>
+              <Text style={{ fontSize: 15, textAlign: 'right' }}>Total: </Text>
+              <Text style={{ fontSize: 15, textAlign: 'right' }}>₹{totalCartPrice}</Text>
+            </View>
+          </View>
+
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
-          <TouchableOpacity onPress={handleRedirectToHomepage}>
-            <View style={{ backgroundColor: 'green', padding: 10, borderRadius: 5 }}>
+
+          <TouchableOpacity onPress={() => {navigation.navigate('HomeScreen')}}>
+            <View style={{ backgroundColor: '#FF9F1C', padding: 10, height:40, width:140, borderRadius: 20, alignItems:'center' }}>
               <Text style={{ color: 'white' }}>Add Items</Text>
             </View>
           </TouchableOpacity>
+
           <TouchableOpacity onPress={handleAddToOrderHistory}>
-            <View style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}>
+            <View style={{ backgroundColor: '#FF9F1C', padding: 10, height:40, width:140, borderRadius: 20, alignItems:'center' }}>
               <Text style={{ color: 'white' }}>Craft Quotation</Text>
             </View>
           </TouchableOpacity>

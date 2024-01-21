@@ -6,12 +6,14 @@ import apiConfig from '../../apiConfig';
 
 const More = ({user}) => {
   const [userName, setUserName] = useState('');
+  const [orderHistory, setOrderHistory] = useState();
   const navigation = useNavigation();
 
   useFocusEffect(
     React.useCallback(() => {
         if (user && user.username) {
           setUserName(user.username);
+          setOrderHistory(user.orderHistory);
         }
     }, [user])
   );
@@ -44,7 +46,7 @@ const More = ({user}) => {
 
 
       <View style={styles.orderSummary}>
-        <TouchableOpacity style={styles.orderButton} onPress={() => {navigation.replace('Orders')}}>
+        <TouchableOpacity style={styles.orderButton} onPress={() => {navigation.replace('Orders',{orderHistory})}}>
           <Text style={styles.orderText}>Orders</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.orderButton}>
