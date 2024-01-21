@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import apiConfig from '../apiConfig';
 
 const ForgotPassword = ({navigation}) => {
   const [email, setEmail] = useState('');
 
   const handleResetPassword = async() => {
     try{
-        const data = await fetch(`http://192.168.1.4:8005/forgetPassword` , { 
+        const data = await fetch(`${apiConfig.baseURL}/forgetPassword` , { 
           method:"POST",
           headers:{
             "Content-type":"application/json"

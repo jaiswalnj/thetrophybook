@@ -17,8 +17,8 @@ const Favourite = ({ user }) => {
   );
 
   return (
-    <View style={{ backgroundColor: '#FAFAFA', marginBottom: 50 }}>
-      <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: 'white' }}>
+    <View style={{ marginBottom: 50, }}>
+      <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
         <Text
           style={{
             fontSize: 30,

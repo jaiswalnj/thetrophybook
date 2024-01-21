@@ -1,6 +1,7 @@
 import React, {useState, createRef} from 'react';
 import {StyleSheet, TextInput, View, Text, Image, KeyboardAvoidingView, Keyboard, TouchableOpacity, ScrollView, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import apiConfig from '../apiConfig';
 
 import Loader from './Components/Loader';
 
@@ -36,7 +37,7 @@ const RegisterScreen = (props) => {
     }
     setLoading(true);
     try{
-      const data = await fetch(`http://192.168.1.3:8005/signup` , { 
+      const data = await fetch(`${apiConfig.baseURL}/signup` , { 
         method:"POST",
         headers:{
           "Content-type":"application/json"

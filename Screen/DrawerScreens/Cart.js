@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import CartItem from '../Components/CartItem';
+import apiConfig from '../../apiConfig';
 
 const Cart = ({ navigation, user }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -33,7 +33,7 @@ const Cart = ({ navigation, user }) => {
 
   const handleAddToOrderHistory = async () => {
     try {
-      const data = await fetch('http://192.168.1.4:8005/addToOrderHistory', {
+      const data = await fetch('${apiConfig.baseURL}/addToOrderHistory', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

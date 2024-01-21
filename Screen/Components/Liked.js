@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as Font from 'expo-font'; 
+import apiConfig from '../../apiConfig';
 import {LinearGradient} from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,7 +12,7 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor}) => 
 
     const onRemove = async () => {
       try{
-        const response = await fetch(`http://192.168.1.4:8005/removeFromLikedItems/${productId}`, {
+        const response = await fetch(`${apiConfig.baseURL}/removeFromLikedItems/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

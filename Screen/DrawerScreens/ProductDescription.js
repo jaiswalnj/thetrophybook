@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
 import { LinearGradient } from 'expo-linear-gradient';
+import apiConfig from '../../apiConfig';
 
 const ProductScreen = ({ route}) => {
   const navigation = useNavigation();
@@ -38,7 +39,7 @@ const ProductScreen = ({ route}) => {
         setCount(count - 1);
       }
       try {
-        const response = await fetch(`http://192.168.1.4:8005/minus-cart-qty/${productId}`, {
+        const response = await fetch(`${apiConfig.baseURL}/minus-cart-qty/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

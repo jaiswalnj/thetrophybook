@@ -1,5 +1,6 @@
 import React, {useState, createRef} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import apiConfig from '../apiConfig';
 import {
   StyleSheet,
   TextInput,
@@ -33,7 +34,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const data = await fetch(`http://192.168.1.4:8005/login`, {
+    const data = await fetch(`${apiConfig.baseURL}/login`, {
       method:"POST",
       headers:{
         "content-type":"application/json"

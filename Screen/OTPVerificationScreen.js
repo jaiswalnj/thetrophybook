@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, Image, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import apiConfig from '../apiConfig';
 
 const OTPVerificationScreen = ({navigation }) => {
   const [otp, setOtp] = useState(['', '', '', '']);
@@ -23,7 +24,7 @@ const OTPVerificationScreen = ({navigation }) => {
     const enteredOTP = otp.join('');
     console.log(enteredOTP,userId);
     try{
-      const data = await fetch(`http://192.168.1.3:8005/verifyOtp` , { 
+      const data = await fetch(`${apiConfig.baseURL}/verifyOtp` , { 
         method:"POST",
         headers:{
           "Content-type":"application/json"

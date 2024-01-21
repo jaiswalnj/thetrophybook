@@ -1,11 +1,12 @@
 import React,{useEffect,useState} from 'react';
-import {View, Text, SafeAreaView, Button, Alert, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Card from '../Components/Card';
 import CategoryCard from '../Components/CategoryCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
+import apiConfig from '../../apiConfig';
 
 const HomeScreen = ({user}) => {
   const navigation = useNavigation();
@@ -48,7 +49,7 @@ const HomeScreen = ({user}) => {
       const isLiked = likedItems.some((item) => item._id === productId);
   
       if (isLiked) {
-        const response = await fetch(`http://192.168.1.4:8005/removeFromLikedItems/${productId}`, {
+        const response = await fetch(`${apiConfig.baseURL}/removeFromLikedItems/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ const HomeScreen = ({user}) => {
           console.error(data.message);
         }
       } else {
-        const response = await fetch(`http://192.168.1.4:8005/addToLikedItems/${productId}`, {
+        const response = await fetch(`${apiConfig.baseURL}/addToLikedItems/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -95,9 +96,8 @@ const HomeScreen = ({user}) => {
       try {
         setLoading(true);
         setProducts([]);
-        const response = await fetch(`http://192.168.1.4:8005/getProducts?category=${category}`);
+        const response = await fetch(`${apiConfig.baseURL}/getProducts?category=${category}`);
         const data = await response.json();
-
         if (response.ok) {
           setProducts([...data]);
           console.log(products);

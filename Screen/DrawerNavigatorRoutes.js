@@ -12,6 +12,7 @@ import HomeScreen from './DrawerScreens/HomeScreen';
 import Cart from './DrawerScreens/Cart';
 import Favourite from './DrawerScreens/Favourite';
 import More from './DrawerScreens/More';
+import apiConfig from '../apiConfig';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +37,7 @@ const DraweerNavigatorRoutes = () => {
 
   const fetchUserData = async () => {
     try {
-      const data = await fetch(`http://192.168.1.4:8005/user/${userId}`)
+      const data = await fetch(`${apiConfig.baseURL}/user/${userId}`)
         .then((response) => response.json())
         .then((responseJson) => {
           if (responseJson) {

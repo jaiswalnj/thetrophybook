@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {LinearGradient} from 'expo-linear-gradient';
+import apiConfig from '../../apiConfig';
 
 
 const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked, onPress}) => {
@@ -10,7 +11,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
 
     const handleAddToCart = async () => {
       try {
-        const data = await fetch(`http://192.168.1.4:8005/addToCart/${productId}`, {
+        const data = await fetch(`${apiConfig.baseURL}/addToCart/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

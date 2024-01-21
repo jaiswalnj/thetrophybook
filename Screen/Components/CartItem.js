@@ -3,6 +3,7 @@ import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'reac
 import base64 from 'base64-js';
 import {LinearGradient} from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import apiConfig from '../../apiConfig';
 
 const CartItem = ({ cartItem, onRemove }) => {
   const [quantity, setQuantity] = useState(cartItem.qty);
