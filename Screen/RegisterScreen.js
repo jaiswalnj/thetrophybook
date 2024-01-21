@@ -49,7 +49,8 @@ const RegisterScreen = (props) => {
         console.log(responseJson.status);
         if (responseJson.status === 'pending') {
           props.navigation.navigate('OTP');
-          AsyncStorage.setItem('userId',responseJson.data.user_id);
+
+          AsyncStorage.setItem('userId',responseJson.data.userId);
         } else {
           setErrortext(responseJson.msg);
         }

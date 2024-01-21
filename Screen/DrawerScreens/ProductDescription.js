@@ -248,7 +248,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16, 
     left:90,
-    bottom: 0,
+    bottom: 5,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 500, height: 500 },
+    shadowRadius: 5,
     zIndex: -1,
   },
     buttonContainer: {

@@ -8,21 +8,12 @@ const OTPVerificationScreen = ({navigation }) => {
   const [userId, setUserId] = useState();
   const inputRefs = useRef([]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const storedUserId = await AsyncStorage.getItem('userId');
-        setUserId(storedUserId || '');
-      } catch (error) {
-        console.error('Error fetching user Id:', error);
-      }
-    };
-    fetchUserData();
-  }, []); 
 
   const handleOTP = async() => {
     const enteredOTP = otp.join('');
     console.log(enteredOTP,userId);
+    const storedUserId = await AsyncStorage.getItem('userId');
+    setUserId(storedUserId || '');
     try{
       const data = await fetch(`${apiConfig.baseURL}/verifyOtp` , { 
         method:"POST",
@@ -89,7 +80,7 @@ const OTPVerificationScreen = ({navigation }) => {
               width: '50%',
               height: 100,
               resizeMode: 'contain',
-              margin: 30,
+              margin: 20,
             }}
           />
       <Text style={styles.title}>Enter the OTP sent to your email</Text>
@@ -122,7 +113,6 @@ const OTPVerificationScreen = ({navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF'
   },

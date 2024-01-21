@@ -136,7 +136,7 @@ const HomeScreen = ({user}) => {
 
 
   return (
-    <SafeAreaView style={{flex: 1, marginBottom:35}}>
+    <SafeAreaView style={{flex: 1, marginBottom:45}}>
       <Loader loading={loading} />
       <View style={{flex: 1, padding: 12, backgroundColor: '#FAFAFA'}}>
         <View style={{paddingTop:5 ,flexDirection: 'row', justifyContent: 'space-between'}}>

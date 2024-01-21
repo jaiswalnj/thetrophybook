@@ -88,7 +88,7 @@ const DraweerNavigatorRoutes = () => {
           tabBarIcon: ({ color, focused }) => {
             let iconName;
 
-            if (route.name === 'Home') {
+            if (route.name === 'HomeScreen') {
               iconName = focused ? 'home' : 'home-outline';
             } else if (route.name === 'Category') {
               iconName = focused ? 'ios-list' : 'ios-list-outline';
@@ -105,12 +105,19 @@ const DraweerNavigatorRoutes = () => {
         })}
       >
         <Tab.Screen
-          name="Home"
+          name="HomeScreen"
           children={() => <HomeScreen user={user} />}
           options={{
-            tabBarButton: props => <CustomTabBarButton route="Home" {...props} />,
+            tabBarButton: props => <CustomTabBarButton route="HomeScreen" {...props} />,
           }}
         />
+        <Tab.Screen
+          name="Category"
+          children={() => <Category/>}
+          options={{
+            tabBarButton: props => <CustomTabBarButton route="Category" {...props} />,
+          }}
+          />
          <Tab.Screen
           name="Favourite"
           children={() => <Favourite user={user} />}
@@ -142,7 +149,7 @@ export default DraweerNavigatorRoutes;
 const styles = StyleSheet.create({
   tabBarStyle: {
     position: 'absolute',
-    height: 70,
+    height: 80,
     paddingLeft: 10,
     paddingRight: 10,
   }
