@@ -7,6 +7,7 @@ import apiConfig from '../../apiConfig';
 const Cart = ({ navigation, user }) => {
   const [cartItems, setCartItems] = useState([]);
 
+
   useFocusEffect(
     React.useCallback(() => {
       if (user && user.cart) {
@@ -57,10 +58,8 @@ const Cart = ({ navigation, user }) => {
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
               <CartItem
+                userId={user._id}
                 cartItem={item}
-                onCustomize={() => {
-                  console.log('Customize pressed for item:', item);
-                }}
                 onRemove={async () => {
                   try {
                     const productId = item.trophy._id;

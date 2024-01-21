@@ -5,17 +5,70 @@ import {LinearGradient} from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import apiConfig from '../../apiConfig';
 
-const CartItem = ({ cartItem, onRemove }) => {
+const CartItem = ({userId, cartItem, onRemove }) => {
   const [quantity, setQuantity] = useState(cartItem.qty);
   const [customization1, setCustomization1] = useState();
-  const [customization2, setCustomization2] = useState();
-  const [customization3, setCustomization3] = useState();
-  const [customization4, setCustomization4] = useState();
+  const [customization2, setCustomization2] = useState(cartItem.text_on_trophy);
+  const [customization3, setCustomization3] = useState(cartItem.occasion);
+  const [customization4, setCustomization4] = useState(cartItem.additional_detail);
   const [isEditing, setIsEditing] = useState(false);
   const cardItem = useRef();
 
-  const handlePlusPress = () => {setQuantity(quantity + 1);};
-  const handleMinusPress = () => {if (quantity > 0) {setQuantity(quantity - 1);}};
+  const handleMinusPress = async() => {
+    const productId=cartItem.trophy._id;
+    if (quantity > 0) {
+      await fetch(`${apiConfig.baseURL}/minus-cart-qty/${productId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userId,
+        }),
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error('API error:', response.status, response.statusText);
+          throw new Error('API error');
+        }
+      })
+      .then(responseData => {
+        console.log(responseData);
+        setQuantity(quantity - 1);
+      })
+      .catch(error => {
+        console.error('Error calling API:', error);
+      });
+    }
+  };
+  
+
+const handlePlusPress = async () => {
+  const productId=cartItem.trophy._id;
+  try {
+    const data = await fetch(`${apiConfig.baseURL}/addToCart/${productId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+      })
+    }).then((response) => response.json())
+    .then((responseJson) => {
+    if (responseJson.message === 'Item added to the cart') {
+      setQuantity(quantity + 1);
+    } else {
+      Alert.alert('Error', data.message || 'Failed to add item to the cart');
+    }
+  })
+  } catch (error) {
+    console.error('Error adding item to the cart:', error.message);
+    Alert.alert('Error', 'Something went wrong. Please try again.');
+  }
+};
 
   useEffect( () => {
     if (isEditing){
@@ -25,21 +78,35 @@ const CartItem = ({ cartItem, onRemove }) => {
     }
   },[isEditing])
 
-
-
-  const handleSave = () => {
-    setIsEditing(false);
-    
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`${apiConfig.baseURL}/cart-item-edit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          cartItemId: cartItem._id,
+          text_on_trophy: customization2,
+          occasion: customization3,
+          additional_detail: customization4,
+        }),
+      });
+  
+      if (response.ok) {
+        const responseData = await response.json();
+        setIsEditing(false);
+      } else {
+        console.error('API error:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error calling API:', error);
+    }
   };
 
   const handleCustomize = () => {
     setIsEditing(true);
-    // console.log(cardItem.current); checking the ref call
-    
-  };
-
-  const handleQuantityChange = (newQuantity) => {
-    setQuantity(newQuantity);
   };
 
   return (
@@ -100,20 +167,19 @@ const CartItem = ({ cartItem, onRemove }) => {
             <View style={{ flex:1, backgroundColor: '#FFF'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Customization 2"
+                placeholder="Text on trophy"
                 value={customization2}
                 onChangeText={(text) => setCustomization2(text)}
               />
               <TextInput
                 style={styles.input}
-                placeholder="Customization 3"
+                placeholder="occasion"
                 value={customization3}
                 onChangeText={(text) => setCustomization3(text)}
               />
               <View style={{width: '100%' ,height: 40, flexDirection:'row', alignItems: 'center', justifyContent: 'space-between'}}>
               <TextInput
                 style={styles.note}
-                // style={`${styles.input} ${styles.note}`}
                 placeholder="Add Note"
                 value={customization4}
                 onChangeText={(text) => setCustomization4(text)}
