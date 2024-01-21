@@ -16,16 +16,13 @@ const Cart = ({ navigation, user }) => {
   );
 
   const totalCartPrice = cartItems.reduce((total, item) => {
-    if (item.price && typeof item.price === 'number' && !isNaN(item.price)) {
-      console.log(`Item price for ${item._id}: ${item.price}`);
-      return total + item.price;
+    if (item.trophy.price && typeof item.trophy.price === 'number' && !isNaN(item.trophy.price)) {
+      return total + item.trophy.price;
     } else {
-      console.warn(`Invalid price for item ${item._id}: ${item.price}`);
+      console.warn(`Invalid price for item ${item.trophy._id}: ${item.trophy.price}`);
     }
     return total;
   }, 0);
-
-  console.log('Total Cart Price:', totalCartPrice);
 
   const handleRedirectToHomepage = () => {
     navigation.navigate('DrawerNavigatorRoutes');
@@ -65,29 +62,25 @@ const Cart = ({ navigation, user }) => {
                   console.log('Customize pressed for item:', item);
                 }}
                 onRemove={async () => {
-                  const productId = item._id;
-                  await fetch(`http://192.168.1.4:8005/removeFromCart/${productId}`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      user_id: user._id,
-                    }),
-                  })
-                    .then(response => {
-                      if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                      }
-                      return response.json();
-                    })
-                    .then(data => {
-                      console.log('API response:', data);
-                    })
-                    .catch(error => {
-                      console.error('Error calling API:', error);
+                  try {
+                    const productId = item.trophy._id;
+                    const response = await fetch(`${apiConfig.baseURL}/removeFromCart/${productId}`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        user_id: user._id,
+                      }),
                     });
-                }}
+                    if (!response.ok) {
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                  } catch (error) {
+                    console.error('Error calling API:', error);
+                  }
+                }}                
               />
             )}
           />

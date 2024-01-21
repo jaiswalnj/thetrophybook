@@ -98,6 +98,7 @@ const HomeScreen = ({user}) => {
         setProducts([]);
         const response = await fetch(`${apiConfig.baseURL}/getProducts?category=${category}`);
         const data = await response.json();
+
         if (response.ok) {
           setProducts([...data]);
           console.log(products);

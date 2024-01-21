@@ -54,7 +54,10 @@ const DraweerNavigatorRoutes = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchUserData();
+      const intervalId = setInterval(fetchUserData, 3000);
+
       return () => {
+        clearInterval(intervalId);
         isMounted.current = false;
       };
     }, [userId])
@@ -67,7 +70,7 @@ const DraweerNavigatorRoutes = () => {
     });
 
     return () => {
-      unsubscribe(); // Clean up the subscription when the component unmounts
+      unsubscribe();
     };
   }, [navigation, fetchUserData]);
 
@@ -139,7 +142,7 @@ export default DraweerNavigatorRoutes;
 const styles = StyleSheet.create({
   tabBarStyle: {
     position: 'absolute',
-    height: 80,
+    height: 70,
     paddingLeft: 10,
     paddingRight: 10,
   }
