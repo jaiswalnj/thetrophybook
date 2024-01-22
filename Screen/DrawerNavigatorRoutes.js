@@ -118,14 +118,11 @@ const DraweerNavigatorRoutes = () => {
         />
         <Tab.Screen
           name="Category"
-          children={() => <><HomeScreen user={user} /><CategoryOverlay/></>}
+          children={() => <><HomeScreen user={user} /><CategoryOverlay isVisible={true}/></>}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Category" onPress={() => setCategoryOverlayVisible(true)} {...props} />,
           }}
           />
-
-
-
          <Tab.Screen
           name="Favourite"
           children={() => <Favourite user={user} />}

@@ -7,7 +7,7 @@ import apiConfig from '../../apiConfig';
 
 const CartItem = ({userId, cartItem, onRemove }) => {
   const [quantity, setQuantity] = useState(cartItem.qty);
-  const [customization1, setCustomization1] = useState();
+  const [customization1, setCustomization1] = useState(cartItem.year);
   const [customization2, setCustomization2] = useState(cartItem.text_on_trophy);
   const [customization3, setCustomization3] = useState(cartItem.occasion);
   const [customization4, setCustomization4] = useState(cartItem.additional_detail);

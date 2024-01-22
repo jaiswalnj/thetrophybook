@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
   categoryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignContent:'center',
     marginTop:10,
     marginBottom: 45,
   },
