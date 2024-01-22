@@ -94,13 +94,13 @@ const Cart = ({user }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
 
           <TouchableOpacity onPress={() => {navigation.navigate('HomeScreen')}}>
-            <View style={{ backgroundColor: '#FF9F1C', padding: 10, height:40, width:140, borderRadius: 20, alignItems:'center' }}>
+            <View style={{ backgroundColor: '#FF9F1C', padding: 10, height:40, width:140, borderRadius: 16, alignItems:'center' }}>
               <Text style={{ color: 'white' }}>Add Items</Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleAddToOrderHistory}>
-            <View style={{ backgroundColor: '#FF9F1C', padding: 10, height:40, width:140, borderRadius: 20, alignItems:'center' }}>
+            <View style={{ backgroundColor: '#FF9F1C', padding: 10, height:40, width:140, borderRadius: 16, alignItems:'center' }}>
               <Text style={{ color: 'white' }}>Craft Quotation</Text>
             </View>
           </TouchableOpacity>

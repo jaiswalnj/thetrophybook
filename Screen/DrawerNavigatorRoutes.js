@@ -2,7 +2,7 @@ import React,{useEffect,useRef ,useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, View, Modal, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomTabBarButton from './Components/CustomTabBarButton';
 import CustomTabBar from './Components/CustomTabBar';
@@ -13,13 +13,18 @@ import Cart from './DrawerScreens/Cart';
 import Favourite from './DrawerScreens/Favourite';
 import More from './DrawerScreens/More';
 import apiConfig from '../apiConfig';
+import CategoryOverlay from './DrawerScreens/CategoryOverlay';
 
 const Tab = createBottomTabNavigator();
+
+
 
 const DraweerNavigatorRoutes = () => {
   const navigation = useNavigation();
   const [userId, setUserId] = useState('');
   const [user, setUser] = useState();
+  const [categoryOverlayVisible, setCategoryOverlayVisible] = useState(false);
+
 
   useEffect(()=>{
     const fetchUserId = async () => {
@@ -113,11 +118,14 @@ const DraweerNavigatorRoutes = () => {
         />
         <Tab.Screen
           name="Category"
-          children={() => <Category/>}
+          children={() => <CategoryOverlay/>}
           options={{
-            tabBarButton: props => <CustomTabBarButton route="Category" {...props} />,
+            tabBarButton: props => <CustomTabBarButton route="Category" onPress={() => setCategoryOverlayVisible(true)} {...props} />,
           }}
           />
+
+
+
          <Tab.Screen
           name="Favourite"
           children={() => <Favourite user={user} />}
@@ -140,6 +148,11 @@ const DraweerNavigatorRoutes = () => {
           }}
         />
       </Tab.Navigator>
+
+      <CategoryOverlay
+        isVisible={categoryOverlayVisible}
+        onClose={() => setCategoryOverlayVisible(false)}
+      />
     </View>
   );
 };
@@ -152,5 +165,6 @@ const styles = StyleSheet.create({
     height: 80,
     paddingLeft: 10,
     paddingRight: 10,
+    zIndex:2,
   }
 });
