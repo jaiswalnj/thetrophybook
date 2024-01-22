@@ -88,6 +88,7 @@ const handlePlusPress = async () => {
         body: JSON.stringify({
           user_id: userId,
           cartItemId: cartItem._id,
+          year: customization1,
           text_on_trophy: customization2,
           occasion: customization3,
           additional_detail: customization4,

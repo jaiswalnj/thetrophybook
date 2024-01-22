@@ -1,24 +1,25 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 
 
 const CategoryOverlay = ({ isVisible, onClose }) => {
+  const [visible, setVisible] = useState(isVisible);
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={isVisible}
+      visible={visible}
       onRequestClose={() => onClose(console.log("lol"))}
     >
       <View style={styles.overlayContainer}>
       
       <View style={{flexDirection:'column'}}>
           <View style={styles.overlayContent}>
-              <View style={{paddingTop: 44,paddingLeft: 15,position: 'absolute'}}>
-                  <TouchableOpacity onPress={() => navigation.replace('DrawerNavigatorRoutes')}>
-                      <Icon name="arrow-back-sharp" size={30} color='black' />
+              <View style={{paddingTop: 44,paddingLeft: 15}}>
+                  <TouchableOpacity onPress={() => setVisible(false)}>
+                      <Icon name="exit-outline" size={30} color='black' />
                   </TouchableOpacity>
               </View>
               
@@ -31,8 +32,6 @@ const CategoryOverlay = ({ isVisible, onClose }) => {
                   </TouchableOpacity>
                 
                 <Text>All Trophies</Text>
-                
-
                 </View>
               </View>
 
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
     width:'70%',
     bottom: 50,
     alignItems: 'center',
-    zIndex:1,
+    zIndex:-1,
     backgroundColor: '#FFF8E0',
   },
   overlayContent: {
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between',
     // alignItems:'flex-start',
     alignSelf: 'flex-start',
-    zIndex:1,
+    zIndex:-1,
     alignItems: 'center',
   },
   Text: {

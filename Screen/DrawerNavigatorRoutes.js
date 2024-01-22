@@ -118,7 +118,7 @@ const DraweerNavigatorRoutes = () => {
         />
         <Tab.Screen
           name="Category"
-          children={() => <CategoryOverlay/>}
+          children={() => <><HomeScreen user={user} /><CategoryOverlay/></>}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Category" onPress={() => setCategoryOverlayVisible(true)} {...props} />,
           }}
@@ -165,6 +165,6 @@ const styles = StyleSheet.create({
     height: 80,
     paddingLeft: 10,
     paddingRight: 10,
-    zIndex:2,
+    zIndex:0,
   }
 });

@@ -49,7 +49,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
           <Image source={{ uri: imageUrl }} style={styles.image} />
   
           <TouchableOpacity style={styles.likeButton} onPress={() => onPress(productId, userId)}>
-          <Icon name={liked ? 'heart' : 'heart-outline'} size={24} color='black'/>
+          <Icon name={liked ? 'heart' : 'heart-outline'} size={24} color='#FF2E2E'/>
           </TouchableOpacity>
         </LinearGradient>
   
