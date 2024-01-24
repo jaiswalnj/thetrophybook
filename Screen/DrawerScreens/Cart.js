@@ -19,7 +19,7 @@ const Cart = ({user }) => {
 
   const totalCartPrice = cartItems.reduce((total, item) => {
     if (item.trophy.price && typeof item.trophy.price === 'number' && !isNaN(item.trophy.price)) {
-      return total + item.trophy.price;
+      return total + (item.trophy.price*item.qty);
     } else {
       console.warn(`Invalid price for item ${item.trophy._id}: ${item.trophy.price}`);
     }

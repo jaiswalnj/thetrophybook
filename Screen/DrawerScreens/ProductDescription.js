@@ -21,7 +21,7 @@ const ProductScreen = ({ route}) => {
     useEffect(() => {
       if (user && user.cart) {
         console.log(user.cart);
-        const cartItem = user.cart.find(item => item._id === productId);
+        const cartItem = user.cart.find(item => item.trophy._id === productId);
         if (cartItem) {
           setCount(cartItem.qty);
           setIsInCart(true);
@@ -261,7 +261,6 @@ const styles = StyleSheet.create({
     height:40,
     borderRadius: 16,
     width:'50%',
-    padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',

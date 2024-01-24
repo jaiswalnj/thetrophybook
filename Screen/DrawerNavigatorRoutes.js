@@ -59,7 +59,7 @@ const DraweerNavigatorRoutes = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchUserData();
-      const intervalId = setInterval(fetchUserData, 3000);
+      const intervalId = setInterval(fetchUserData, 1000);
 
       return () => {
         clearInterval(intervalId);
