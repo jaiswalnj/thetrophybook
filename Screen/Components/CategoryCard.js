@@ -30,7 +30,6 @@ const CategoryCard = ({title, active }) => {
       <View style={[styles.container, active && styles.activeContainer]}>
       <Image source={image} style={styles.image} />
       </View>
-      <Text style={styles.title}>{title}</Text>
     </View>
     <Text style={styles.title}>{title}</Text>
     </View>
@@ -39,11 +38,19 @@ const CategoryCard = ({title, active }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
+    justifyContent: 'center',
     backgroundColor: 'white',
     alignItems: 'center',
+    width: 50,
+    height: 50,
   },
   activeContainer: {
+    flex:1,
+    justifyContent: 'center',
     backgroundColor: '#FFCD1C',
+    width: 60,
+    height: 60,
 
   },
   circle: {
@@ -71,9 +78,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'center',
+    width: '80%',
+    height: '80%',
+    resizeMode: 'contain',
   },
   titleIdle: {
     marginTop: 4,

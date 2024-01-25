@@ -6,26 +6,8 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 
-const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor}) => {
+const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor, onRemove}) => {
     const navigation = useNavigation();
-
-
-    const onRemove = async () => {
-      try{
-        const response = await fetch(`${apiConfig.baseURL}/removeFromLikedItems/${productId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            user_id: userId,
-          }),
-        });
-        setRefreshKey((prevKey) => prevKey + 1);
-      }catch (error) {
-        console.error('Error toggling like status:', error);
-      } 
-    };
     
     const BUTTON_SHRINK_FACTOR = .2;
 
@@ -79,7 +61,7 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor}) => 
           onPress={handleAddToCart}
           activeOpacity={0.88}
         >
-          <Icon name="add-outline" size={29} color="black" style={{ position: 'center', top: 1, left: 2 }} />
+          <Icon name="add-outline" size={29} color="black" style={{top: 1, left: 2 }} />
         </TouchableOpacity>
         <Text style={styles.price}>₹{price}</Text>
         <Text style={styles.title}>{title}</Text>

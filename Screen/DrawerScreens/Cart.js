@@ -4,10 +4,11 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CartItem from '../Components/CartItem';
 import apiConfig from '../../apiConfig';
 
+
+
 const Cart = ({user }) => {
   const navigation = useNavigation();
   const [cartItems, setCartItems] = useState([]);
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -28,14 +29,15 @@ const Cart = ({user }) => {
 
   const handleAddToOrderHistory = async () => {
     try {
+      
       const data = await fetch(`${apiConfig.baseURL}/addToOrderHistory`, {
         method: 'POST',
-        headers: {
+         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: user._id,
-        }),
+          user_id: user._id,
+      }),
       }).then((response) => response.json());
 
       console.log('addToOrderHistory API Response:', data);
@@ -60,6 +62,7 @@ const Cart = ({user }) => {
                 onRemove={async () => {
                   try {
                     const productId = item.trophy._id;
+                    setCartItems((prevCartItems) => prevCartItems.filter((cartItem) => cartItem.trophy._id !== productId));
                     const response = await fetch(`${apiConfig.baseURL}/removeFromCart/${productId}`, {
                       method: 'POST',
                       headers: {

@@ -21,28 +21,14 @@ const Tab = createBottomTabNavigator();
 
 const DraweerNavigatorRoutes = () => {
   const navigation = useNavigation();
-  const [userId, setUserId] = useState('');
   const [user, setUser] = useState();
   const [categoryOverlayVisible, setCategoryOverlayVisible] = useState(false);
-
-
-  useEffect(()=>{
-    const fetchUserId = async () => {
-      try {
-        const storedUserId = await AsyncStorage.getItem('user_id');
-        setUserId(storedUserId || '');
-      } catch (error) {
-        console.error('Error fetching user Id:', error);
-      }
-    };
-    fetchUserId();
-  },[]);
-
   const isMounted = useRef(true);
 
   const fetchUserData = async () => {
     try {
-      const data = await fetch(`${apiConfig.baseURL}/user/${userId}`)
+      const storedUserId = await AsyncStorage.getItem('user_id');
+      const data = await fetch(`${apiConfig.baseURL}/user/${storedUserId}`)
         .then((response) => response.json())
         .then((responseJson) => {
           if (responseJson) {
@@ -59,13 +45,13 @@ const DraweerNavigatorRoutes = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchUserData();
-      const intervalId = setInterval(fetchUserData, 1000);
+      const intervalId = setInterval(fetchUserData, 3000);
 
       return () => {
         clearInterval(intervalId);
         isMounted.current = false;
       };
-    }, [userId])
+    }, [])
   );
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', () => {
@@ -116,13 +102,6 @@ const DraweerNavigatorRoutes = () => {
             tabBarButton: props => <CustomTabBarButton route="HomeScreen" {...props} />,
           }}
         />
-        <Tab.Screen
-          name="Category"
-          children={() => <><HomeScreen user={user} /><CategoryOverlay isVisible={true}/></>}
-          options={{
-            tabBarButton: props => <CustomTabBarButton route="Category" onPress={() => setCategoryOverlayVisible(true)} {...props} />,
-          }}
-          />
          <Tab.Screen
           name="Favourite"
           children={() => <Favourite user={user} />}

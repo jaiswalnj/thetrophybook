@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Liked from '../Components/Liked';
+import apiConfig from '../../apiConfig';
 
 const Favourite = ({ user }) => {
   const [likedItems, setLikedItems] = useState([]);
@@ -42,6 +43,24 @@ const Favourite = ({ user }) => {
               price={item.price}
               liked={true}
               useCustomColor={index % 3 === 0}
+              onRemove={async () => {
+                try{
+                  productId=item._id;
+                  setLikedItems((prevLikedItems) => prevLikedItems.filter((likedItem) => likedItem._id !== productId));
+                  const response = await fetch(`${apiConfig.baseURL}/removeFromLikedItems/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      user_id: user._id,
+                    }),
+                  });
+                  setRefreshKey((prevKey) => prevKey + 1);
+                }catch (error) {
+                  console.error('Error toggling like status:', error);
+                } 
+              }}
             />
           </TouchableOpacity>
         )}

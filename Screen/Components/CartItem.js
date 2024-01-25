@@ -17,6 +17,7 @@ const CartItem = ({userId, cartItem, onRemove }) => {
   const handleMinusPress = async() => {
     const productId=cartItem.trophy._id;
     if (quantity > 0) {
+      setQuantity(quantity - 1);
       await fetch(`${apiConfig.baseURL}/minus-cart-qty/${productId}`, {
         method: 'POST',
         headers: {
@@ -35,8 +36,6 @@ const CartItem = ({userId, cartItem, onRemove }) => {
         }
       })
       .then(responseData => {
-        console.log(responseData);
-        setQuantity(quantity - 1);
       })
       .catch(error => {
         console.error('Error calling API:', error);
@@ -48,6 +47,7 @@ const CartItem = ({userId, cartItem, onRemove }) => {
 const handlePlusPress = async () => {
   const productId=cartItem.trophy._id;
   try {
+    setQuantity(quantity + 1);
     const data = await fetch(`${apiConfig.baseURL}/addToCart/${productId}`, {
       method: 'POST',
       headers: {
@@ -59,7 +59,6 @@ const handlePlusPress = async () => {
     }).then((response) => response.json())
     .then((responseJson) => {
     if (responseJson.message === 'Item added to the cart') {
-      setQuantity(quantity + 1);
     } else {
       Alert.alert('Error', data.message || 'Failed to add item to the cart');
     }
@@ -80,6 +79,7 @@ const handlePlusPress = async () => {
 
   const handleSave = async () => {
     try {
+      setIsEditing(false);
       const response = await fetch(`${apiConfig.baseURL}/cart-item-edit`, {
         method: 'POST',
         headers: {
@@ -97,7 +97,6 @@ const handlePlusPress = async () => {
   
       if (response.ok) {
         const responseData = await response.json();
-        setIsEditing(false);
       } else {
         console.error('API error:', response.status, response.statusText);
       }
