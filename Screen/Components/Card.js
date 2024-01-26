@@ -1,13 +1,24 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {LinearGradient} from 'expo-linear-gradient';
 import apiConfig from '../../apiConfig';
+import * as Font from 'expo-font';
+
 
 
 const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked, onPress}) => {
     
     const BUTTON_SHRINK_FACTOR = .2;
+
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'EuclidFlexMedium': require('C:/Dev work/thetrophybook/assets/fonts/EuclidFlex/EuclidFlexMedium.ttf'),
+        // Other font imports can go here
+        "ArialRounded": require('../../assets/fonts/ArialRounded/ArialRoundedFont.ttf'),
+      });
+    };
+    
 
     const handleAddToCart = async () => {
       try {
@@ -32,6 +43,19 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
         Alert.alert('Error', 'Something went wrong. Please try again.');
       }
     };
+    
+
+    useEffect(() => {
+      const loadAssetsAsync = async () => {
+        await Promise.all([loadFonts()]);
+        
+      };
+  
+      loadAssetsAsync();
+    }, []);
+  
+    
+  
 
     const gradientColors = useCustomColor
     ? ['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']
@@ -59,7 +83,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
           onPress={handleAddToCart}
           activeOpacity={0.88}
         >
-          <Icon name="add-outline" size={29} color="black" style={{top: 1, left: 2 }} />
+          <Icon name="add-outline" size={29} color="black" style={{  top: 1, left: 1 }} />
         </TouchableOpacity>
         <Text style={styles.price}>₹{price}</Text>
         <Text style={styles.title}>{title}</Text>
@@ -95,14 +119,16 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       resizeMode: 'contain',
     },
     title: {
-      fontSize: 18,
+      fontSize: 20,
       paddingTop: 4,
       paddingHorizontal: 16,
       color: 'black',
+      fontFamily: 'EuclidFlexMedium',
     },
     price: {
-      fontSize: 25,
+      fontSize: 24,
       fontWeight: 'regular',
+      fontFamily: 'ArialRounded',
       letterSpacing: 0.2,
       color: 'black',
       paddingTop: 20,
@@ -111,8 +137,8 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
     },
     likeButton: {
       position: 'absolute',
-      top: 10,
-      right: 10,
+      top: 9,
+      right: 9,
       zIndex: 1,
     },
     addButton: {
@@ -126,7 +152,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       shadowRadius: 2,
       height: 30,
       width: 30,
-      bottom: 60,
+      bottom: 90,
       right: 10,
       elevation: 2,
       zIndex: 1,

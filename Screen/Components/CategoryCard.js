@@ -31,7 +31,7 @@ const CategoryCard = ({title, active }) => {
       <Image source={image} style={styles.image} />
       </View>
     </View>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={[styles.titleIdle, active && styles.titleSelected]}>{title}</Text>
     </View>
   );
 };
@@ -44,19 +44,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 50,
     height: 50,
+    justifyContent: 'center',
   },
   activeContainer: {
-    flex:1,
+    // backgroundColor: '#FFCD1C',
+    backgroundColor: '#f7c619',
+    width: 72,
+    height: 72,
+    // alignContent:'center',
     justifyContent: 'center',
-    backgroundColor: '#FFCD1C',
-    width: 60,
-    height: 60,
+    // backgroundColor: '#000',
 
   },
   circle: {
     width: 50,
     height: 50,
-    borderRadius: 25,
+    borderRadius: 24,
     overflow: 'hidden',
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2 },
@@ -66,15 +69,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   activecircle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 70,
+    height: 70,
+    borderRadius: 32,
     overflow: 'hidden',
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 4,
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
     zIndex: 1,
   },
   image: {
@@ -84,11 +87,12 @@ const styles = StyleSheet.create({
   },
   titleIdle: {
     marginTop: 4,
-    fontSize: 8,
+    fontSize: 12,
   },
   titleSelected: {
     marginTop: 4,
-    fontSize: 10,
+    fontSize: 16,
+    color: "#f7c619",
   },
 });
 

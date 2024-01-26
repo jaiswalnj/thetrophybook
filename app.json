@@ -25,6 +25,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "fonts": {
+      "ArialRounded": "./assets/fonts/Arial Rounded Font.ttf",
+      "EuclidFlexMedium": "./assets/fonts/EuclidFlexMedium.ttf",
+      "EuclidFlexLight": "./assets/fonts/EuclidFlexLight.ttf"
     }
+
+    
+    
   }
 }
