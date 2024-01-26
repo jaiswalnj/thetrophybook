@@ -25,14 +25,15 @@ const CategoryCard = ({title, active }) => {
 
   
   return (
-    <View style={{alignItems: 'center', marginHorizontal:10}}>
+    <View style={{ alignItems: 'center', marginHorizontal: 10, marginTop: 10, marginBottom: 10}}>
     <View style={[styles.circle, active && styles.activecircle]}>
       <View style={[styles.container, active && styles.activeContainer]}>
-      <Image source={image} style={styles.image} />
+        <Image source={image} style={styles.image} />
       </View>
     </View>
-    <Text style={[styles.titleIdle, active && styles.titleSelected]}>{title}</Text>
+      <Text style={[styles.titleIdle, active && styles.titleSelected, {textTransform: 'uppercase' }]}>{title}</Text>
     </View>
+
   );
 };
 
@@ -44,17 +45,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 50,
     height: 50,
-    justifyContent: 'center',
   },
   activeContainer: {
-    // backgroundColor: '#FFCD1C',
+    flex:1,
     backgroundColor: '#f7c619',
     width: 72,
     height: 72,
-    // alignContent:'center',
     justifyContent: 'center',
-    // backgroundColor: '#000',
-
   },
   circle: {
     width: 50,

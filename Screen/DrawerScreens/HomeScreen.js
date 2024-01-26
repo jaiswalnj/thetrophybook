@@ -139,23 +139,26 @@ const HomeScreen = ({user}) => {
     <SafeAreaView style={{flex: 1, marginBottom:45}}>
       <Loader loading={loading} />
       <View style={{flex: 1, padding: 12, backgroundColor: '#FAFAFA'}}>
-        <View style={{paddingTop:5 ,flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text
-            style={{
-              fontSize: 40,
-              textAlign: 'left',
-              marginLeft: 5,
-              marginTop: 35,
-              marginBottom: 20,
-            }}> Hello {userName}
-          </Text>
-          
-          <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
-            <Text style={{ color: "#ffffff", fontSize:40, alignSelf: 'center'}}>
-                  {userName ? userName.charAt(0) : "?"}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10, marginTop:40,marginBottom:20 }}>
+            <Text
+              style={{
+                fontSize: 50,
+                textAlign: 'left',
+                marginLeft: 5,
+                
+                fontFamily: 'Roboto',
+              }}
+            >
+              Hello {userName}
+            </Text>
+
+            <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
+              <Text style={{ color: "#ffffff", fontSize: 40, alignSelf: 'center' }}>
+                {userName ? userName.charAt(0) : "?"}
               </Text>
-          </View>
+            </View>
         </View>
+
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={styles.categoryContainer}>
@@ -223,11 +226,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginTop:40,
-    marginRight:10,
+    width: 65,
+    height: 65,
+    borderRadius: 32,
+    marginRight:14,
     borderColor:'black',
     borderWidth:1,
   },

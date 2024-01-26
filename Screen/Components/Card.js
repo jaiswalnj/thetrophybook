@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-na
 import Icon from 'react-native-vector-icons/Ionicons';
 import {LinearGradient} from 'expo-linear-gradient';
 import apiConfig from '../../apiConfig';
-import * as Font from 'expo-font';
+
 
 
 
@@ -11,13 +11,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
     
     const BUTTON_SHRINK_FACTOR = .2;
 
-    const loadFonts = async () => {
-      await Font.loadAsync({
-        'EuclidFlexMedium': require('C:/Dev work/thetrophybook/assets/fonts/EuclidFlex/EuclidFlexMedium.ttf'),
-        // Other font imports can go here
-        "ArialRounded": require('../../assets/fonts/ArialRounded/ArialRoundedFont.ttf'),
-      });
-    };
+    
     
 
     const handleAddToCart = async () => {
@@ -43,19 +37,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
         Alert.alert('Error', 'Something went wrong. Please try again.');
       }
     };
-    
 
-    useEffect(() => {
-      const loadAssetsAsync = async () => {
-        await Promise.all([loadFonts()]);
-        
-      };
-  
-      loadAssetsAsync();
-    }, []);
-  
-    
-  
 
     const gradientColors = useCustomColor
     ? ['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']
@@ -131,7 +113,6 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       fontFamily: 'ArialRounded',
       letterSpacing: 0.2,
       color: 'black',
-      paddingTop: 20,
       paddingLeft: 16,
       paddingBottom: 2,
     },
@@ -142,7 +123,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       zIndex: 1,
     },
     addButton: {
-      position: 'absolute',
+      position: 'relative',
       backgroundColor: 'white',
       alignItems: 'center',
       borderRadius: 5,
@@ -152,7 +133,8 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       shadowRadius: 2,
       height: 30,
       width: 30,
-      bottom: 90,
+      bottom: 25,
+      left:160,
       right: 10,
       elevation: 2,
       zIndex: 1,
