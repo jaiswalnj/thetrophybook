@@ -67,6 +67,7 @@ const More = ({user}) => {
       <View style={styles.options}>
       <TouchableOpacity style={styles.option}>
           <Text style={styles.optionText}>Address</Text>
+          <Text style={styles.optionText}>{user.address}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.option} onPress={handleFeedbackPress}>
         <Text style={styles.optionText}>Feedback</Text>

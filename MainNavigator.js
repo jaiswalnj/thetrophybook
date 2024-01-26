@@ -85,7 +85,7 @@ const MainNavigator = () => {
   });
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="DrawerNavigatorRoutes">
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}

@@ -2,18 +2,16 @@ import React,{useEffect,useRef ,useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, View, Modal, TouchableOpacity} from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomTabBarButton from './Components/CustomTabBarButton';
 import CustomTabBar from './Components/CustomTabBar';
 import { useNavigation } from '@react-navigation/native';
-import Category from './DrawerScreens/Category';
 import HomeScreen from './DrawerScreens/HomeScreen';
 import Cart from './DrawerScreens/Cart';
 import Favourite from './DrawerScreens/Favourite';
 import More from './DrawerScreens/More';
 import apiConfig from '../apiConfig';
-import CategoryOverlay from './DrawerScreens/CategoryOverlay';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +20,6 @@ const Tab = createBottomTabNavigator();
 const DraweerNavigatorRoutes = () => {
   const navigation = useNavigation();
   const [user, setUser] = useState();
-  const [categoryOverlayVisible, setCategoryOverlayVisible] = useState(false);
   const isMounted = useRef(true);
 
   const fetchUserData = async () => {
@@ -124,11 +121,6 @@ const DraweerNavigatorRoutes = () => {
           }}
         />
       </Tab.Navigator>
-
-      <CategoryOverlay
-        isVisible={categoryOverlayVisible}
-        onClose={() => setCategoryOverlayVisible(false)}
-      />
     </View>
   );
 };

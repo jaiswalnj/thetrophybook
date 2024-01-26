@@ -184,7 +184,6 @@ const HomeScreen = ({user}) => {
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {section.trophies.map((product, index) => (
                   <TouchableOpacity
-                    key={product.productId}
                     onPress={() => navigation.navigate('ProductDescription', { product,user})}
                   >
                     <Card
