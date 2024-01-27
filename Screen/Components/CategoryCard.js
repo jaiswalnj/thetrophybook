@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     height: 50,
   },
   activeContainer: {
-    flex:1,
     backgroundColor: '#f7c619',
     width: 72,
     height: 72,
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
   circle: {
     width: 50,
     height: 50,
-    borderRadius: 24,
+    borderRadius: 25,
     overflow: 'hidden',
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2 },
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
   activecircle: {
     width: 70,
     height: 70,
-    borderRadius: 32,
+    borderRadius: 35,
     overflow: 'hidden',
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2 },

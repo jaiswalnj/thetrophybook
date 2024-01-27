@@ -10,12 +10,14 @@ const RegisterScreen = (props) => {
   const [userEmail, setUserEmail] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [cUserPassword, setCUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const emailInputRef = createRef();
-  const ageInputRef = createRef();
   const addressInputRef = createRef();
   const passwordInputRef = createRef();
+  const cpasswordInputRef = createRef();
+
 
 
   const handleSubmitButton = async() => {
@@ -35,6 +37,15 @@ const RegisterScreen = (props) => {
       alert('Please fill Password');
       return;
     }
+    if (!cUserPassword) {
+      alert('Please fill Confirm Password');
+      return;
+    }
+    if (userPassword != cUserPassword) {
+      alert('Password does not matched');
+      return;
+    }
+
     setLoading(true);
     try{
       const data = await fetch(`${apiConfig.baseURL}/signup` , { 
@@ -42,7 +53,7 @@ const RegisterScreen = (props) => {
         headers:{
           "Content-type":"application/json"
         },
-        body:JSON.stringify({username:userName , email:userEmail , password:userPassword})
+        body:JSON.stringify({username:userName , email:userEmail , address: userAddress, password:userPassword})
       }).then((response) => response.json())
       .then((responseJson) => {
         setLoading(false);
@@ -107,6 +118,25 @@ const RegisterScreen = (props) => {
               ref={emailInputRef}
               returnKeyType="next"
               onSubmitEditing={() =>
+                addressInputRef.current &&
+                addressInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(UserAddress) =>
+                setUserAddress(UserAddress)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Address"
+              placeholderTextColor="#8b9cb5"
+              autoCapitalize="sentences"
+              ref={addressInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
                 passwordInputRef.current &&
                 passwordInputRef.current.focus()
               }
@@ -126,23 +156,22 @@ const RegisterScreen = (props) => {
               returnKeyType="next"
               secureTextEntry={true}
               onSubmitEditing={() =>
-                ageInputRef.current &&
-                ageInputRef.current.focus()
+                cpasswordInputRef.current &&
+                cpasswordInputRef.current.focus()
               }
               blurOnSubmit={false}
             />
           </View>
-          <View style={styles.SectionStyle}>
+          <View  style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(UserAddress) =>
-                setUserAddress(UserAddress)
+              onChangeText={(CUserPassword) =>
+                setCUserPassword(CUserPassword)
               }
               underlineColorAndroid="#f000"
-              placeholder="Address"
+              placeholder="Confirm Password"
               placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              ref={addressInputRef}
+              ref={cpasswordInputRef}
               returnKeyType="next"
               onSubmitEditing={Keyboard.dismiss}
               blurOnSubmit={false}

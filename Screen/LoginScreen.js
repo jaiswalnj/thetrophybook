@@ -11,7 +11,6 @@ import {
   Keyboard,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Alert,
 } from 'react-native';
 
 import Loader from './Components/Loader';
@@ -67,13 +66,13 @@ const LoginScreen = ({navigation}) => {
           <KeyboardAvoidingView enabled>
             <View style={{alignItems: 'center', alignContent: 'center'}}>
               <Image
-                source={require('../Image/main.png')}
+                source={require('../Image/logo.png')}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 160,
+                  height: 160,
                 }}
               />
-              <Text style={{fontSize:40, padding: 10}}>Delta{'\n'}Trophies</Text>
+              <Text style={{fontSize:40, padding: 10, fontWeight:500, textTransform: 'uppercase'}}>Delta Trophies</Text>
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
@@ -127,7 +126,7 @@ const LoginScreen = ({navigation}) => {
               style={styles.lbuttonStyle}
               activeOpacity={0.5}
               onPress={handleSubmitPress}>
-              <Text style={styles.buttonTextStyle}>LOGIN</Text>
+              <Text style={[styles.buttonTextStyle,{color: 'black'}]}>LOGIN</Text>
             </TouchableOpacity>
             </View>
             <Text
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
    rbuttonStyle: {
-    backgroundColor: '#C0C0C0',
+    backgroundColor: '#757575',
     height: 40,
     alignItems: 'center',
     borderRadius: 10,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   buttonTextStyle: {
-    color: 'black',
+    color: 'white',
     paddingVertical: 10,
     fontSize: 16,
   },

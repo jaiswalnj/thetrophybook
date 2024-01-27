@@ -29,7 +29,6 @@ const More = ({user}) => {
   };
 
   const handleLogout= () => {
-    AsyncStorage.clear(); 
     Alert.alert('Logout ?', 'Press Confirm to Logout', [
     {
     text: 'Cancel',

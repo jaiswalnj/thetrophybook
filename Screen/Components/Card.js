@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -6,13 +6,9 @@ import apiConfig from '../../apiConfig';
 
 
 
-
 const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked, onPress}) => {
     
     const BUTTON_SHRINK_FACTOR = .2;
-
-    
-    
 
     const handleAddToCart = async () => {
       try {
@@ -37,7 +33,6 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
         Alert.alert('Error', 'Something went wrong. Please try again.');
       }
     };
-
 
     const gradientColors = useCustomColor
     ? ['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']
@@ -87,7 +82,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       borderRadius: 16,
       overflow: 'hidden',
       elevation: 3,
-      shadowColor: '#64ECC7',
+      backgroundColor: '#64ECC7',
       shadowOpacity: 0.3,
       shadowOffset: { width: 5, height: 5 },
       shadowRadius: 2,

@@ -83,6 +83,7 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor, onRe
       height: 250,
       borderRadius: 16,
       overflow: 'hidden',
+      backgroundColor: '#64ECC7',
       elevation: 3,
       alignSelf: '',
     },
