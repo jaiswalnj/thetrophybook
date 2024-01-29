@@ -12,6 +12,8 @@ const App = () => {
     await Font.loadAsync({
       'EuclidFlexMedium': require('./assets/fonts/EuclidFlex/EuclidFlexMedium.ttf'),
       "ArialRounded": require('./assets/fonts/ArialRounded/ArialRoundedFont.ttf'),
+      "EuclidFlexRegular": require('./assets/fonts/EuclidFlex/EuclidFlexRegular.ttf'),
+      "EuclidFlexLight": require('./assets/fonts/EuclidFlex/EuclidFlexLight.ttf'),
     });
   };
   useEffect(() => {
