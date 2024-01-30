@@ -73,7 +73,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       overflow: 'hidden',
       width:200,
       marginTop: 12,
-      marginBottom: 15,
+      marginBottom: -15,
       marginHorizontal:10,
     },
     gradientCard: {

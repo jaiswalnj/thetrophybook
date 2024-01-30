@@ -25,7 +25,7 @@ const CategoryCard = ({title, active }) => {
 
   
   return (
-    <View style={{ alignItems: 'center', marginHorizontal: 10, marginTop: 10, marginBottom: 10}}>
+    <View style={{ alignItems: 'center', marginHorizontal: 10, marginTop: 0}}>
     <View style={[styles.circle, active && styles.activecircle]}>
       <View style={[styles.container, active && styles.activeContainer]}>
         <Image source={image} style={styles.image} />
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     height: 50,
   },
   activeContainer: {
-    backgroundColor: '#f7c619',
-    width: 72,
-    height: 72,
+    backgroundColor: '#FFCD1C',
+    width: 74,
+    height: 74,
     justifyContent: 'center',
   },
   circle: {
@@ -68,10 +68,11 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
+    bottom: 10,
     overflow: 'hidden',
-    shadowColor: 'black',
+    shadowColor: '#000',
     shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.9,
     shadowRadius: 5,
     elevation: 5,
     zIndex: 1,
@@ -79,15 +80,19 @@ const styles = StyleSheet.create({
   image: {
     width: '80%',
     height: '80%',
+    
     resizeMode: 'contain',
   },
   titleIdle: {
     marginTop: 4,
-    fontSize: 12,
+    fontSize: 11,
+    letterSpacing:0.04,
   },
   titleSelected: {
     marginTop: 4,
-    fontSize: 16,
+    bottom: 10,
+    letterSpacing:1.1,
+    fontSize: 14,
     color: "#f7c619",
   },
 });

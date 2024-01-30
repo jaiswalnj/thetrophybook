@@ -172,11 +172,11 @@ const HomeScreen = ({user}) => {
           <ScrollView vertical showsVerticalScrollIndicator={false}>
 
           {trophySections.map((section) => (
-            <View key={section.trophyType}>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-              <Text style={{ fontSize: 22, textAlign: 'left',}}>{section.trophyType}</Text>
+            <View key={section.trophyType} style={{marginTop:-10,}}>
+              <View style={{flexDirection:'row', justifyContent:'space-between', }}>
+              <Text style={{ fontSize: 20, textAlign: 'left',fontFamily: 'EuclidFlexRegular',bottom: -15,}}>{section.trophyType}</Text>
               <TouchableOpacity style={{flexDirection:'row', alignItems: 'center'}}>
-                <Text style={{fontSize:20, textAlign: 'right', color:'#FFCD1C'}}>More</Text>
+                <Text style={{fontSize:18, textAlign: 'right', color:'#FFCD1C',}}>More</Text>
                 <Icon name='chevron-forward-outline' size={22} color='#FFCD1C'  />
               </TouchableOpacity>
               </View>

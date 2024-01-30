@@ -145,7 +145,7 @@ const handlePlusPress = async () => {
                       <Icon name="remove-outline" size={18} color='white' />
                       </View>
                     </TouchableOpacity>
-                    <Text style={{ color: 'black', fontSize: 16, marginLeft: 8, marginRight: 8}}>{quantity}</Text>
+                    <Text style={{ color: 'white', fontSize: 16, marginLeft: 8, marginRight: 8}}>{quantity}</Text>
                     <TouchableOpacity onPress={handlePlusPress}>
                       <View style={{backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1,}}>
                       <Icon name="add-outline" size={18} color='white' />
