@@ -31,7 +31,7 @@ const Favourite = ({ user }) => {
       </View>
       <FlatList
         data={likedItems}
-        keyExtractor={(product) => product.productId}
+        keyExtractor={(product) => product._id}
         numColumns={2}
         renderItem={({ item, index }) => (
           <TouchableOpacity onPress={() => navigation.navigate('ProductDescription', { product: item, user })}>

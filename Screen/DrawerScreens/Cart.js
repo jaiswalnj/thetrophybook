@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CartItem from '../Components/CartItem';
 import apiConfig from '../../apiConfig';
@@ -27,7 +27,12 @@ const Cart = ({user }) => {
     return total;
   }, 0);
 
-  const handleAddToOrderHistory = async () => {
+  const handleCraftQuotation = () =>{
+    generatebill();
+    AddToOrderHistory();
+  }
+
+  const AddToOrderHistory = async () => {
     try {
       
       const data = await fetch(`${apiConfig.baseURL}/addToOrderHistory`, {
@@ -43,6 +48,27 @@ const Cart = ({user }) => {
       console.log('addToOrderHistory API Response:', data);
     } catch (error) {
       console.error('Error calling addToOrderHistory API:', error.message);
+    }
+  };
+
+  const generatebill = async () => {
+    try {
+      const createPdfResponse = await fetch(`${apiConfig.baseURL}/create-pdf`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user._id,
+        }),
+      });
+  
+      if (!createPdfResponse.ok) {
+        throw new Error(`HTTP error! Status: ${createPdfResponse.status}`);
+      }
+      Alert.alert('Order Placed', 'Your order has been successfully placed!');
+    } catch (error) {
+      console.error('Error handling order:', error.message);
     }
   };
 
@@ -102,7 +128,7 @@ const Cart = ({user }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleAddToOrderHistory}>
+          <TouchableOpacity onPress={handleCraftQuotation}>
             <View style={{ backgroundColor: '#FF9F1C', padding: 10, height:40, width:140, borderRadius: 16, alignItems:'center' }}>
               <Text style={{ color: 'white' }}>Craft Quotation</Text>
             </View>

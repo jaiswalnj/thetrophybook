@@ -103,7 +103,7 @@ const DraweerNavigatorRoutes = () => {
         />
          <Tab.Screen
           name="Favourite"
-          children={() => <Favourite user={user} />}
+          children={() => <Favourite user={user}/>}
           options={{
             tabBarButton: props => <CustomTabBarButton route="Favourite" {...props} />,
           }}
