@@ -110,16 +110,16 @@ const ProductScreen = ({ route}) => {
           </LinearGradient>
         </View>
         <View style={{height:'60%', width:'100%'}}>
-          <View style={{marginLeft: 14}}> 
+          <View style={{marginLeft: '3%'}}> 
         <ScrollView vertical showsVerticalScrollIndicator={true}>
-          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:'space-around', marginRight: 10}}>
+          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
                 <Text style={styles.productTitle}>{product.trophyName}</Text>
                 <Text style={styles.productPrice}>${product.price}</Text>
           </View>
             <Text >{product.trophyType}</Text>
             <Text >{product.category}</Text>
             <Text style={styles.productDescription}>{product.description}</Text>
-            <Text style={{ color: 'black', fontFamily: 'EuclidFlexRegular', fontSize: 20, marginLeft: 1, marginTop: 1, marginBottom: -25, letterSpacing:2}}>Size</Text>
+            <Text style={{ color: 'black', fontFamily: 'EuclidFlexMedium', fontSize: 20, marginBottom: '-6%', letterSpacing:2, textTransform: 'uppercase',}}>Size</Text>
           <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', width: '100%', paddingHorizontal: 10,}}>           
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex:1, flexDirection: 'row', }}>
               {sizes.map((s, i) => (
@@ -130,24 +130,26 @@ const ProductScreen = ({ route}) => {
             </ScrollView>
           </View>
           <View style={{flex: 0, flexDirection: 'column', backgroundColor: '#FAFAFA',marginTop: 10,height: 150,}}>
-            <Text style={{fontSize: 22,marginTop:2, fontFamily: 'EuclidFlexRegular', marginBottom: -12, textTransform: 'uppercase', color: '#000'}}>Product Details</Text>
+            <Text style={{fontSize: 19,marginTop:'2%', fontFamily: 'EuclidFlexMedium',letterSpacing: 1, marginBottom: '-6%', textTransform: 'uppercase', color: '#000'}}>Product Details</Text>
             <View style={{flexDirection:'row', justifyContent:'center'}}>
-              <View style={{paddingHorizontal:10, borderRightWidth:1, borderColor:'black'}}>
+              <View style={{paddingHorizontal: '2%', borderRightWidth:1, borderColor:'gray'}}>
                 <Text style={styles.subtitle1}>Product</Text>
                 <Text style={styles.subtitle1}>Type </Text>
               </View>
-              <View style={{paddingHorizontal:10}}>
+              <View style={{paddingHorizontal:'2%'}}>
                 <Text style={styles.subtitle2}>{product.category}</Text>
                 <Text style={styles.subtitle2}>{product.trophyType}</Text>
               </View>
             </View>
-          <View style={ {fontSize: 20,color: '#000F',textDecorationLine: 'underline', marginLeft:10}} />
+          <View style={ {fontSize: 20,color: '#000F',textDecorationLine: 'underline'}} />
             <TouchableOpacity>
               <Text style={styles.moreDetails}>More Details</Text>
             </TouchableOpacity>
           </View>
           </ScrollView>
            </View>
+
+
           <View style={styles.buttonContainer}>
             {isInCart ? (
             <View style={{flexDirection:'row', justifyContent: 'space-evenly', alignContent: 'space-around', width: '100%'}}>
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '300%',
-    height: 250,
+    height: '65%',
     marginVertical: 110,
     marginHorizontal: -70,
     marginBottom:5,
@@ -209,21 +211,22 @@ const styles = StyleSheet.create({
     elevation:4
   },
   productTitle: {
-    fontSize: 30,
-    marginBottom: 8,
+    fontSize: 28,
+    marginTop: '4%',
     textTransform: 'uppercase',
     letterSpacing:2,
     fontFamily: 'ArialRounded',
     alignItems: 'flex-start'
   },
   productPrice: {
-    fontSize: 30,
+    fontSize: 28,
+    marginTop: '4%',
     color: '#FF9F1C',
-    marginBottom: 8,
-    paddingLeft: 30,
+    // marginBottom: 8,
+    // paddingLeft: 30,
   },
   productDescription: {
-    fontSize: 16,
+    fontSize: 15,
     lineHeight: 24,
     padding:10,
   },
@@ -260,15 +263,15 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   cardOverlay: {
-    height: 800,
-    width:500,
-    borderRadius: 35,
+    height: '100%',
+    width:'100%',
+    borderRadius: 25,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16, 
-    left:90,
-    bottom: 15,
+    // padding: 16, /
+    // marginBottom: '50%',
+    // bottom: '10%',
     shadowOpacity: 0.9,
     shadowColor: '#b00f0e',
     shadowOffset: { width: 8, height: 8 },
@@ -278,10 +281,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
       backgroundColor: '#FFFFFF',
-      height: 80,
+      height: '16%',
       flexDirection: 'row',
       position: 'relative',
-      bottom: -14,
+      bottom: '4%',
       top: 'auto',
       justifyContent: 'space-around',
       alignItems: 'center',
@@ -290,7 +293,6 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.5,
       shadowOffset: { width: 1, height: 1 },
       shadowRadius: 5,
-      // marginTop: 'auto', 
     },
   quantityContainer: {
     backgroundColor: '#FF9F1C',

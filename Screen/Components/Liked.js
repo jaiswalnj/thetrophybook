@@ -51,7 +51,7 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor, onRe
           <Image source={{ uri: imageUrl }} style={styles.image} />
   
           <TouchableOpacity style={styles.likeButton} onPress={onRemove}>
-          <Icon name='trash-outline' size={20} color='black'/>
+          <Icon name='heart' size={20} color='#FF2E2E'/>
           </TouchableOpacity>
         </LinearGradient>
   
@@ -75,11 +75,11 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor, onRe
       width:180,
       marginTop: 12,
       marginBottom: 15,
-      marginHorizontal:16,
-      paddingHorizontal:5,
+      marginHorizontal:'3%',
+      // paddingHorizontal:5,
     },
     gradientCard: {
-      width: 160,
+      width: '90%',
       height: 250,
       borderRadius: 16,
       overflow: 'hidden',
@@ -91,7 +91,7 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor, onRe
       width: '200%',
       height: 180,
       marginVertical: 50,
-      marginHorizontal: -90,
+      marginHorizontal: -80,
       resizeMode: 'contain',
     },
     title: {

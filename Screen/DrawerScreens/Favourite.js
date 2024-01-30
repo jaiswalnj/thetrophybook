@@ -19,16 +19,18 @@ const Favourite = ({ user }) => {
 
   return (
     <View style={{ marginBottom: 50, }}>
-      <View style={{ paddingTop: 10, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
+      <View style={{ alignItems: 'center', backgroundColor: '#FAFAFA', justifyContent: 'center' }}>
         <Text
           style={{
             fontSize: 30,
             textAlign: 'center',
-            marginTop: 30,
-            marginBottom: 10,
+            marginTop: '10%',
+            marginBottom: '2%'
           }}> Favourite
         </Text>
       </View>
+        
+      <View style={{width: '100%'}}>
       <FlatList
         data={likedItems}
         keyExtractor={(product) => product._id}
@@ -65,6 +67,7 @@ const Favourite = ({ user }) => {
           </TouchableOpacity>
         )}
       />
+      </View>
     </View>
   );
 };

@@ -173,13 +173,13 @@ const HomeScreen = ({user}) => {
 
           {trophySections.map((section) => (
             <View key={section.trophyType} style={{marginTop:-10,}}>
-              <View style={{flexDirection:'row', justifyContent:'space-between', }}>
-              <Text style={{ fontSize: 20, textAlign: 'left',fontFamily: 'EuclidFlexRegular',bottom: -15,}}>{section.trophyType}</Text>
-              <TouchableOpacity style={{flexDirection:'row', alignItems: 'center'}}>
+              {/* <View style={{flexDirection:'row', justifyContent:'space-between', }}> */}
+              <Text style={{ fontSize: 22, textAlign: 'left',fontFamily: 'EuclidFlexMedium', marginTop: '6%', marginBottom: '-9%', marginLeft: '2%'}}>{section.trophyType}</Text>
+              {/* <TouchableOpacity style={{flexDirection:'row', alignItems: 'center'}}>
                 <Text style={{fontSize:18, textAlign: 'right', color:'#FFCD1C',}}>More</Text>
                 <Icon name='chevron-forward-outline' size={22} color='#FFCD1C'  />
-              </TouchableOpacity>
-              </View>
+              </TouchableOpacity> */}
+              
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {section.trophies.map((product, index) => (
                   <TouchableOpacity
