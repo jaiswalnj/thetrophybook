@@ -2,7 +2,7 @@ import React,{useEffect,useRef ,useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, View ,Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomTabBarButton from './Components/CustomTabBarButton';
 import CustomTabBar from './Components/CustomTabBar';
@@ -12,6 +12,7 @@ import Cart from './DrawerScreens/Cart';
 import Favourite from './DrawerScreens/Favourite';
 import More from './DrawerScreens/More';
 import apiConfig from '../apiConfig';
+const { width, height } = Dimensions.get('window');
 
 
 
@@ -44,7 +45,7 @@ const DraweerNavigatorRoutes = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchUserData();
-      const intervalId = setInterval(fetchUserData, 3000);
+      const intervalId = setInterval(fetchUserData, 5000);
 
       return () => {
         clearInterval(intervalId);
@@ -132,7 +133,7 @@ export default DraweerNavigatorRoutes;
 const styles = StyleSheet.create({
   tabBarStyle: {
     position: 'absolute',
-    height: 80,
+    height: height * 0.095,
     paddingLeft: 10,
     paddingRight: 10,
     zIndex:0,

@@ -1,14 +1,24 @@
-import React,{useEffect,useState} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Card from '../Components/Card';
 import CategoryCard from '../Components/CategoryCard';
-import Icon from 'react-native-vector-icons/Ionicons';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
 import apiConfig from '../../apiConfig';
 
-const HomeScreen = ({user}) => {
+const { width, height } = Dimensions.get('window');
+
+ 
+const HomeScreen = ({ user }) => {
   const navigation = useNavigation();
   const [userId, setUserId] = useState('');
   const [userName, setUserName] = useState('');
@@ -20,14 +30,13 @@ const HomeScreen = ({user}) => {
   const [trophySections, setTrophySections] = useState([]);
 
   const categories = [
-    { title: 'Medals'},
-    { title: 'Momentos'},
-    { title: 'Trophies'},
-    { title: 'Badges'},
-    { title: 'Cups'},
-    { title: 'More'},
+    { title: 'Medals' },
+    { title: 'Momentos' },
+    { title: 'Trophies' },
+    { title: 'Badges' },
+    { title: 'Cups' },
+    { title: 'More' },
   ];
-
 
   const handlePress = (index, category) => {
     setActiveIndex(index);
@@ -36,18 +45,18 @@ const HomeScreen = ({user}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-        if (user && user.likedItems) {
-          setLikedItems(user.likedItems);
-          setUserName(user.username);
-          setUserId(user._id);
-        }
+      if (user && user.likedItems) {
+        setLikedItems(user.likedItems);
+        setUserName(user.username);
+        setUserId(user._id);
+      }
     }, [user])
   );
 
   const handleLikePress = async (productId, userId) => {
     try {
       const isLiked = likedItems.some((item) => item._id === productId);
-  
+
       if (isLiked) {
         const response = await fetch(`${apiConfig.baseURL}/removeFromLikedItems/${productId}`, {
           method: 'POST',
@@ -58,9 +67,9 @@ const HomeScreen = ({user}) => {
             user_id: userId,
           }),
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
           setLikedItems((prevLikedItems) => prevLikedItems.filter((item) => item._id !== productId));
         } else {
@@ -76,9 +85,9 @@ const HomeScreen = ({user}) => {
             user_id: userId,
           }),
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
           setLikedItems((prevLikedItems) => [...prevLikedItems, data.data]);
         } else {
@@ -89,7 +98,6 @@ const HomeScreen = ({user}) => {
       console.error('Error toggling like status:', error);
     }
   };
-
 
   useEffect(() => {
     const fetchProducts = async (category) => {
@@ -131,59 +139,62 @@ const HomeScreen = ({user}) => {
 
       setTrophySections(sectionsArray);
     };
-        organizeTrophiesIntoSections();
+    organizeTrophiesIntoSections();
   }, [products]);
 
-
   return (
-    <SafeAreaView style={{flex: 1, marginBottom:45}}>
+    <SafeAreaView style={{ flex: 1, marginBottom: height * 0.07 }}>
       <Loader loading={loading} />
-      <View style={{flex: 1, padding: 12, backgroundColor: '#FAFAFA'}}>
-        <View style={{paddingTop:5 ,flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, marginBottom: 20}}>
+      <View style={{ flex: 1, padding: width * 0.04, backgroundColor: '#FAFAFA' }}>
+        <View style={{ paddingTop: height * 0.02, flexDirection: 'row', justifyContent: 'space-between', marginTop: height * 0.01, marginBottom: height * 0.02 }}>
           <Text
             style={{
-              fontSize: 40,
+              fontSize: width * 0.1,
               textAlign: 'left',
-              marginLeft: 5,
-            }}> Hello {userName}
+              marginLeft: width * 0.01,
+            }}
+          >
+            Hello {userName}
           </Text>
-          
-          <View style={[styles.profileImage, { backgroundColor: '#808080'}]}>
-            <Text style={{ color: "#ffffff", fontSize:40, alignSelf: 'center'}}>
-                  {userName ? userName.charAt(0) : "?"}
-              </Text>
-            </View>
+
+          <View style={[styles.profileImage, { backgroundColor: '#808080' }]}>
+            <Text style={{ color: "#ffffff", fontSize: width * 0.1, alignSelf: 'center' }}>
+              {userName ? userName.charAt(0) : "?"}
+            </Text>
+          </View>
         </View>
 
-
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.categoryContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ flex: 1, flexDirection: 'row', maxHeight: height * 0.125 }}
+        >
+          <View style={styles.categoryContainer}>
             {categories.map((category, index) => (
-            <TouchableOpacity onPress={() => handlePress(index, category.title)} key={index}>
-              <CategoryCard
+              <TouchableOpacity onPress={() => handlePress(index, category.title)} key={index}>
+                <CategoryCard
                   title={category.title}
                   active={activeIndex === index}
                 />
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+            ))}
           </View>
-          </ScrollView>
+        </ScrollView>
 
-          <ScrollView vertical showsVerticalScrollIndicator={false}>
+        <ScrollView
+          vertical
+          showsVerticalScrollIndicator={false}
+          style={{ flex: 1, maxHeight: height * 0.85 }}
+        >
 
           {trophySections.map((section) => (
-            <View key={section.trophyType} style={{marginTop:-10,}}>
-              {/* <View style={{flexDirection:'row', justifyContent:'space-between', }}> */}
-              <Text style={{ fontSize: 22, textAlign: 'left',fontFamily: 'EuclidFlexMedium', marginTop: '6%', marginBottom: '-9%', marginLeft: '2%'}}>{section.trophyType}</Text>
-              {/* <TouchableOpacity style={{flexDirection:'row', alignItems: 'center'}}>
-                <Text style={{fontSize:18, textAlign: 'right', color:'#FFCD1C',}}>More</Text>
-                <Icon name='chevron-forward-outline' size={22} color='#FFCD1C'  />
-              </TouchableOpacity> */}
-              
+            <View key={section.trophyType} >
+              <Text style={{ fontSize: width * 0.055, textAlign: 'left', fontFamily: 'EuclidFlexMedium',height: height * 0.05}}>{section.trophyType}</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {section.trophies.map((product, index) => (
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('ProductDescription', { product,user})}
+                    onPress={() => navigation.navigate('ProductDescription', { product, user })}
+                    key={index}
                   >
                     <Card
                       imageUrl={`data:${product.image.image.contentType};base64,${base64.fromByteArray(product.image.image.data.data)}`}
@@ -198,59 +209,31 @@ const HomeScreen = ({user}) => {
                   </TouchableOpacity>
                 ))}
               </ScrollView>
-              </View>
+            </View>
           ))}
         </ScrollView>
       </View>
-      
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   categoryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignContent:'center',
-    marginTop:10,
-    marginBottom: 45,
-  },
-  productContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    alignContent: 'center',
+    marginTop: height * 0.02,
+    marginBottom: height * 0.07,
   },
   profileImage: {
-    width: 65,
-    height: 65,
-    borderRadius: 32,
-    marginRight:14,
-    borderColor:'black',
-    borderWidth:1,
+    width: width * 0.15,
+    aspectRatio: 1,
+    borderRadius: width * 0.075,
+    marginRight: width * 0.02,
+    borderColor: 'black',
+    borderWidth: 1,
+    alignItems: 'center',
   },
-  container: {
-    // ...
-  },
-  cardContainer: {
-    flexDirection: 'row',
-    // ...
-  },
-  header: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-    
-  },
-  titleText: {
-    // ...
-  },
-  moreText: {
-    color: "#FFCD1C"
-  },
-  gradientCard: {
-
-  },
-  
 });
 
 export default HomeScreen;
