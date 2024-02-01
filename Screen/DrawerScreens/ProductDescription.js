@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, version } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Alert, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -116,9 +116,9 @@ const ProductScreen = ({ route }) => {
                 </View>
                 <Text>{product.trophyType}</Text>
                 <Text>{product.category}</Text>
-                <Text style={styles.productDescription}>{product.description}</Text>
-                <Text style={{ color: 'black', fontFamily: 'EuclidFlexMedium', fontSize: height *0.02, letterSpacing: 2, height: height* 0.03  }}>Size</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', width: '100%', paddingHorizontal: 10, }}>
+                <Text style={styles.productDescription}>{product.description}This is a metal trophy made for basketball games. It comes in three different colors, like bronze, silver and gold. </Text>
+                <Text style={{ color: 'black', fontFamily: 'EuclidFlexRegular', marginTop: height * 0.02, fontSize: height *0.025, letterSpacing: 2, height: height* 0.03, marginVertical: height * 0.008  }}>Size</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', width: '100%', paddingHorizontal: width * 0.03, }}>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1, flexDirection: 'row', }}>
                     {sizes.map((s, i) => (
                       <TouchableOpacity key={i} style={[styles.sizedesign, { backgroundColor: size === s ? '#FF9F1C' : '#FFFFFF', shadowColor: size === s ? '#FF9F1C' : '#000' }]} onPress={() => setSize(s)}>
@@ -128,7 +128,7 @@ const ProductScreen = ({ route }) => {
                   </ScrollView>
                 </View>
                 <View style={{ flex: 0, flexDirection: 'column', backgroundColor: '#FAFAFA', marginTop:  5, height:  120, }}>
-                  <Text style={{ fontSize: 16, marginTop: '2%', fontFamily: 'EuclidFlexMedium', letterSpacing: 1, marginBottom: '-6%', textTransform: 'uppercase', color: '#000' }}>Product Details</Text>
+                  <Text style={{ color: 'black', fontFamily: 'EuclidFlexRegular', fontSize: height *0.025, letterSpacing: 2, height: height* 0.03, marginVertical: height * 0.008   }}>Product Details</Text>
                   <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={{ paddingHorizontal: '1%', borderRightWidth: 1, borderColor: 'gray' }}>
                       <Text style={styles.subtitle1}>Product</Text>
@@ -146,6 +146,7 @@ const ProductScreen = ({ route }) => {
                 </View>
               </ScrollView>
             </View>
+          </View>
 
             <View style={styles.buttonContainer}>
               {isInCart ? (
@@ -176,7 +177,7 @@ const ProductScreen = ({ route }) => {
                 </TouchableOpacity>
               )}
             </View>
-          </View>
+          
         </>
       ) : (
         <Loader />
@@ -206,6 +207,7 @@ const styles = StyleSheet.create({
   productTitle: {
     fontSize: width* 0.07,
     marginTop: width > 600 ? '4%' : '2%',
+    maxWidth: width * 0.7,
     textTransform: 'uppercase',
     letterSpacing: 2,
     fontFamily: 'ArialRounded',
@@ -218,25 +220,31 @@ const styles = StyleSheet.create({
     color: '#FF9F1C',
   },
   productDescription: {
-    fontSize:  12,
+    fontSize:  width * 0.034,
     lineHeight: 18,
-    padding: 5,
+    color: 'rgba(0, 0, 0, 0.72)',
+    marginVertical: height * 0.008,
+    marginTop: height * 0.016,
+    marginRight: width * 0.05,
+    
   },
   back: {
     paddingTop: 40,
     paddingBottom: 10,
   },
   subtitle1: {
-    fontSize: 12,
-    marginBottom: -15,
+    fontSize: height * 0.0148,
+    marginBottom: height * -0.025 ,
+    marginVertical: height * 0.008,
     textTransform: 'uppercase',
     textAlign: 'right',
     fontFamily: 'EuclidFlexMedium',
     color: 'gray',
   },
   subtitle2: {
-    fontSize: 12,
-    marginBottom: -15,
+    fontSize: height * 0.0148,
+    marginBottom: height * -0.025,
+    marginVertical: height * 0.008,
     textAlign: 'left',
     textTransform: 'uppercase',
     fontFamily: 'EuclidFlexMedium',
@@ -248,11 +256,11 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   moreDetails: {
-    fontSize: 10,
+    fontSize: height * 0.015,
     color: '#FF9F1C',
     textTransform: 'uppercase',
     fontFamily: 'EuclidFlexMedium',
-    marginTop: 10,
+    marginVertical: height * 0.015,
   },
   cardOverlay: {
     height: '100%',
@@ -269,15 +277,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   buttonContainer: {
-    backgroundColor: 'black',
     backgroundColor: '#FFFFFF',
-    height: height*0.1,
     flexDirection: 'row',
     position: 'relative',
-    top: height * 0.08,
+    height: height * 0.1,
+    bottom: height * -0.03,
+    paddingHorizontal: width * 0.03,
     justifyContent: 'space-around',
     alignItems: 'center',
-    width: '95%',
+    width: width * 1,
     shadowColor: 'black',
     shadowOpacity: 0.5,
     shadowOffset: { width: 1, height: 1 },
@@ -287,16 +295,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF9F1C',
     borderRadius: 20,
     width: width * 0.25,
-    height: height * 0.03,
-    left: 10,
-    height: 50,
+    height: height * 0.065,
+    marginHorizontal: width * 0.02,
     borderRadius: 24,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
   quantityText: {
-    fontSize: width*0.04,
+    fontSize: width*0.05,
     fontWeight: 'bold',
     color: '#FFF',
   },
@@ -305,22 +312,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FF9F1C',
+    // padding: height * 0.01,
     borderRadius: 24,
-    marginHorizontal:5,
-    width: 'auto',
-    height: height*0.03,
+    width: width * 0.05,
+    height: height*0.065,
   },
   activeCartButton: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FF9F1C',
-    marginRight: 5,
-    marginLeft: 10,
     borderRadius: 25,
     alignContent: 'center',
-    width: 'auto',
-    height: height*0.06,
+    width: width * 0.6,
+    height: height*0.065,
   },
   addToCartButtonText: {
     color: 'white',
@@ -328,17 +333,18 @@ const styles = StyleSheet.create({
     fontFamily: 'EuclidFlexMedium',
     letterSpacing: 1.1,
     textAlign: 'center',
-    fontSize:  18,
+    fontSize:  width * 0.05,
   },
   sizedesign: {
-    paddingHorizontal: 18,
-    paddingVertical: 6,
-    borderRadius: 5,
+    paddingHorizontal: width * 0.07,
+    paddingVertical: height * 0.014,
+    borderRadius: 6,
     marginBottom: 4,
-    marginRight: 10,
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 6, height: 6 },
-    shadowRadius: 10,
+    marginRight: width * 0.05,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 4, height: 0 },
+    shadowRadius: 20,
     elevation: 2,
   },
 });
