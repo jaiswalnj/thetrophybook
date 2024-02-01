@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   subtitle1: {
-    height: height*0.035,
+    height: height*0.04,
     fontSize: height * 0.0148,
     marginBottom: height * -0.025 ,
     marginVertical: height * 0.008,
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   subtitle2: {
-    height: height*0.035,
+    height: height*0.04,
     fontSize: height * 0.0148,
     marginBottom: height * -0.025,
     marginVertical: height * 0.008,
