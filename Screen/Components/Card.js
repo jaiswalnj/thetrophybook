@@ -3,9 +3,10 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, Alert, Dimensions } fr
 import Icon from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import apiConfig from '../../apiConfig';
+import StarRating from 'react-native-star-rating';
 const { width, height } = Dimensions.get('window');
 
-const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked, onPress }) => {
+const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked, onPress, rating}) => {
   const BUTTON_SHRINK_FACTOR = 0.2;
 
   const handleAddToCart = async () => {
@@ -59,8 +60,13 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       >
         <Icon name="add-outline" size={29} color="black" style={{ padding:-1}} />
       </TouchableOpacity>
+      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
       <Text style={styles.price}>₹{price}</Text>
-      <Text style={styles.title}>{title}</Text>
+      <View style={{marginTop: 20, marginRight:35}}>
+      <StarRating disabled={false} maxStars={5} rating={rating} fullStarColor="#FF9F1C" starSize= {14}/>
+      </View>
+      </View>
+      <Text style={styles.subtitle}>{title}</Text>
     </View>
   );
 };
@@ -96,6 +102,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     color: 'black',
     fontFamily: 'EuclidFlexMedium',
+  },
+  subtitle: {
+    fontSize: width * 0.045,
+    paddingTop: 2,
+    paddingHorizontal: 16,
+    color: 'black',
+    fontFamily: 'EuclidFlexRegular',
   },
   price: {
     fontSize: width * 0.06,

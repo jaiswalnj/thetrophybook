@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import CategoryCard from '../Components/CategoryCard';
 import base64 from 'base64-js';
 import Loader from '../Components/Loader';
 import apiConfig from '../../apiConfig';
-
+import CategoryOverlay from './CategoryOverlay';
 const { width, height } = Dimensions.get('window');
 
  
@@ -28,6 +28,9 @@ const HomeScreen = ({ user }) => {
   const [category, setCategory] = useState('Trophies');
   const [loading, setLoading] = useState(false);
   const [trophySections, setTrophySections] = useState([]);
+  const filteredTrophyTypes = trophySections.map((section) => section.trophyType);
+  const scrollViewRef = useRef(null);
+
 
   const categories = [
     { title: 'Medals' },
@@ -142,6 +145,17 @@ const HomeScreen = ({ user }) => {
     organizeTrophiesIntoSections();
   }, [products]);
 
+  const scrollToTrophySection = (trophyType) => {
+    const index = trophySections.findIndex((section) => section.trophyType === trophyType);
+    if (scrollViewRef.current && index !== -1) {
+      scrollViewRef.current.scrollTo({
+        x: index * width,
+        y: 0,
+        animated: true,
+      });
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: height * 0.07 }}>
       <Loader loading={loading} />
@@ -157,8 +171,8 @@ const HomeScreen = ({ user }) => {
             Hello {userName}
           </Text>
 
-          <View style={[styles.profileImage, { backgroundColor: '#808080' }]}>
-            <Text style={{ color: "#ffffff", fontSize: width * 0.1, alignSelf: 'center' }}>
+          <View style={[styles.profileImage, { backgroundColor: '#b23838' }]}>
+            <Text style={{ color: "black", fontSize: width * 0.1, alignSelf: 'center' }}>
               {userName ? userName.charAt(0) : "?"}
             </Text>
           </View>
@@ -180,16 +194,19 @@ const HomeScreen = ({ user }) => {
             ))}
           </View>
         </ScrollView>
-
+        <View style={{position:'absolute',top : height*0.87,right: 10, zIndex: 2 }}>
+        <CategoryOverlay trophyTypes={filteredTrophyTypes} onSelectCategory={scrollToTrophySection}/>
+        </View>
         <ScrollView
           vertical
+          ref={scrollViewRef}
           showsVerticalScrollIndicator={false}
           style={{ flex: 1, maxHeight: height * 0.85 }}
         >
 
           {trophySections.map((section) => (
             <View key={section.trophyType} >
-              <Text style={{ fontSize: width * 0.055, textAlign: 'left', fontFamily: 'EuclidFlexMedium',height: height * 0.05}}>{section.trophyType}</Text>
+              <Text style={{ fontSize: width * 0.05, textAlign: 'left', fontFamily: 'EuclidFlexRegular',height: height * 0.04}}>{section.trophyType}</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {section.trophies.map((product, index) => (
                   <TouchableOpacity
@@ -205,6 +222,7 @@ const HomeScreen = ({ user }) => {
                       useCustomColor={index % 2 === 0}
                       liked={likedItems.some((item) => item._id === product._id)}
                       onPress={(productId, userId) => handleLikePress(productId, userId)}
+                      rating={product.customer_feedback.ratings.average}
                     />
                   </TouchableOpacity>
                 ))}

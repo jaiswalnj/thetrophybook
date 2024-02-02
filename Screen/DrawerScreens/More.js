@@ -65,13 +65,12 @@ const More = ({user}) => {
 
       <View style={styles.options}>
       <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Address</Text>
-          <Text style={styles.optionText}>{user.address}</Text>
+          <Text style={styles.optionText}>Address : {user.address}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.option} onPress={handleFeedbackPress}>
         <Text style={styles.optionText}>Feedback</Text>
       </TouchableOpacity>
-      <Feedback isVisible={isFeedbackModalVisible} onClose={handleCloseFeedbackModal} />
+      <Feedback isVisible={isFeedbackModalVisible} onClose={handleCloseFeedbackModal} user_id={user._id}/>
         <TouchableOpacity style={styles.option} onPress={handleLogout}>
           <Text style={styles.optionText}>Logout</Text>
         </TouchableOpacity>
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   option: {
-    backgroundColor: '#FFF8DF',
+    backgroundColor: '#f2f2f2',
     padding: 15,
     borderRadius: 5,
     marginVertical: 5,

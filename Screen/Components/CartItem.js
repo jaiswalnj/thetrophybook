@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    resizeMode: 'center',
+    resizeMode: 'contain',
   },
   
   card: {
@@ -353,12 +353,11 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderStyle: 'dashed',
     padding: 5,
-    
     borderWidth: 2,
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 8,
-
+    width: 80,
   },
 });
 

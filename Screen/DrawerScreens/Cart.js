@@ -116,7 +116,7 @@ const Cart = ({user}) => {
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Your cart is empty</Text>
             <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-              <View style={{ backgroundColor: '#FF9F1C', padding: width * 0.02, height: height * 0.05, width: width * 0.4, borderRadius: width * 0.05, alignItems: 'center' }}>
+              <View style={{ backgroundColor: '#FF9F1C', padding: width * 0.02, height: height * 0.05, width: width * 0.4, borderRadius: width * 0.05, alignItems: 'center', marginTop: height*0.02 }}>
                 <Text style={{ color: 'white' }}>Add Items</Text>
               </View>
             </TouchableOpacity>

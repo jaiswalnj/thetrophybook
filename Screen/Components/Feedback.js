@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StarRating from 'react-native-star-rating';
+import apiConfig from '../../apiConfig';
 
-const Feedback = ({ isVisible, onClose }) => {
+const Feedback = ({ user_id,isVisible, onClose }) => {
   const [rating, setRating] = useState(0);
   const [comments, setComments] = useState('');
 
@@ -11,9 +12,24 @@ const Feedback = ({ isVisible, onClose }) => {
     setRating(newRating);
   };
 
-  const handleSubmit = () => {
-    Alert.alert('Feedback Submitted', `Rating: ${rating}\nComments: ${comments}`);
-    onClose();
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(`${apiConfig.baseURL}/feedback-mail`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ review: comments, rating, user_id }),
+      });
+      console.log(response);
+      if (response) {
+        onClose();
+      } else {
+        console.error('Failed to send feedback');
+      }
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+    }
   };
 
   return (

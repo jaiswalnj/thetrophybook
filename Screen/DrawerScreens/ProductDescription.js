@@ -15,7 +15,7 @@ const ProductScreen = ({ route }) => {
   const navigation = useNavigation();
   const { product } = route.params;
   const { user } = route.params;
-  const [size, setSize] = useState(11);
+  const [size, setSize] = useState();
   const sizes = product.size;
   const [count, setCount] = useState(0);
   const [isInCart, setIsInCart] = useState(false);
@@ -29,6 +29,7 @@ const ProductScreen = ({ route }) => {
       const cartItem = user.cart.find((item) => item.trophy._id === productId);
       if (cartItem) {
         setCount(cartItem.qty);
+        setSize(cartItem.size);
         setIsInCart(true);
       }
     }
@@ -94,6 +95,23 @@ const ProductScreen = ({ route }) => {
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
+    fetch(`${apiConfig.baseURL}/customer-feedback`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        rating: newRating,
+        product_id: productId,
+      }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('API Response:', data);
+    })
+    .catch((error) => {
+      console.error('Error updating rating:', error);
+    });
   };
 
   return (
