@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import base64 from 'base64-js';
 import Liked from '../Components/Liked';
 import apiConfig from '../../apiConfig';
+
+
+const { width, height } = Dimensions.get('window');
 
 const Favourite = ({ user }) => {
   const [likedItems, setLikedItems] = useState([]);
@@ -22,15 +25,15 @@ const Favourite = ({ user }) => {
       <View style={{ alignItems: 'center', backgroundColor: '#FAFAFA', justifyContent: 'center' }}>
         <Text
           style={{
-            fontSize: 30,
+            fontSize: width * 0.08,
             textAlign: 'center',
-            marginTop: '10%',
-            marginBottom: '2%'
+            marginTop: height * 0.05,
+            marginBottom: height * 0.01,
           }}> Favourite
         </Text>
       </View>
         
-      <View style={{width: '100%'}}>
+      <View style={{width: width * 1}}>
       <FlatList
         data={likedItems}
         keyExtractor={(product) => product._id}

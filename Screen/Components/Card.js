@@ -57,7 +57,7 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
         onPress={handleAddToCart}
         activeOpacity={0.88}
       >
-        <Icon name="add-outline" size={29} color="black" style={{ left: 1, top: 1}} />
+        <Icon name="add-outline" size={29} color="black" style={{ padding:-1}} />
       </TouchableOpacity>
       <Text style={styles.price}>₹{price}</Text>
       <Text style={styles.title}>{title}</Text>
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
+    padding: -1,
     backgroundColor: 'white',
     alignItems: 'center',
     borderRadius: 5,
