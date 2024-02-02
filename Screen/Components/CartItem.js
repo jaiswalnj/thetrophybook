@@ -4,6 +4,8 @@ import base64 from 'base64-js';
 import {LinearGradient} from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import apiConfig from '../../apiConfig';
+import StarRating from 'react-native-star-rating';
+
 
 const CartItem = ({userId, cartItem, onRemove }) => {
   const [quantity, setQuantity] = useState(cartItem.qty);
@@ -127,18 +129,18 @@ const handlePlusPress = async () => {
         { isEditing ? (
             <View style={{padding:5, width: 190}}>
               
-                <View style= {{flexDirection: 'row',backgroundColor: '#FFF', justifyContent: 'space-between'}}> 
+                <View style= {{flexDirection: 'row', justifyContent: 'space-between'}}> 
                 
-                <Text style={{fontSize:22}} >{cartItem.trophy.trophyName}</Text>
-                
-                
-                <Icon name="trash-outline" size={25} color='#000' />
+                <Text style={{fontSize:25, marginTop:7}} >{cartItem.trophy.trophyName}</Text>
+
+                <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: 10}}>
+                  <Icon name='trash-outline' size={25} color='black'/>
+                </TouchableOpacity>
                 
               </View>
                   
       <View style= {{flexDirection: 'row', height:50, width: '100%', alignItems:'center', marginTop: 2, justifyContent: 'space-between' }}>
           <View   style={styles.buttonbg}>
-
                 <View style= {{flexDirection: 'row', }}>
                     <TouchableOpacity onPress={handleMinusPress}>
                       <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1, justifyContent: 'center'}}>
@@ -151,7 +153,7 @@ const handlePlusPress = async () => {
                       <Icon name="add-outline" size={18} color='white' />
                       </View>
                     </TouchableOpacity>
-                    </View>
+                  </View>
                 </View>
               <TextInput 
               style={styles.year}
@@ -194,8 +196,15 @@ const handlePlusPress = async () => {
           ) : (
             <View style={{flexDirection: 'row'}}>
             <View style={{padding:20}}>
-            <Text style={styles.title}>{ cartItem.trophy.price}</Text>
-            <Text style={styles.title}>{cartItem.trophy.trophyName}</Text>
+            <Text style={styles.title}>₹{ cartItem.trophy.price}</Text>
+            <StarRating
+                  disabled={false}
+                  maxStars={5}
+                  rating={cartItem.trophy.customer_feedback.ratings.average}
+                  fullStarColor="#FF9F1C"
+                  starSize= {12}
+                />
+            <Text style={styles.title2}>{cartItem.trophy.trophyName}</Text>
             </View>
             <View style={styles.quantityContainer}>
               
@@ -209,7 +218,21 @@ const handlePlusPress = async () => {
               <Icon name='trash-outline' size={22} color='black'/>
               </TouchableOpacity>
               </View>
-                  <Text >Quantity: {cartItem.qty}</Text>
+              <View   style={styles.buttonbg}>
+                <View style= {{flexDirection: 'row', }}>
+                    <TouchableOpacity onPress={handleMinusPress}>
+                      <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1, justifyContent: 'center'}}>
+                      <Icon name="remove-outline" size={18} color='white' />
+                      </View>
+                    </TouchableOpacity>
+                    <Text style={{ color: 'white', fontSize: 16, marginLeft: 8, marginRight: 8}}>{quantity}</Text>
+                    <TouchableOpacity onPress={handlePlusPress}>
+                      <View style={{backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1,}}>
+                      <Icon name="add-outline" size={18} color='white' />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
             </View>
          </View>
           )
@@ -266,8 +289,12 @@ const styles = StyleSheet.create({
 
   },
   title: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  title2: {
+    fontSize: 16,
     marginBottom: 5,
   },
   buttonbg:{
@@ -275,13 +302,8 @@ const styles = StyleSheet.create({
       borderRadius: 16,
       width:'48%',
       flexDirection: 'row',
-      // marginRight: 10,
       justifyContent: 'center', 
       alignItems: 'center',
-      // alignContent: 'space-around',
-      // alignItems: 'center',
-      // justifyContent: 'space-between',
-      
       height: 30,
     
   },
@@ -291,9 +313,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '48%',
     textAlign: 'center',
-    // marginBottom: 10,
-    // marginTop: 10,
-    // margin: '0 auto',
     paddingHorizontal: 10,
     borderRadius: 8,
   },
@@ -327,7 +346,7 @@ const styles = StyleSheet.create({
   quantityContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   note: {
     height: 30,

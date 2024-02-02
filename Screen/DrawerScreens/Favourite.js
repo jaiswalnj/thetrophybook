@@ -21,7 +21,7 @@ const Favourite = ({ user }) => {
   );
 
   return (
-    <View style={{ marginBottom: 50, }}>
+    <View style={{ backgroundColor: '#FAFAFA', marginBottom: height * 0.07}}>
       <View style={{ alignItems: 'center', backgroundColor: '#FAFAFA', justifyContent: 'center' }}>
         <Text
           style={{
@@ -35,6 +35,7 @@ const Favourite = ({ user }) => {
         
       <View style={{width: width * 1}}>
       <FlatList
+        style={{height: height * 0.80}}
         data={likedItems}
         keyExtractor={(product) => product._id}
         numColumns={2}

@@ -73,7 +73,6 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor, onRe
   const styles = StyleSheet.create({
     container: {
       overflow: 'hidden',
-      // backgroundColor: 'red',
       width: width * 0.45,
       height: height * 0.40,
       marginTop: height * 0.008,
@@ -82,60 +81,6 @@ const Liked = ({ imageUrl, title, price, productId, userId, useCustomColor, onRe
       marginRight: width * 0.02,
       paddingHorizontal:5,
     },
-  // {
-  //   // gradientCard: {
-  //   //   width: '90%',
-  //   //   height: 250,
-  //   //   borderRadius: 16,
-  //   //   overflow: 'hidden',
-  //   //   backgroundColor: '#64ECC7',
-  //   //   elevation: 3,
-  //   //   alignSelf: '',
-  //   // },
-  //   // image: {
-  //   //   width: '200%',
-  //   //   height: 180,
-  //   //   marginVertical: 50,
-  //   //   marginHorizontal: -80,
-  //   //   resizeMode: 'contain',
-  //   // },
-  //   // title: {
-  //   //   fontSize: 18,
-  //   //   paddingTop: 4,
-  //   //   paddingHorizontal: 16,
-  //   //   color: 'black',
-  //   // },
-  //   // price: {
-  //   //   fontSize: 25,
-  //   //   fontWeight: 'regular',
-  //   //   letterSpacing: 0.2,
-  //   //   color: 'black',
-  //   //   paddingTop: 20,
-  //   //   paddingLeft: 16,
-  //   //   paddingBottom: 2,
-  //   // },
-  //   // likeButton: {
-  //   //   position: 'absolute',
-  //   //   top: 10,
-  //   //   right: 10,
-  //   //   zIndex: 1,
-  //   // },
-  //   // addButton: {
-  //   //   position: 'absolute',
-  //   //   backgroundColor: 'white',
-  //   //   alignItems: 'center',
-  //   //   borderRadius: 5,
-  //   //   shadowColor: 'black',
-  //   //   shadowOpacity: 0.3,
-  //   //   shadowOffset: { width: 5, height: 5},
-  //   //   shadowRadius: 5,
-  //   //   height: 30,
-  //   //   width: 30,
-  //   //   bottom: 70,
-  //   //   right: 5,
-  //   //   elevation: 4,
-  //   //   zIndex: 1,
-// }
     gradientCard: {
       width: width * 0.4,
       height: height * 0.28,

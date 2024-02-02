@@ -15,11 +15,8 @@ const Orders = ({ route }) => {
 
       {item.trophy && (
         <View style={styles.trophyContainer}>
-          {/* <Image source={{ uri: `data:${item.trophy.image[0].image.contentType};base64,${item.trophy.image[0].image.data}` }} style={styles.trophyImage} /> */}
           <View style={styles.trophyDetails}>
-            <Text>Trophy Name: {item.trophy.trophyName}</Text>
-            <Text>Category: {item.trophy.category}</Text>
-            <Text>Price: ${item.trophy.price}</Text>
+            <Text>Trophy Id: {item.trophy}</Text>
           </View>
         </View>
       )}
