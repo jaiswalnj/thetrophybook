@@ -1,7 +1,8 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+const { width, height } = Dimensions.get('window');
     
 const Orders = ({ route }) => {
   const { orderHistory } = route.params;
@@ -40,6 +41,7 @@ const Orders = ({ route }) => {
       </View>
 
       <FlatList
+        style={{height: height * 0.91}}
         data={orderHistory}
         keyExtractor={(item) => item._id}
         renderItem={renderOrderItem}

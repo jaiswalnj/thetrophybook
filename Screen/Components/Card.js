@@ -62,8 +62,8 @@ const Card = ({ imageUrl, title, price, productId, userId, useCustomColor, liked
       </TouchableOpacity>
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
       <Text style={styles.price}>₹{price}</Text>
-      <View style={{marginTop: 20, marginRight:35}}>
-      <StarRating disabled={false} maxStars={5} rating={rating} fullStarColor="#FF9F1C" starSize= {14}/>
+      <View style={{marginTop: 15, marginRight:30}}>
+      <StarRating disabled={false} maxStars={5} rating={rating} fullStarColor="#FF9F1C" starSize= {13} starStyle={{letterSpacing:2.5}}/>
       </View>
       </View>
       <Text style={styles.subtitle}>{title}</Text>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
     width: width * 0.50,
-    height: height * 0.40,
+    height: height * 0.38,
   },
   gradientCard: {
     width: width * 0.42,
@@ -96,26 +96,19 @@ const styles = StyleSheet.create({
     marginHorizontal: width * -0.22,
     resizeMode: 'contain',
   },
-  title: {
-    fontSize: width * 0.05,
-    paddingTop: 2,
-    paddingHorizontal: 16,
-    color: 'black',
-    fontFamily: 'EuclidFlexMedium',
-  },
   subtitle: {
-    fontSize: width * 0.045,
+    fontSize: width * 0.038,
     paddingTop: 2,
     paddingHorizontal: 16,
     color: 'black',
     fontFamily: 'EuclidFlexRegular',
   },
   price: {
-    fontSize: width * 0.06,
-    fontWeight: 'regular',
+    fontSize: width * 0.05,
+    fontWeight: '200',
     fontFamily: 'ArialRounded',
     marginTop: 10,
-    letterSpacing: 0.2,
+    letterSpacing: 2,
     color: 'black',
     paddingLeft: 16,
   },

@@ -20,6 +20,7 @@ const ProductScreen = ({ route }) => {
   const [count, setCount] = useState(0);
   const [isInCart, setIsInCart] = useState(false);
   const productId = product._id;
+  const [cartId, setCartId] = useState();
   const userId = user._id;
   const [rating, setRating] = useState(product.customer_feedback.ratings.average);
 
@@ -29,11 +30,41 @@ const ProductScreen = ({ route }) => {
       const cartItem = user.cart.find((item) => item.trophy._id === productId);
       if (cartItem) {
         setCount(cartItem.qty);
+        setCartId(cartItem._id);
         setSize(cartItem.size);
         setIsInCart(true);
       }
     }
-  }, [user]);
+  }, [user,isInCart]);
+
+  const handleSave = async (selectedSize) => {
+    try {
+      if (!isInCart) {
+        console.error("Product is not in the cart.");
+        return;
+      }
+      console.log(userId,cartId,selectedSize);
+      const response = await fetch(`${apiConfig.baseURL}/cart-item-edit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          cartItemId: cartId,
+          size: selectedSize,
+        }),
+      });
+  
+      if (response.ok) {
+        setSize(selectedSize);
+      } else {
+        console.error('API error:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error calling API:', error);
+    }
+  };
 
   const handleMinusPress = async () => {
     if (count > 0) {
@@ -57,6 +88,7 @@ const ProductScreen = ({ route }) => {
         .then((responseData) => {
           if (count === 1) {
             setIsInCart(false);
+            setCount(count - 1);
           } else {
             setCount(count - 1);
           }
@@ -81,6 +113,8 @@ const ProductScreen = ({ route }) => {
         .then((response) => response.json())
         .then((responseJson) => {
           if (responseJson.message === 'Item added to the cart') {
+            console.log(responseJson.data);
+            setCartId(responseJson.data);
             setIsInCart(true);
             setCount(count + 1);
           } else {
@@ -133,8 +167,8 @@ const ProductScreen = ({ route }) => {
               style={styles.cardOverlay}
             />
           </View>
-          <View style={{ height: width > 600 ? '60%' : 'auto', width: '100%', marginHorizontal: width * 0.02 }}>
-            <View style={{ marginLeft: width > 600 ? '3%' : '1%' }}>
+          <View style={{ height: width > 600 ? '60%' : 'auto', width: '90%', marginHorizontal: width * 0.04 }}>
+            <View style={{ marginLeft: '1%' }}>
               <ScrollView vertical showsVerticalScrollIndicator={true}>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: height*0.01 }}>
                   <Text style={styles.productTitle}>{product.trophyName}</Text>
@@ -148,6 +182,7 @@ const ProductScreen = ({ route }) => {
                   selectedStar={(rating) => handleRatingChange(rating)}
                   fullStarColor="#FF9F1C"
                   starSize= {width* 0.04}
+                  starStyle={{letterSpacing:3}}
                 />
                 </View>
                 <Text style={styles.productDescription}>{product.description}This is a metal trophy made for basketball games. It comes in three different colors, like bronze, silver and gold. </Text>
@@ -155,7 +190,7 @@ const ProductScreen = ({ route }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', width: '100%'}}>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1, flexDirection: 'row', }}>
                     {sizes.map((s, i) => (
-                      <TouchableOpacity key={i} style={[styles.sizedesign, { backgroundColor: size === s ? '#FF9F1C' : '#FFFFFF', shadowColor: size === s ? '#FF9F1C' : '#000' }]} onPress={() => setSize(s)}>
+                      <TouchableOpacity key={i} style={[styles.sizedesign, { backgroundColor: size === s ? '#FF9F1C' : '#FFFFFF', shadowColor: size === s ? '#FF9F1C' : '#000' }]} onPress={() => handleSave(s)}>
                         <Text style={{ color: size === s ? '#FFFFFF' : '#000000', fontSize: width > 600 ? 24 : 18 }}>{s}"</Text>
                       </TouchableOpacity>
                     ))}
@@ -298,7 +333,8 @@ const styles = StyleSheet.create({
   cardOverlay: {
     height: '100%',
     width: '100%',
-    borderRadius: 25,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',

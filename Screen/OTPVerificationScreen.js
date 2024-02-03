@@ -11,9 +11,9 @@ const OTPVerificationScreen = ({navigation }) => {
 
   const handleOTP = async() => {
     const enteredOTP = otp.join('');
-    console.log(enteredOTP,userId);
     const storedUserId = await AsyncStorage.getItem('userId');
-    setUserId(storedUserId || '');
+    setUserId(storedUserId);
+    console.log(enteredOTP,userId);
     try{
       const data = await fetch(`${apiConfig.baseURL}/verifyOtp` , { 
         method:"POST",

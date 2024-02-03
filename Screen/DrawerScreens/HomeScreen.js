@@ -171,8 +171,8 @@ const HomeScreen = ({ user }) => {
             Hello {userName}
           </Text>
 
-          <View style={[styles.profileImage, { backgroundColor: '#b23838' }]}>
-            <Text style={{ color: "black", fontSize: width * 0.1, alignSelf: 'center' }}>
+          <View style={[styles.profileImage, { backgroundColor: '#808080' }]}>
+            <Text style={{ color: "white", fontSize: width * 0.1, alignSelf: 'center' }}>
               {userName ? userName.charAt(0) : "?"}
             </Text>
           </View>
@@ -206,7 +206,7 @@ const HomeScreen = ({ user }) => {
 
           {trophySections.map((section) => (
             <View key={section.trophyType} >
-              <Text style={{ fontSize: width * 0.05, textAlign: 'left', fontFamily: 'EuclidFlexRegular',height: height * 0.04}}>{section.trophyType}</Text>
+              <Text style={{ fontSize: width * 0.047,marginLeft: width * 0.03,marginTop: height*0.01,letterSpacing:1.3, textAlign: 'left', fontFamily: 'EuclidFlexMedium',height: height * 0.04}}>{section.trophyType}</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {section.trophies.map((product, index) => (
                   <TouchableOpacity

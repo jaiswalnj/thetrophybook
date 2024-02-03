@@ -205,6 +205,7 @@ const handlePlusPress = async () => {
                   starSize= {12}
                 />
             <Text style={styles.title2}>{cartItem.trophy.trophyName}</Text>
+            <Text style={styles.title2}>Size:{cartItem.size}</Text>
             </View>
             <View style={styles.quantityContainer}>
               
