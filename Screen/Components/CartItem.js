@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import base64 from 'base64-js';
 import {LinearGradient} from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import apiConfig from '../../apiConfig';
 import StarRating from 'react-native-star-rating';
+
+const { width, height } = Dimensions.get('window');
 
 
 const CartItem = ({userId, cartItem, onRemove }) => {
@@ -15,6 +17,7 @@ const CartItem = ({userId, cartItem, onRemove }) => {
   const [customization4, setCustomization4] = useState(cartItem.additional_detail);
   const [isEditing, setIsEditing] = useState(false);
   const cardItem = useRef();
+  const flexD = useRef();
 
   const handleMinusPress = async() => {
     const productId=cartItem.trophy._id;
@@ -73,11 +76,15 @@ const handlePlusPress = async () => {
 
   useEffect( () => {
     if (isEditing){
-      cardItem.current.setNativeProps({ style: { height: 180, width:135} });
+      cardItem.current.setNativeProps({ style: { height: height * 0.26, width:width * 0.38} });
+      flexD.current.setNativeProps({style: { flexDirection: 'column'}});
     }else{
-      cardItem.current.setNativeProps({ style: { height: 80, width:70} });
+      cardItem.current.setNativeProps({ style: { height: height* 0.15 , width: width * 0.23} });
+      flexD.current.setNativeProps({style: { flexDirection: 'row'}});
     }
   },[isEditing])
+
+
 
   const handleSave = async () => {
     try {
@@ -114,7 +121,8 @@ const handlePlusPress = async () => {
   return (
     <>
     
-    <View  style={styles.cartItemContainer} >
+    <View ref={flexD} style={styles.cartItemContainer} >
+
       <View ref={cardItem} style={styles.cardContainer}>
         <LinearGradient 
       colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
@@ -125,22 +133,19 @@ const handlePlusPress = async () => {
       <Image  source={{ uri: `data:${cartItem.trophy.image.image.contentType};base64,${base64.fromByteArray(cartItem.trophy.image.image.data.data)}` }}  style={styles.image}/>
       </LinearGradient>
       </View>
+
+
       <View style={styles.detailsContainer}>
         { isEditing ? (
-            <View style={{padding:5, width: 190}}>
-              
-                <View style= {{flexDirection: 'row', justifyContent: 'space-between'}}> 
-                
-                <Text style={{fontSize:25, marginTop:7}} >{cartItem.trophy.trophyName}</Text>
 
-                <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: 10}}>
-                  <Icon name='trash-outline' size={25} color='black'/>
-                </TouchableOpacity>
-                
-              </View>
-                  
+            <View style={{padding: height * 0.001, width: width * 0.6}}>              
+                <View style= {{flexDirection: 'row', justifyContent: 'space-between'}}>                 
+                <Text style={{fontSize:height * 0.03, marginTop:height * 0.01 }} >{cartItem.trophy.trophyName}</Text>
+            </View>
+                 
       <View style= {{flexDirection: 'row', height:50, width: '100%', alignItems:'center', marginTop: 2, justifyContent: 'space-between' }}>
-          <View   style={styles.buttonbg}>
+                
+          <View   style={styles.buttonbg}> //this is button for editing: true
                 <View style= {{flexDirection: 'row', }}>
                     <TouchableOpacity onPress={handleMinusPress}>
                       <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1, justifyContent: 'center'}}>
@@ -161,6 +166,10 @@ const handlePlusPress = async () => {
                 value={customization1}
                 onChangeText={(text) => setCustomization1(text)}
               />
+              
+                <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: 10}}>
+                  <Icon name='trash-outline' size={25} color='black'/>
+                </TouchableOpacity>
 
             </View>
 
@@ -193,43 +202,50 @@ const handlePlusPress = async () => {
               </View>
               </View>
             </View>
+
+
           ) : (
+
+
             <View style={{flexDirection: 'row'}}>
-            <View style={{padding:20}}>
-            <Text style={styles.title}>₹{ cartItem.trophy.price}</Text>
-            <StarRating
-                  disabled={false}
-                  maxStars={5}
-                  rating={cartItem.trophy.customer_feedback.ratings.average}
-                  fullStarColor="#FF9F1C"
-                  starSize= {12}
-                />
-            <Text style={styles.title2}>{cartItem.trophy.trophyName}</Text>
-            <Text style={styles.title2}>Size:{cartItem.size}</Text>
-            </View>
+                  <View style={{padding:height * 0.008}}>
+                    <Text style={styles.title}>₹{ cartItem.trophy.price}</Text>
+                    <StarRating
+                          disabled={false}
+                          maxStars={5}
+                          rating={cartItem.trophy.customer_feedback.ratings.average}
+                          fullStarColor="#FF9F1C"
+                          starSize= {height * 0.018}
+                        />
+                    <Text style={styles.title2} >{cartItem.trophy.trophyName}</Text>
+                    {/* <Text style={styles.title3}>Size:{cartItem.size}</Text> */}
+                  </View>
+
+
+
             <View style={styles.quantityContainer}>
               
             <View style={{flexDirection:'row', alignContent: 'space-between', }}>
-              <TouchableOpacity onPress={() => handleCustomize()} style={{padding: 10}}>
-              <Icon name='create' size={22} color='black'/>
+              <TouchableOpacity onPress={() => handleCustomize()} style={{padding: width * 0.025}}>
+              <Icon name='create-outline' size={height * 0.034} color='black'/>
               </TouchableOpacity>
               
               
-              <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: 10}}>
-              <Icon name='trash-outline' size={22} color='black'/>
+              <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: width * 0.025}}>
+              <Icon name='trash-outline' size={height * 0.034} color='black'/>
               </TouchableOpacity>
               </View>
               <View   style={styles.buttonbg}>
                 <View style= {{flexDirection: 'row', }}>
                     <TouchableOpacity onPress={handleMinusPress}>
                       <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1, justifyContent: 'center'}}>
-                      <Icon name="remove-outline" size={18} color='white' />
+                      <Icon name="remove-outline" size={height * 0.026} color='white' />
                       </View>
                     </TouchableOpacity>
-                    <Text style={{ color: 'white', fontSize: 16, marginLeft: 8, marginRight: 8}}>{quantity}</Text>
+                    <Text style={{ color: 'white', fontSize: height * 0.022, marginHorizontal: width * 0.015}}>{quantity}</Text>
                     <TouchableOpacity onPress={handlePlusPress}>
                       <View style={{backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1,}}>
-                      <Icon name="add-outline" size={18} color='white' />
+                      <Icon name="add-outline" size={height * 0.026} color='white' />
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -246,20 +262,18 @@ const handlePlusPress = async () => {
 
 const styles = StyleSheet.create({
   cartItemContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 25,
-    paddingHorizontal: 10,
-    paddingBottom: 20 , 
-    paddingVertical:5,
+    width: width * 1,
+    marginHorizontal: width * 0.04,
     backgroundColor: '#FAFAFA',
   },
   quantityContainer:{
     flex:2,
     backgroundColor: '#FF9F1C',
+    backgroundColor: 'red',
     borderRadius: 16,
-    // padding:20,
     width:100,
     padding: 10,
     flexDirection: 'column',
@@ -276,36 +290,51 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     height: '100%',
-    
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 8,
     overflow: 'hidden',
     elevation: 3,
-    // alignSelf: ''
   },
   detailsContainer: {
     flexDirection: 'row',
+    // backgroundColor: 'yellow',
+    width: width * 0.8 ,
+    // height: height * 0.2,
+    padding: height * 0.012
     
 
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontSize: height * 0.035,
+    // fontWeight: 'bold',
+    letterSpacing: width * 0.0035,
+    // fontFamily: 'ArialRounded',
+    marginVertical: height * 0.01,
+    // marginTop: height * 0.008,
+    // marginBottom: height * 0.003,
   },
   title2: {
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: height * 0.028,
+    // fontFamily: 'EuclidFlexMedium',
+    marginVertical: height * 0.01,
+    // marginTop: height * 0.008,
+    // marginBottom: height * -0.025,
+    
   },
+  // title3: {
+  //   fontSize: height * 0.019,
+  //   // marginVertical: height * 0.001,
+  // },
   buttonbg:{
       backgroundColor: '#FF9F1C',
-      borderRadius: 16,
-      width:'48%',
+      borderRadius: height * 0.02,
+      marginVertical: height * 0.04,
+      width: width * 0.24,
       flexDirection: 'row',
       justifyContent: 'center', 
       alignItems: 'center',
-      height: 30,
+      height: height * 0.038,
     
   },
   year:{
