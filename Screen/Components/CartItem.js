@@ -126,7 +126,6 @@ const handlePlusPress = async () => {
       <View ref={cardItem} style={styles.cardContainer}>
         <LinearGradient 
       colors={['#64ECC7', '#87FFDE', '#64ECC7', '#39FFC9']}
-      
       start={{ x: 0.455, y: 0 }}
       end={{ x:1, y: 1 }}
       style={styles.card}>
@@ -139,23 +138,23 @@ const handlePlusPress = async () => {
         { isEditing ? (
 
             <View style={{padding: height * 0.001, width: width * 0.6}}>              
-                <View style= {{flexDirection: 'row', justifyContent: 'space-between'}}>                 
-                <Text style={{fontSize:height * 0.03, marginTop:height * 0.01 }} >{cartItem.trophy.trophyName}</Text>
-            </View>
+                <View style= {{flex: 1, flexDirection: 'row', width: width * 1,  alignItems: 'center'}}>                 
+                    <Text style={{fontSize:height * 0.03, marginTop:height * 0.001, marginLeft: width * 0.33}} >{cartItem.trophy.trophyName}</Text>
+                </View>
                  
-      <View style= {{flexDirection: 'row', height:50, width: '100%', alignItems:'center', marginTop: 2, justifyContent: 'space-between' }}>
+      <View style= {{flexDirection: 'row', height:height * 0.048, width: width  * 0.94, alignItems:'center', marginTop: height * 0.001, backgroundColor: '#FFF' }}>
                 
-          <View   style={styles.buttonbg}> //this is button for editing: true
+          <View   style={styles.buttonbg}>
                 <View style= {{flexDirection: 'row', }}>
                     <TouchableOpacity onPress={handleMinusPress}>
                       <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1, justifyContent: 'center'}}>
-                      <Icon name="remove-outline" size={18} color='white' />
+                      <Icon name="remove-outline" size={height * 0.03} color='white' />
                       </View>
                     </TouchableOpacity>
-                    <Text style={{ color: 'white', fontSize: 16, marginLeft: 8, marginRight: 8}}>{quantity}</Text>
+                    <Text style={{ color: 'white', fontSize: height * 0.022, marginLeft: 8, marginRight: 8}}>{quantity}</Text>
                     <TouchableOpacity onPress={handlePlusPress}>
-                      <View style={{backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1,}}>
-                      <Icon name="add-outline" size={18} color='white' />
+                      <View style={{backgroundColor: '#FF9F1C',borderRadius: height * 0.01,padding: 1,}}>
+                      <Icon name="add-outline" size={height * 0.03} color='white' />
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -167,15 +166,15 @@ const handlePlusPress = async () => {
                 onChangeText={(text) => setCustomization1(text)}
               />
               
-                <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: 10}}>
-                  <Icon name='trash-outline' size={25} color='black'/>
+                <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{}}>
+                  <Icon name='trash-outline' size={height * 0.038} style={{marginHorizontal: width * 0.02}} color='black'/>
                 </TouchableOpacity>
 
             </View>
 
 
 
-            <View style={{ flex:1, backgroundColor: '#FFF'}}>
+            <View style={{ flex:1, backgroundColor: '#FFF', width: width * 0.93, }}>
               <TextInput
                 style={styles.input}
                 placeholder="Text on trophy"
@@ -188,7 +187,7 @@ const handlePlusPress = async () => {
                 value={customization3}
                 onChangeText={(text) => setCustomization3(text)}
               />
-              <View style={{width: '100%' ,height: 40, flexDirection:'row', alignItems: 'center', justifyContent: 'space-between'}}>
+              <View style={{width: width * 0.93 ,height: height * 0.06, flexDirection:'row', alignItems: 'center', justifyContent: 'space-between'}}>
               <TextInput
                 style={styles.note}
                 placeholder="Add Note"
@@ -207,9 +206,10 @@ const handlePlusPress = async () => {
           ) : (
 
 
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', width: width * 0.9}}>
                   <View style={{padding:height * 0.008}}>
                     <Text style={styles.title}>₹{ cartItem.trophy.price}</Text>
+                    <View style={{width: width * 0.22}}>
                     <StarRating
                           disabled={false}
                           maxStars={5}
@@ -217,40 +217,43 @@ const handlePlusPress = async () => {
                           fullStarColor="#FF9F1C"
                           starSize= {height * 0.018}
                         />
+                      </View>
+
                     <Text style={styles.title2} >{cartItem.trophy.trophyName}</Text>
                     {/* <Text style={styles.title3}>Size:{cartItem.size}</Text> */}
                   </View>
 
 
 
-            <View style={styles.quantityContainer}>
-              
-            <View style={{flexDirection:'row', alignContent: 'space-between', }}>
-              <TouchableOpacity onPress={() => handleCustomize()} style={{padding: width * 0.025}}>
-              <Icon name='create-outline' size={height * 0.034} color='black'/>
-              </TouchableOpacity>
-              
-              
-              <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: width * 0.025}}>
-              <Icon name='trash-outline' size={height * 0.034} color='black'/>
-              </TouchableOpacity>
-              </View>
-              <View   style={styles.buttonbg}>
-                <View style= {{flexDirection: 'row', }}>
-                    <TouchableOpacity onPress={handleMinusPress}>
-                      <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1, justifyContent: 'center'}}>
-                      <Icon name="remove-outline" size={height * 0.026} color='white' />
-                      </View>
-                    </TouchableOpacity>
-                    <Text style={{ color: 'white', fontSize: height * 0.022, marginHorizontal: width * 0.015}}>{quantity}</Text>
-                    <TouchableOpacity onPress={handlePlusPress}>
-                      <View style={{backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1,}}>
-                      <Icon name="add-outline" size={height * 0.026} color='white' />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
+                <View style={styles.quantityContainer}>
+                  
+                        <View style={{flexDirection:'row', alignContent: 'space-between', }}>
+                            <TouchableOpacity onPress={() => handleCustomize()} style={{padding: width * 0.025}}>
+                            <Icon name='create-outline' size={height * 0.034} color='black'/>
+                            </TouchableOpacity>
+                            
+                            
+                            <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{padding: width * 0.025}}>
+                            <Icon name='trash-outline' size={height * 0.034} color='black'/>
+                            </TouchableOpacity>
+                        </View>
+                        
+                        <View   style={styles.buttonbg}>
+                          <View style= {{flexDirection: 'row', }}>
+                              <TouchableOpacity onPress={handleMinusPress}>
+                                <View style={{ backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1, justifyContent: 'center'}}>
+                                <Icon name="remove-outline" size={height * 0.026} color='white' />
+                                </View>
+                              </TouchableOpacity>
+                              <Text style={{ color: 'white', fontSize: height * 0.022, marginHorizontal: width * 0.015}}>{quantity}</Text>
+                              <TouchableOpacity onPress={handlePlusPress}>
+                                <View style={{backgroundColor: '#FF9F1C',borderRadius: 1,padding: 1,}}>
+                                <Icon name="add-outline" size={height * 0.026} color='white' />
+                                </View>
+                              </TouchableOpacity>
+                            </View>
+                        </View>
                 </View>
-            </View>
          </View>
           )
         }
@@ -266,27 +269,39 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: width * 1,
-    marginHorizontal: width * 0.04,
     backgroundColor: '#FAFAFA',
+    marginVertical: height*0.001,
+    // backgroundColor: 'red'
   },
-  quantityContainer:{
-    flex:2,
-    backgroundColor: '#FF9F1C',
-    backgroundColor: 'red',
-    borderRadius: 16,
-    width:100,
-    padding: 10,
-    flexDirection: 'column',
-    alignContent: 'flex-start',
+  quantityContainer: {
+    flex: 2,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
+    // backgroundColor: 'red',
+    marginRight: width * 0.18,
+    width: width * 0.02,
+    height: height * 0.175,
+  },
+  detailsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: width * 0.98 ,
+    marginTop: height * 0.01,
+    height: 'auto',
+    paddingHorizontal: height * 0.01
+  },
+  cardContainer: {
+    backgroundColor: '#FFF',
+    height: height * 0.26,
+    width:width * 0.38,
+    marginHorizontal: width * 0.02,
+    marginTop: height * 0.01,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
   },
-  
   card: {
     width: '100%',
     height: '100%',
@@ -296,31 +311,28 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 3,
   },
-  detailsContainer: {
-    flexDirection: 'row',
-    // backgroundColor: 'yellow',
-    width: width * 0.8 ,
-    // height: height * 0.2,
-    padding: height * 0.012
-    
-
+  star: {
+    fontSize: height * 0.035,
+    fontWeight: 'bold',
+    letterSpacing: width * 0.0035,
+    fontFamily: 'ArialRounded',
+    // not in use 
+    marginTop: height * 0.01,
+    marginBottom: height * 0.006,
   },
   title: {
     fontSize: height * 0.035,
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
     letterSpacing: width * 0.0035,
-    // fontFamily: 'ArialRounded',
-    marginVertical: height * 0.01,
-    // marginTop: height * 0.008,
-    // marginBottom: height * 0.003,
+    fontFamily: 'ArialRounded',
+    marginTop: height * 0.01,
+    marginBottom: height * 0.006,
   },
   title2: {
     fontSize: height * 0.028,
-    // fontFamily: 'EuclidFlexMedium',
-    marginVertical: height * 0.01,
-    // marginTop: height * 0.008,
-    // marginBottom: height * -0.025,
-    
+    fontFamily: 'EuclidFlexMedium',
+    marginTop: height * 0.008,
+    marginBottom: height * -0.025,
   },
   // title3: {
   //   fontSize: height * 0.019,
@@ -329,65 +341,53 @@ const styles = StyleSheet.create({
   buttonbg:{
       backgroundColor: '#FF9F1C',
       borderRadius: height * 0.02,
-      marginVertical: height * 0.04,
-      width: width * 0.24,
+      marginVertical: height * 0.035,
+      width: width * 0.3,
       flexDirection: 'row',
       justifyContent: 'center', 
       alignItems: 'center',
       height: height * 0.038,
-    
   },
   year:{
-    height: 30,
+    height: height * 0.037,
     borderColor: 'gray',
     borderWidth: 1,
-    width: '48%',
+    width: width * 0.4,
     textAlign: 'center',
+    marginHorizontal: width * 0.01,
     paddingHorizontal: 10,
     borderRadius: 8,
   },
   input: {
-    height: 30,
+    height: height * 0.04,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: height * 0.005,
     paddingHorizontal: 10,
     borderRadius: 8,
   },
   saveButton: {
-    // flex:1,
     backgroundColor: '#FFCD1C',
-    height:35,
-    width:'46%',
+    height: height * 0.045,
+    width:width * 0.38,
     // padding: 8,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    // alignSelf: 'flex-end',
-    borderRadius: 10,
+    borderRadius: height * 0.01,
     marginTop: -9,
   },
-  cardContainer: {
-    height: 80,
-    width: 70,
-    marginRight:10
-    // marginLeft: 10,
-  },
-  quantityContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   note: {
-    height: 30,
+    height: height * 0.042,
     borderColor: 'gray',
     borderStyle: 'dashed',
-    padding: 5,
-    borderWidth: 2,
+    // padding: 5,
+    borderWidth: width * 0.005,
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 8,
-    width: 80,
+    marginHorizontal: width * 0.01,
+    width: width * 0.38,
   },
 });
 
