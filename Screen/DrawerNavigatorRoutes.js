@@ -2,7 +2,7 @@ import React,{useEffect,useRef ,useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, View ,Dimensions} from 'react-native';
+import { StyleSheet, View ,Dimensions, KeyboardAvoidingView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomTabBarButton from './Components/CustomTabBarButton';
 import CustomTabBar from './Components/CustomTabBar';
@@ -67,7 +67,10 @@ const DraweerNavigatorRoutes = () => {
 
 
   return (
-    <View style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+        keyboardVerticalOffset={10}
+        style={{ flex: 1 }}
+      >
       <Tab.Navigator
         tabBar={props => <CustomTabBar {...props} />}
         screenOptions={({ route }) => ({
@@ -124,7 +127,7 @@ const DraweerNavigatorRoutes = () => {
           }}
         />
       </Tab.Navigator>
-    </View>
+      </KeyboardAvoidingView>
   );
 };
 

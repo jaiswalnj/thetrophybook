@@ -1,4 +1,4 @@
-import React, { useEffect, useState, version } from 'react';
+import React, { useEffect, useState} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Alert, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -40,7 +40,7 @@ const ProductScreen = ({ route }) => {
   const handleSave = async (selectedSize) => {
     try {
       if (!isInCart) {
-        console.error("Product is not in the cart.");
+        Alert.alert("Product is not in the cart.");
         return;
       }
       console.log(userId,cartId,selectedSize);

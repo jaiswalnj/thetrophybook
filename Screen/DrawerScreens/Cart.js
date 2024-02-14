@@ -9,6 +9,7 @@ const { width, height } = Dimensions.get('window');
 const Cart = ({user}) => {
   const navigation = useNavigation();
   const [cartItems, setCartItems] = useState([]);
+  const [customisedItemIndex, setCustomisedItemIndex] = useState(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -82,10 +83,11 @@ const Cart = ({user}) => {
           <FlatList
             data={cartItems}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <CartItem
                 userId={user._id}
                 cartItem={item}
+                onCust= {() =>{setCustomisedItemIndex(index)}}
                 onRemove={async () => {
                   try {
                     const productId = item.trophy._id;
@@ -111,6 +113,16 @@ const Cart = ({user}) => {
                 }}
               />
             )}
+            ref={(flatListRef) => {
+              if (flatListRef && customisedItemIndex !== -1) {
+                flatListRef.scrollToIndex({
+                  animated: false, 
+                  index: customisedItemIndex,
+                  viewOffset: 0,
+                  viewPosition: 0.8,
+                });
+              }
+            }}
           />
         ) : (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

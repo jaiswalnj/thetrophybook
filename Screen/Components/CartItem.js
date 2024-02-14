@@ -9,7 +9,7 @@ import StarRating from 'react-native-star-rating';
 const { width, height } = Dimensions.get('window');
 
 
-const CartItem = ({userId, cartItem, onRemove }) => {
+const CartItem = ({userId, cartItem, onRemove,onCust }) => {
   const [quantity, setQuantity] = useState(cartItem.qty);
   const [customization1, setCustomization1] = useState(cartItem.year);
   const [customization2, setCustomization2] = useState(cartItem.text_on_trophy);
@@ -115,6 +115,7 @@ const handlePlusPress = async () => {
   };
 
   const handleCustomize = () => {
+    onCust();
     setIsEditing(true);
   };
 
