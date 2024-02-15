@@ -170,6 +170,10 @@ const handlePlusPress = async () => {
                 <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{}}>
                   <Icon name='trash-outline' size={height * 0.038} style={{marginHorizontal: width * 0.02}} color='black'/>
                 </TouchableOpacity>
+                
+                <TouchableOpacity onPress={() => onRemove(cartItem.id)} style={{backgroundColor: "gray", borderRadius: 10, width: width * 0.074, height: height * 0.041 }}>
+                  <Icon name='add-outline' size={height * 0.038} style={{padding: 1}} color='white'/>
+                </TouchableOpacity>
 
             </View>
 
@@ -184,7 +188,7 @@ const handlePlusPress = async () => {
               />
               <TextInput
                 style={styles.input}
-                placeholder="occasion"
+                placeholder="Occasion"
                 value={customization3}
                 onChangeText={(text) => setCustomization3(text)}
               />
@@ -208,6 +212,7 @@ const handlePlusPress = async () => {
 
 
             <View style={{flexDirection: 'row', width: width * 0.9}}>
+                  
                   <View style={{padding:height * 0.008}}>
                     <Text style={styles.title}>₹{ cartItem.trophy.price}</Text>
                     <View style={{width: width * 0.22}}>
@@ -272,13 +277,11 @@ const styles = StyleSheet.create({
     width: width * 1,
     backgroundColor: '#FAFAFA',
     marginVertical: height*0.001,
-    // backgroundColor: 'red'
   },
   quantityContainer: {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'red',
     marginRight: width * 0.18,
     width: width * 0.02,
     height: height * 0.175,
@@ -370,7 +373,7 @@ const styles = StyleSheet.create({
   saveButton: {
     backgroundColor: '#FFCD1C',
     height: height * 0.045,
-    width:width * 0.38,
+    width:width * 0.45,
     // padding: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -382,13 +385,12 @@ const styles = StyleSheet.create({
     height: height * 0.042,
     borderColor: 'gray',
     borderStyle: 'dashed',
-    // padding: 5,
     borderWidth: width * 0.005,
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 8,
     marginHorizontal: width * 0.01,
-    width: width * 0.38,
+    width: width * 0.45,
   },
 });
 
